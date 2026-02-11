@@ -112,7 +112,7 @@ export default function SignUpForm() {
                     </Field>
                 </FieldGroup>
 
-                <Button type="submit" className="w-full h-11 text-base">
+                <Button type="submit" className="w-full h-11 text-base cursor-pointer">
                     Sign Up
                 </Button>
             </form>
