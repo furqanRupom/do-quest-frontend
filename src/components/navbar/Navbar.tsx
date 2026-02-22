@@ -48,7 +48,7 @@ const Navbar: React.FunctionComponent = () => {
                         <Plus />
                         <span>Post Bounty</span>
                     </Button>
-                    <Button size="lg" className='cursor-pointer'>Sign In</Button>
+                    <Button size="lg" className='cursor-pointer'><Link href="/sign-in">Sign In</Link></Button>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -95,7 +95,7 @@ const Navbar: React.FunctionComponent = () => {
                                 className='cursor-pointer w-full'
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
-                                Sign In
+                             <Link href="/sign-in" className='w-full h-full block'>Sign In</Link>
                             </Button>
                         </div>
                     </div>
