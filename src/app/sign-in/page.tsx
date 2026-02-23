@@ -10,7 +10,6 @@ const signInPage = () => {
             <div className=' font-bold text-3xl inline-flex items-center '>
                 <LogoIcon />
                 <h3 className='pt-3'>Do<span className='text-primary'>.</span><span>Quest</span></h3>
-
             </div>
         </div>
       <Card className="max-w-lg w-full p-7">
