@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,14 +10,18 @@ import {
     FieldGroup,
     FieldLabel,
 } from "@/components/ui/field";
+import { registerUser } from "@/services/auth/registerUser";
 
 export default function SignUpForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [state,formAction,isPending] = useActionState(registerUser,null)
+    console.log(state);
+    
 
     return (
         <section>
-            <form className="space-y-6">
+            <form action={formAction} className="space-y-6">
                 <FieldGroup>
                     {/* Name */}
                     <Field>
@@ -113,7 +117,7 @@ export default function SignUpForm() {
                 </FieldGroup>
 
                 <Button type="submit" className="w-full h-11 text-base cursor-pointer">
-                    Sign Up
+                   {isPending ? "Signing Up..." : "Sign Up"}
                 </Button>
             </form>
 

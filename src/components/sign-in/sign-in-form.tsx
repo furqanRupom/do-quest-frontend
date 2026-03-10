@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,20 +9,22 @@ import {
     FieldGroup,
     FieldLabel,
 } from "@/components/ui/field";  
+import { loginUser } from "@/services/auth/loginUser";
 
 export default function SignInForm() {
     const [showPassword, setShowPassword] = useState(false);
+    const [state,formAction,isPending] = useActionState(loginUser,null)
 
     return (
         <section>
 
-            <form className="space-y-6">
+            <form action={formAction} className="space-y-6">
                 <FieldGroup>
                     <Field>
 
-                        <FieldLabel htmlFor="emailOrUsername">Email or Username</FieldLabel>
+                        <FieldLabel htmlFor="usernameOrEmail">Email or Username</FieldLabel>
                         <Input
-                            id="emailOrUsername"
+                            id="usernameOrEmail"
                             type="text"
                             placeholder="Enter your email or username"
                             autoComplete="email"
@@ -67,7 +69,7 @@ export default function SignInForm() {
                     type="submit"
                     className="w-full cursor-pointer h-11 text-base"
                 >
-                    Sign In
+                    {isPending ? "Signing In..." : "Sign In"}
                 </Button>
             </form>
 
