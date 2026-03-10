@@ -7,9 +7,10 @@ const registerValidationZodSchema = z.object({
     username: z.string().min(5, "Username is required and must be at least 5 characters long").max(10, "Username must be at most 10 characters long").regex(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores"),
     email: z.email("Email is required and must be a valid email address"),
     password: z.string().min(8, "Password is required and must be at least 8 characters long").regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/, "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character"),
-    confirmPassword: z.string().min(8, "Confirm Password is required and must be at least 8 characters long").regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/, "Confirm Password must contain at least one uppercase letter, one lowercase letter, one number and one special character").refine((data: any) => data.password === data.confirmPassword, {
-        message: "Passwords do not match",
-    })
+    confirmPassword: z.string().min(8, "Confirm Password is required and must be at least 8 characters long")
+}).refine((data: any) => data.password === data.confirmPassword, {
+    error: "Passwords do not match",
+    path: ["confirmPassword"],
 });
 export const registerUser = async (_currentState: any, formData: FormData): Promise<any> => {
 

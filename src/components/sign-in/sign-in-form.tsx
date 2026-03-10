@@ -40,7 +40,7 @@ export default function SignInForm() {
                             id="usernameOrEmail"
                             name="usernameOrEmail"
                             type="text"
-                            placeholder="user@example.com or user12345"
+                            placeholder="Enter your email or username"
                             autoComplete="email"
                         />
                         {
