@@ -15,14 +15,11 @@ export const loginUser = async (_currentState: any, formData: FormData): Promise
     
     if (!response.ok) {
       console.log(response);
-      
-      throw new Error("Login failed");
     }
 
     const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error logging in:", error);
-    throw error;
   }
 };

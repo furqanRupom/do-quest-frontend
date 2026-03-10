@@ -14,6 +14,7 @@ import { loginUser } from "@/services/auth/loginUser";
 export default function SignInForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [state,formAction,isPending] = useActionState(loginUser,null)
+    
 
     return (
         <section>
@@ -25,6 +26,7 @@ export default function SignInForm() {
                         <FieldLabel htmlFor="usernameOrEmail">Email or Username</FieldLabel>
                         <Input
                             id="usernameOrEmail"
+                            name="usernameOrEmail"
                             type="text"
                             placeholder="Enter your email or username"
                             autoComplete="email"
@@ -46,6 +48,7 @@ export default function SignInForm() {
                         <div className="relative">
                             <Input
                                 id="password"
+                                name="password"
                                 type={showPassword ? "text" : "password"}
                                 placeholder="Enter your password"
                                 className="pr-10"

@@ -16,7 +16,6 @@ export default function SignUpForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [state,formAction,isPending] = useActionState(registerUser,null)
-    console.log(state);
     
 
     return (
@@ -28,6 +27,7 @@ export default function SignUpForm() {
                         <FieldLabel htmlFor="name">Full Name</FieldLabel>
                         <Input
                             id="name"
+                            name="name"
                             type="text"
                             placeholder="Enter your full name"
                             autoComplete="name"
@@ -40,6 +40,7 @@ export default function SignUpForm() {
                         <FieldLabel htmlFor="username">Username</FieldLabel>
                         <Input
                             id="username"
+                            name="username"
                             type="text"
                             placeholder="Choose a username"
                             autoComplete="username"
@@ -52,6 +53,7 @@ export default function SignUpForm() {
                         <FieldLabel htmlFor="email">Email</FieldLabel>
                         <Input
                             id="email"
+                            name="email"
                             type="email"
                             placeholder="Enter your email"
                             autoComplete="email"
@@ -65,6 +67,7 @@ export default function SignUpForm() {
                         <div className="relative">
                             <Input
                                 id="password"
+                                name="password"
                                 type={showPassword ? "text" : "password"}
                                 placeholder="Create a password"
                                 className="pr-10"
@@ -93,6 +96,7 @@ export default function SignUpForm() {
                         <div className="relative">
                             <Input
                                 id="confirmPassword"
+                                name="confirmPassword"
                                 type={showConfirmPassword ? "text" : "password"}
                                 placeholder="Confirm your password"
                                 className="pr-10"

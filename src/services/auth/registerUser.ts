@@ -15,11 +15,9 @@ export const registerUser = async (_currentState: any, formData: FormData): Prom
             body: JSON.stringify({ username, name, email, password }),
         });
 
-        
         const data = await response.json();
         return data;
     } catch (error) {
         console.error("Error registering user:", error);
-        throw error;
     }
 };
