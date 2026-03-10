@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
     Field,
+    FieldDescription,
     FieldGroup,
     FieldLabel,
 } from "@/components/ui/field";
@@ -16,6 +17,17 @@ export default function SignUpForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [state,formAction,isPending] = useActionState(registerUser,null)
+
+    const getFieldError = (fieldName: string) => {
+        if (!state?.errors) return null;
+
+        const fieldError = state.errors.find(
+            (error: any) => error.field === fieldName
+        );
+
+        return fieldError ? fieldError.message : null;
+    };
+
     
 
     return (
@@ -31,8 +43,15 @@ export default function SignUpForm() {
                             type="text"
                             placeholder="Enter your full name"
                             autoComplete="name"
-                            required
                         />
+
+                        {
+                            getFieldError("name") && (
+                                <FieldDescription className="text-destructive">
+                                    {getFieldError("name")}
+                                </FieldDescription>
+                            )
+                        }
                     </Field>
 
                     {/* Username */}
@@ -44,8 +63,15 @@ export default function SignUpForm() {
                             type="text"
                             placeholder="Choose a username"
                             autoComplete="username"
-                            required
                         />
+
+                        {
+                            getFieldError("username") && (
+                                <FieldDescription className="text-destructive">
+                                    {getFieldError("username")}
+                                </FieldDescription>
+                            )
+                        }
                     </Field>
 
                     {/* Email */}
@@ -57,8 +83,14 @@ export default function SignUpForm() {
                             type="email"
                             placeholder="Enter your email"
                             autoComplete="email"
-                            required
                         />
+                        {
+                            getFieldError("email") && (
+                                <FieldDescription className="text-destructive">
+                                    {getFieldError("email")}
+                                </FieldDescription>
+                            )
+                        }
                     </Field>
 
                     {/* Password */}
@@ -72,7 +104,6 @@ export default function SignUpForm() {
                                 placeholder="Create a password"
                                 className="pr-10"
                                 autoComplete="new-password"
-                                required
                             />
                             <Button
                                 type="button"
@@ -88,6 +119,13 @@ export default function SignUpForm() {
                                 )}
                             </Button>
                         </div>
+                        {
+                            getFieldError("password") && (
+                                <FieldDescription className="text-destructive">
+                                    {getFieldError("password")}
+                                </FieldDescription>
+                            )
+                        }
                     </Field>
 
                     {/* Confirm Password */}
@@ -101,7 +139,6 @@ export default function SignUpForm() {
                                 placeholder="Confirm your password"
                                 className="pr-10"
                                 autoComplete="new-password"
-                                required
                             />
                             <Button
                                 type="button"
@@ -117,6 +154,13 @@ export default function SignUpForm() {
                                 )}
                             </Button>
                         </div>
+                            {
+                            getFieldError("confirmPassword") && (
+                                <FieldDescription className="text-destructive">
+                                    {getFieldError("confirmPassword")}
+                                </FieldDescription>
+                            )
+                        }
                     </Field>
                 </FieldGroup>
 
