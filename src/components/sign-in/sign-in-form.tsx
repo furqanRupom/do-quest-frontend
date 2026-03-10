@@ -6,15 +6,27 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
     Field,
+    FieldDescription,
     FieldGroup,
     FieldLabel,
-} from "@/components/ui/field";  
+} from "@/components/ui/field";
 import { loginUser } from "@/services/auth/loginUser";
 
 export default function SignInForm() {
     const [showPassword, setShowPassword] = useState(false);
-    const [state,formAction,isPending] = useActionState(loginUser,null)
-    
+    const [state, formAction, isPending] = useActionState(loginUser, null)
+    console.log(state);
+    const getFieldError = (fieldName: string) => {
+        if (!state?.errors) return null;
+
+        const fieldError = state.errors.find(
+            (error: any) => error.field === fieldName
+        );
+
+        return fieldError ? fieldError.message : null;
+    };
+
+
 
     return (
         <section>
@@ -28,11 +40,18 @@ export default function SignInForm() {
                             id="usernameOrEmail"
                             name="usernameOrEmail"
                             type="text"
-                            placeholder="Enter your email or username"
+                            placeholder="user@example.com or user12345"
                             autoComplete="email"
-                            required
                         />
+                        {
+                            getFieldError("usernameOrEmail") && (
+                                <FieldDescription className="text-destructive">
+                                    {getFieldError("usernameOrEmail")}
+                                </FieldDescription>
+                            )
+                        }
                     </Field>
+             
 
                     <Field>
                         <div className="flex items-center justify-between">
@@ -53,7 +72,6 @@ export default function SignInForm() {
                                 placeholder="Enter your password"
                                 className="pr-10"
                                 autoComplete="current-password"
-                                required
                             />
                             <Button
                                 type="button"
@@ -65,7 +83,15 @@ export default function SignInForm() {
                                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                             </Button>
                         </div>
+                        {
+                            getFieldError("password") && (
+                                <FieldDescription className="text-destructive">
+                                    {getFieldError("password")}
+                                </FieldDescription>
+                            )
+                        }
                     </Field>
+                  
                 </FieldGroup>
 
                 <Button
