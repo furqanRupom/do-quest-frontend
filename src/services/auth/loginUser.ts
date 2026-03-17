@@ -1,5 +1,6 @@
 "use server"
 
+import { cookies } from "next/headers";
 import z from "zod";
 
 const loginValidationZodSchema = z.object({
@@ -34,9 +35,16 @@ export const loginUser = async (_currentState: any, formData: FormData): Promise
 
     if (!response.ok) {
       console.log(response);
+      return {
+        success: false,
+        errors: [{ message: "Invalid username/email or password" }]
+      }
     }
 
-    const data = await response.json();
+    const {data} = await response.json();
+    const cookieStore = await cookies();
+    cookieStore.set("accessToken", data.accessToken, { httpOnly: true, secure: true, sameSite: "strict" });
+    cookieStore.set("refreshToken", data.refreshToken, { httpOnly: true, secure: true, sameSite: "strict" });
     return data;
   } catch (error) {
     console.error("Error logging in:", error);
