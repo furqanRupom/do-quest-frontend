@@ -34,7 +34,6 @@ export const loginUser = async (_currentState: any, formData: FormData): Promise
     });
 
     if (!response.ok) {
-      console.log(response);
       return {
         success: false,
         errors: [{ message: "Invalid username/email or password" }]
