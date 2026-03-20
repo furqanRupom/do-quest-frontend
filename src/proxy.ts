@@ -3,7 +3,6 @@ import type { NextRequest } from 'next/server'
 
 export function proxy(request: NextRequest) {
     
-    console.log("From PROXY : ", request.cookies.get('accessToken')?.value)
     return NextResponse.redirect(new URL('/', request.url))
 }
 
