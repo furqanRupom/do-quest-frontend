@@ -1,12 +1,9 @@
 "use server"
 
+import { loginValidationZodSchema } from "@/zod/auth.validation";
 import { cookies } from "next/headers";
-import z from "zod";
 
-const loginValidationZodSchema = z.object({
-  usernameOrEmail: z.string().min(1, "Email or username is required"),
-  password: z.string().min(8, "Password is required and must be at least 8 characters long").regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/, "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character"),
-})
+
 
 export const loginUser = async (_currentState: any, formData: FormData): Promise<any> => {
   const loginData = {
