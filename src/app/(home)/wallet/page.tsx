@@ -1,3 +1,4 @@
+import Wallet from "@/components/modules/Wallet/Wallet";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -5,6 +6,6 @@ export const metadata: Metadata = {
     description:"Do quests wallet page"
 };
 const walletpage = () => {
-    return <h3>wallet page</h3>
+    return <><Wallet /></>
 }
 export default walletpage
