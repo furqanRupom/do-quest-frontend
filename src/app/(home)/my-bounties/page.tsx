@@ -1,3 +1,4 @@
+import MyBounties from "@/components/modules/MyBounties/MyBounties";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -5,6 +6,6 @@ export const metadata: Metadata = {
     description: "Do my bounties page",
 };
 const myBountiesPage = () => {
-    return <h3>welcome to my bounties page</h3>
+    return <><MyBounties /></>
 }
 export default myBountiesPage

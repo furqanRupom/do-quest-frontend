@@ -1,3 +1,4 @@
+import BrowseBounties from "@/components/modules/Browse/BrowseBounties";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,6 +7,7 @@ export const metadata: Metadata = {
 };
 
 const browsepage = () => {
-    return <h3>Welcome to browse page</h3>
+    return <><BrowseBounties /></>
 }
+
 export default browsepage
