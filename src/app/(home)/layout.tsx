@@ -1,19 +1,19 @@
-import Footer from '@/components/footer/Footer';
-import Navbar from '@/components/navbar/Navbar';
-import Offer from '@/components/offer/Offer';
+import Footer from '@/components/shared/Footer';
+import Navbar from '@/components/shared/Navbar';
+import Offer from '@/components/shared/Offer';
+import QueryProviders from '@/providers/QueryProvider';
+
 import * as React from 'react';
 
 interface IHomeLayoutProps {
     children: React.ReactNode
 }
 
-const HomeLayout: React.FunctionComponent<IHomeLayoutProps> = (props) => {
+const HomeLayout: React.FunctionComponent<IHomeLayoutProps> = ({ children }) => {
     return <main>
         <Offer />
         <Navbar />
-        <div>
-            {props.children}
-        </div>
+        <QueryProviders>{children}</QueryProviders>
         <Footer />
     </main>;
 };

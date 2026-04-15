@@ -1,9 +1,9 @@
-import ActiveBounties from "@/components/home/ActiveBounties";
-import Cta from "@/components/home/Cta";
-import Faq from "@/components/home/Faq";
-import Hero from "@/components/home/Hero";
-import Service from "@/components/home/Service";
-import Image from "next/image";
+import ActiveBounties from "@/components/modules/Home/ActiveBounties";
+import Cta from "@/components/modules/Home/Cta";
+import Faq from "@/components/modules/Home/Faq";
+import Hero from "@/components/modules/Home/Hero";
+import Service from "@/components/modules/Home/Service";
+
 
 export default function Home() {
   return (

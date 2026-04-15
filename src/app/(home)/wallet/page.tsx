@@ -1,4 +1,4 @@
-import Wallet from "@/components/modules/Wallet/Wallet";
+import Wallet from "@/components/modules/Home/Wallet/Wallet";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

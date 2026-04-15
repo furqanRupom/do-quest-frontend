@@ -1,4 +1,4 @@
-import MyBounties from "@/components/modules/MyBounties/MyBounties";
+import MyBounties from "@/components/modules/Home/MyBounties/MyBounties";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

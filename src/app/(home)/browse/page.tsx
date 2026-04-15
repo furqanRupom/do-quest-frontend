@@ -1,4 +1,4 @@
-import BrowseBounties from "@/components/modules/Browse/BrowseBounties";
+import BrowseBounties from "@/components/modules/Home/Browse/BrowseBounties";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

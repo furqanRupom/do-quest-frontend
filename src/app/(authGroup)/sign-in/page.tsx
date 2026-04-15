@@ -1,5 +1,6 @@
 import LogoIcon from "@/components/logo/LogoIcon"
-import SignInForm from "@/components/sign-in/sign-in-form"
+import SignInForm from "@/components/modules/Auth/Sign-In-Form"
+
 import { Card } from "@/components/ui/card"
 import { FieldDescription,  FieldLegend, FieldSet } from "@/components/ui/field"
 
