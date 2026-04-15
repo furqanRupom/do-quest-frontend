@@ -1,7 +1,7 @@
 import Footer from '@/components/shared/Footer';
 import Navbar from '@/components/shared/Navbar';
 import Offer from '@/components/shared/Offer';
-import QueryProviders from '@/providers/QueryProvider';
+
 
 import * as React from 'react';
 
@@ -13,7 +13,7 @@ const HomeLayout: React.FunctionComponent<IHomeLayoutProps> = ({ children }) => 
     return <main>
         <Offer />
         <Navbar />
-        <QueryProviders>{children}</QueryProviders>
+        {children}
         <Footer />
     </main>;
 };
