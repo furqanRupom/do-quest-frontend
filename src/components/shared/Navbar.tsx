@@ -27,117 +27,103 @@ const Navbar: React.FunctionComponent = () => {
     return (
         <>
             {/* Spacer so content doesn't hide under fixed navbar */}
-            <div className='h-16' />
+            <div className='h-[76px]' />
 
-            <header
-                className={`
-                    fixed top-0 left-0 right-0 z-50
-                    transition-all duration-500 ease-in-out
-                    ${isScrolled
-                        ? [
-                            'bg-background/60',
-                            'backdrop-blur-xl',
-                            'backdrop-saturate-150',
-                            'shadow-[0_4px_24px_-4px_rgba(0,0,0,0.12),0_1px_2px_rgba(0,0,0,0.06)]',
-                            'border-b border-white/10',
-                        ].join(' ')
-                        : 'bg-background border-b border-transparent'
-                    }
-                `}
-            >
-                {/* Subtle top highlight line when scrolled */}
-                <div
+            <header className="fixed top-0 left-0 right-0 z-50 flex justify-center p-4">
+                <nav
                     className={`
-                        absolute top-0 left-0 right-0 h-px
-                        bg-gradient-to-r from-transparent via-primary/30 to-transparent
-                        transition-opacity duration-500
-                        ${isScrolled ? 'opacity-100' : 'opacity-0'}
+                        sticky top-0 z-50 flex items-center justify-between px-6 h-[56px] w-[95%]
+                        rounded-full mx-auto max-w-7xl
+                        transition-all duration-500 ease-in-out
+                        ${isScrolled
+                            ? [
+                                'bg-background/80',
+                                'backdrop-blur-xl',
+                                'shadow-[0_8px_30px_rgba(0,0,0,0.06)]',
+                                'border border-white/10',
+                            ].join(' ')
+                            : 'bg-background border border-transparent'
+                        }
                     `}
-                />
-
-                <div className='flex justify-between items-center max-w-7xl mx-auto h-16 px-4'>
-
+                >
                     {/* Logo */}
                     <Logo />
 
                     {/* Desktop Navigation */}
-                    <ul className='hidden md:flex gap-1 items-center'>
+                    <div className="hidden md:flex items-center gap-0.5">
                         {navLinks.map((link) => {
                             const isActive = pathname === link.href;
                             return (
-                                <li key={link.href}>
-                                    <Link
-                                        href={link.href}
-                                        className={`
-                                            relative px-3 py-2 rounded-md text-sm font-medium
-                                            transition-all duration-200
-                                            hover:text-primary hover:bg-primary/8
-                                            ${isActive ? 'text-primary' : 'text-muted-foreground'}
-                                        `}
-                                    >
-                                        {link.label}
-                                        {/* Active underline pip */}
-                                        <span
-                                            className={`
-                                                absolute bottom-1 left-3 right-3 h-0.5 rounded-full
-                                                bg-primary transition-all duration-300 origin-center
-                                                ${isActive ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'}
-                                            `}
-                                        />
-                                    </Link>
-                                </li>
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className={`
+                                        px-5 py-2 text-base font-semibold
+                                        transition-all duration-300 rounded-full
+                                        scale-95 active:scale-90
+                                        ${isActive
+                                            ? 'text-foreground bg-accent/10'
+                                            : 'text-muted-foreground hover:bg-accent/10'
+                                        }
+                                    `}
+                                >
+                                    {link.label}
+                                </Link>
                             );
                         })}
-                    </ul>
+                    </div>
 
-                    {/* Desktop Buttons */}
-                    <div className='hidden md:flex items-center gap-2.5'>
-                        <Button size="sm" className='cursor-pointer gap-1.5 transition-all duration-200'>
-                            <Plus className='w-4 h-4' />
-                            <span>Post Bounty</span>
-                        </Button>
-                        <Button
-                            size="sm"
-                            variant="outline"
-                            className='cursor-pointer backdrop-blur-sm transition-all duration-200'
-                            asChild
+                    {/* Desktop Actions */}
+                    <div className="hidden md:flex items-center gap-3">
+                        <Link
+                            href="/sign-in"
+                            className="text-base font-semibold text-muted-foreground hover:text-foreground transition-colors"
                         >
-                            <Link href="/sign-in">Sign In</Link>
+                            Sign In
+                        </Link>
+                        <Button
+                            size="lg"
+                            className=" cursor-pointer px-5 py-2 text-md font-bold shadow-lg shadow-primary/20 scale-95 active:scale-90 transition-all duration-300 hover:brightness-110 gap-1.5 "
+                        >
+                            <Plus className="w-5 h-5" />
+                            <span className=''>Post Bounty</span>
                         </Button>
                     </div>
 
                     {/* Mobile Menu Toggle */}
                     <Button
-                        variant="ghost"
+                        variant="secondary"
                         size="icon"
-                        className='md:hidden'
+                        className="md:hidden h-9 w-9 cursor-pointer"
                         onClick={() => setIsMobileMenuOpen(p => !p)}
                         aria-label="Toggle menu"
                     >
                         <span className={`transition-all duration-300 ${isMobileMenuOpen ? 'rotate-90 opacity-0 absolute' : 'rotate-0 opacity-100'}`}>
-                            <Menu className='w-5 h-5' />
+                            <Menu className="w-5 h-5" />
                         </span>
                         <span className={`transition-all duration-300 ${isMobileMenuOpen ? 'rotate-0 opacity-100' : '-rotate-90 opacity-0 absolute'}`}>
-                            <X className='w-5 h-5' />
+                            <X className="w-5 h-5" />
                         </span>
                     </Button>
-                </div>
+                </nav>
 
                 {/* Mobile Menu */}
                 <div
                     className={`
-                        md:hidden overflow-hidden
+                        fixed top-[76px] left-0 right-0 md:hidden
                         transition-all duration-300 ease-in-out
-                        ${isMobileMenuOpen ? 'max-h-[420px] opacity-100' : 'max-h-0 opacity-0'}
+                        ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}
                     `}
                 >
                     <div
                         className={`
-                            px-4 pt-2 pb-5 border-t border-white/10
-                            ${isScrolled ? 'bg-background/50 backdrop-blur-xl' : 'bg-background'}
+                            mx-4 p-5 rounded-2xl
+                            bg-background/95 backdrop-blur-xl
+                            border border-white/10
+                            shadow-[0_8px_30px_rgba(0,0,0,0.06)]
                         `}
                     >
-                        <ul className='flex flex-col mb-4'>
+                        <ul className="flex flex-col mb-5">
                             {navLinks.map((link) => {
                                 const isActive = pathname === link.href;
                                 return (
@@ -145,17 +131,16 @@ const Navbar: React.FunctionComponent = () => {
                                         <Link
                                             href={link.href}
                                             className={`
-                                                flex items-center gap-2.5 py-3 text-sm font-medium
+                                                flex items-center gap-3 py-3 text-base font-medium
                                                 border-b border-border/30 last:border-0
                                                 transition-colors duration-150
-                                                hover:text-primary
-                                                ${isActive ? 'text-primary' : 'text-muted-foreground'}
+                                                ${isActive ? 'text-foreground' : 'text-muted-foreground'}
                                             `}
                                             onClick={() => setIsMobileMenuOpen(false)}
                                         >
                                             <span
                                                 className={`
-                                                    w-1 h-4 rounded-full shrink-0
+                                                    w-1.5 h-5 rounded-full shrink-0
                                                     transition-all duration-200
                                                     ${isActive ? 'bg-primary opacity-100' : 'bg-transparent opacity-0'}
                                                 `}
@@ -167,19 +152,19 @@ const Navbar: React.FunctionComponent = () => {
                             })}
                         </ul>
 
-                        <div className='flex flex-col gap-2'>
+                        <div className="flex flex-col gap-2.5">
                             <Button
                                 size="default"
-                                className='w-full gap-1.5'
+                                className="w-full cursor-pointer gap-1.5"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
-                                <Plus className='w-4 h-4' />
+                                <Plus className="w-4 h-4" />
                                 Post Bounty
                             </Button>
                             <Button
                                 size="default"
                                 variant="outline"
-                                className='w-full backdrop-blur-sm'
+                                className="w-full  backdrop-blur-sm text-base"
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 asChild
                             >

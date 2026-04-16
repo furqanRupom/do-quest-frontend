@@ -36,7 +36,7 @@ const Offer: React.FunctionComponent = () => {
             <Button
                 size="icon"
                 variant="ghost"
-                className="text-secondary hover:bg-emerald-400/20 flex-shrink-0"
+                className="text-secondary hover:bg-emerald-400/20 shrink-0"
                 onClick={handleClose}
             >
                 <X className="h-4 w-4" />
