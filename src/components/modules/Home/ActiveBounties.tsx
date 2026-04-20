@@ -1,6 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 
 export default function ActiveBounties() {
     return (
@@ -30,10 +31,18 @@ export default function ActiveBounties() {
                             <p className="text-gray-600 dark:text-gray-300 mb-8">
                                 Be the first to post a bounty and start getting high-quality submissions.
                             </p>
-                            <Button size="lg">
-                                <Plus className="mr-2 h-5 w-5" />
-                                Post a Bounty
-                            </Button>
+
+
+                    <div className="flex justify-center items-center gap-3">
+                         <Button
+                            size="lg"
+                            className=" cursor-pointer px-5 py-2 text-md font-bold shadow-lg shadow-primary/20 scale-95 active:scale-90 transition-all duration-300 hover:brightness-110 gap-1.5 "
+                        >
+                            <Plus className="w-5 h-5" />
+                            <span className=''>Post Bounty</span>
+                        </Button>
+                    </div>
+
                         </div>
                     </div>
                 </div>
