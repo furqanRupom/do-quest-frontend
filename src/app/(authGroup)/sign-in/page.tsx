@@ -16,7 +16,7 @@ const signInPage = () => {
       <Card className="max-w-lg w-full p-7">
             <FieldSet>
                 <FieldLegend className="mx-auto font-bold"><h3 className=" text-2xl ">Welcome back!</h3></FieldLegend>
-                <FieldDescription className="text-center">Sign in to your account to continue.</FieldDescription>
+                <FieldDescription className="text-center">Sign in to your account and continue.</FieldDescription>
              <SignInForm />
             </FieldSet> 
       </Card>
