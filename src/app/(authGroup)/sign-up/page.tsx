@@ -2,9 +2,12 @@ import LogoIcon from "@/components/logo/LogoIcon"
 import SignUpForm from "@/components/modules/Auth/Sign-Up-Form"
 import { Card } from "@/components/ui/card"
 import { FieldDescription, FieldLegend, FieldSet } from "@/components/ui/field"
+interface SignUpParams {
+  searchParams: Promise<{ redirect?: string }>;
+}
 
-
-const signInPage = () => {
+const signUpPage = async ({ searchParams }: SignUpParams) => {
+  const params = await searchParams
   return <section className="max-w-7xl mx-auto min-h-svh flex flex-col items-center justify-center">
     <div className="py-5">
       <div className=' font-bold text-3xl inline-flex items-center '>
@@ -17,9 +20,9 @@ const signInPage = () => {
       <FieldSet>
         <FieldLegend className="mx-auto font-bold"><h3 className=" text-2xl ">Create Account</h3></FieldLegend>
         <FieldDescription className="text-center">Create a new account to get started.</FieldDescription>
-        <SignUpForm />
+        <SignUpForm redirectPath={params.redirect} />
       </FieldSet>
     </Card>
   </section>
 }
-export default signInPage
+export default signUpPage

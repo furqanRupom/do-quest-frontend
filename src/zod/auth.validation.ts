@@ -20,3 +20,4 @@ export const loginValidationZodSchema = z.object({
 
 
 export type ILoginPayload = z.infer<typeof loginValidationZodSchema>;
+export type IRegisterPayload = z.infer<typeof registerValidationZodSchema>;

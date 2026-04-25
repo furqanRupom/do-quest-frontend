@@ -11,3 +11,14 @@ export interface ILoginResponse {
         isDeleted: boolean;
     }
 }
+
+export interface IRegisterResponse {
+    needPasswordChange: boolean;
+    email: string;
+    name: string;
+    username: string;
+    role: string;
+    image: string;
+    status: string;
+    isDeleted: boolean;
+}

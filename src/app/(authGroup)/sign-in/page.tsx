@@ -4,8 +4,13 @@ import SignInForm from "@/components/modules/Auth/Sign-In-Form"
 import { Card } from "@/components/ui/card"
 import { FieldDescription,  FieldLegend, FieldSet } from "@/components/ui/field"
 
+interface SignInParams {
+  searchParams: Promise<{ redirect?: string }>;
+}
 
-const signInPage = () => {
+const signInPage = async  ({searchParams}:SignInParams) => {
+    const params = await searchParams
+    const redirectPath = params.redirect
     return <section className="max-w-7xl mx-auto min-h-svh flex flex-col items-center justify-center">
         <div className="py-5">
             <div className=' font-bold text-3xl inline-flex items-center '>
@@ -17,7 +22,7 @@ const signInPage = () => {
             <FieldSet>
                 <FieldLegend className="mx-auto font-bold"><h3 className=" text-2xl ">Welcome back!</h3></FieldLegend>
                 <FieldDescription className="text-center">Sign in to your account and continue.</FieldDescription>
-             <SignInForm />
+             <SignInForm redirectPath={redirectPath} />
             </FieldSet> 
       </Card>
     </section>

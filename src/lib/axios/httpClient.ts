@@ -80,6 +80,7 @@ const httpGet = async <TData>(endpoint: string, options?: ApiRequestOptions): Pr
 const httpPost = async <TData>(endpoint: string, data: unknown, options?: ApiRequestOptions): Promise<ApiResponse<TData>> => {
     try {
         const instance = await axiosInstance();
+  
         const response = await instance.post<ApiResponse<TData>>(endpoint, data, {
             params: options?.params,
             headers: options?.headers,

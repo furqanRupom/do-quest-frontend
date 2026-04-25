@@ -1,16 +1,15 @@
 "use server";
 
-import { getDefaultDashboardRoute, isValidRedirectForRole, UserRole } from "@/lib/authUtils";
 import { httpClient } from "@/lib/axios/httpClient";
-import { setTokenInCookies } from "@/lib/tokenUtils";
 import { ApiErrorResponse } from "@/types/api.types";
-import { ILoginResponse } from "@/types/auth.types";
+import { IRegisterResponse } from "@/types/auth.types";
 
-import { ILoginPayload, loginValidationZodSchema } from "@/zod/auth.validation";
+import { IRegisterPayload, registerValidationZodSchema } from "@/zod/auth.validation";
 import { redirect } from "next/navigation";
 
-export const loginAction = async (payload: ILoginPayload, redirectPath?: string): Promise<ILoginResponse | ApiErrorResponse> => {
-  const parsedPayload = loginValidationZodSchema.safeParse(payload);
+export const registerAction = async (payload: IRegisterPayload, redirectPath?: string): Promise<IRegisterResponse | ApiErrorResponse> => {
+    const parsedPayload = registerValidationZodSchema.safeParse(payload);
+  console.log(process.env.NEXT_PUBLIC_API_BASE_URL)
   if (!parsedPayload.success) {
     const firstError = parsedPayload.error.issues[0].message || "Invalid input";
     return {
@@ -21,16 +20,11 @@ export const loginAction = async (payload: ILoginPayload, redirectPath?: string)
   
   try {
 
-    const response = await httpClient.post<ILoginResponse>("/auth/login", parsedPayload.data);
+    const response = await httpClient.post<IRegisterResponse>("/auth/register", parsedPayload.data);
 
-    const { accessToken, refreshToken, user } = response.data;
+    const user = response.data;
     const { role, needPasswordChange, email } = user;
-    await setTokenInCookies("accessToken", accessToken);
-    await setTokenInCookies("refreshToken", refreshToken);
 
-    // if(!emailVerified){
-    //     redirect("/verify-email");
-    // }else // in the catch block
 
     if (needPasswordChange) {
       //TODO : refactoring
@@ -38,10 +32,10 @@ export const loginAction = async (payload: ILoginPayload, redirectPath?: string)
     } else {
       // TODO : for now we going to just redirecting to dashboard for testing purpose we will update it as well
       // redirect(redirectPath || "/dashboard");
-      const targetPath = redirectPath && isValidRedirectForRole(redirectPath, role as UserRole) ? redirectPath : getDefaultDashboardRoute(role as UserRole);
+    //   const targetPath = redirectPath && isValidRedirectForRole(redirectPath, role as UserRole) ? redirectPath : getDefaultDashboardRoute(role as UserRole);
 
 
-      redirect(targetPath);
+      redirect("/sign-in");
     }
 
   } catch (error: any) {
@@ -55,7 +49,7 @@ export const loginAction = async (payload: ILoginPayload, redirectPath?: string)
     // }
     return {
       success: false,
-      message: `Login failed: ${error.message}`,
+      message: `Sign Up failed: ${error.message}`,
     }
   }
 }
