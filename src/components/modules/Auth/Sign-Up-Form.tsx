@@ -125,6 +125,7 @@ const SignUpForm = ({redirectPath}:SignUpFormProps) => {
                                     onClick={() => setShowPassword((v) => !v)}
                                     variant="ghost"
                                     size="icon"
+                                    className=" hover:bg-transparent"
                                 >
                                     {showPassword ? (
                                         <EyeOff className="size-4" />
@@ -156,6 +157,7 @@ const SignUpForm = ({redirectPath}:SignUpFormProps) => {
                                     onClick={() => setShowConfirmPassword((v) => !v)}
                                     variant="ghost"
                                     size="icon"
+                                    className=" hover:bg-transparent"
                                 >
                                     {showConfirmPassword ? (
                                         <EyeOff className="size-4" />

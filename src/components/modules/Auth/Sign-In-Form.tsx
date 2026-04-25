@@ -101,6 +101,7 @@ const SignInForm = ({ redirectPath }: SignInFormProps) => {
                   onClick={() => setShowPassword((value) => !value)}
                   variant="ghost"
                   size="icon"
+                  className=" hover:bg-transparent"
                 >
                   {showPassword ? (
                     <EyeOff className="size-4" aria-hidden="true" />
