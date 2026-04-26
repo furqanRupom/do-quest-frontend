@@ -9,7 +9,6 @@ import { redirect } from "next/navigation";
 
 export const registerAction = async (payload: IRegisterPayload, redirectPath?: string): Promise<IRegisterResponse | ApiErrorResponse> => {
     const parsedPayload = registerValidationZodSchema.safeParse(payload);
-  console.log(process.env.NEXT_PUBLIC_API_BASE_URL)
   if (!parsedPayload.success) {
     const firstError = parsedPayload.error.issues[0].message || "Invalid input";
     return {
