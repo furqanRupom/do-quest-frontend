@@ -84,13 +84,14 @@ export async function proxy(request: NextRequest) {
             isAuth &&
             isValidAccessToken &&
             pathname !== "/verify-email" &&
-            pathname !== "/reset-password"
+            pathname !== "/reset-password" &&
+            pathname !== "/change-password"
         ) {
             return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url));
         }
 
         // Rule - 2 : User is trying to access reset password page
-        if (pathname === "/reset-password") {
+        if (pathname === "/change-password") {
 
             const email = request.nextUrl.searchParams.get("email");
 
@@ -152,8 +153,8 @@ export async function proxy(request: NextRequest) {
 
                 // need password change scenario
                 if (userInfo.needPasswordChange) {
-                    if (pathname !== "/reset-password") {
-                        const resetPasswordUrl = new URL("/reset-password", request.url);
+                    if (pathname !== "/change-password") {
+                        const resetPasswordUrl = new URL("/change-password", request.url);
                         resetPasswordUrl.searchParams.set("email", userInfo.email);
                         return NextResponse.redirect(resetPasswordUrl);
                     }
@@ -161,7 +162,7 @@ export async function proxy(request: NextRequest) {
                     return NextResponse.next();
                 }
 
-                if (!userInfo.needPasswordChange && pathname === "/reset-password") {
+                if (!userInfo.needPasswordChange && pathname === "/change-password") {
                     return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url));
                 }
             }

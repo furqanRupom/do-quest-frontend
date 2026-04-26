@@ -27,7 +27,7 @@ export const registerAction = async (payload: IRegisterPayload, redirectPath?: s
 
     if (needPasswordChange) {
       //TODO : refactoring
-      redirect(`/reset-password?email=${email}`);
+      redirect(`/change-password?email=${email}`);
     } else {
       // TODO : for now we going to just redirecting to dashboard for testing purpose we will update it as well
       // redirect(redirectPath || "/dashboard");

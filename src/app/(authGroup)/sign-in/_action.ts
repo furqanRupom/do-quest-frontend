@@ -34,7 +34,7 @@ export const loginAction = async (payload: ILoginPayload, redirectPath?: string)
 
     if (needPasswordChange) {
       //TODO : refactoring
-      redirect(`/reset-password?email=${email}`);
+      redirect(`/change-password?email=${email}`);
     } else {
       // TODO : for now we going to just redirecting to dashboard for testing purpose we will update it as well
       // redirect(redirectPath || "/dashboard");
