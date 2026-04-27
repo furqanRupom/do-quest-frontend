@@ -18,7 +18,7 @@ export const forgotPasswordAction = async (payload: IForgotPasswordPayload): Pro
 
     try {
 
-        const response = await httpClient.post<any>("/forgot-password", parsedPayload.data);
+        const response = await httpClient.post<any>("/auth/forgot-password", parsedPayload.data);
         if (response.success) {
             redirect('/sign-in')
 

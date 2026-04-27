@@ -17,8 +17,8 @@ export const resetPasswordAction = async (payload: IResetPasswordPayload,token:s
     }
 
     try {
-
-        const response = await httpClient.post<any>(`/reset-password?token=${token}`, parsedPayload.data);
+  
+        const response = await httpClient.post<any>(`/auth/reset-password?token=${token}`, parsedPayload.data);
         if (response.success) {
             redirect('/sign-in')
 
