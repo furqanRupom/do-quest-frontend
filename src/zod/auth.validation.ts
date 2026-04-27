@@ -25,6 +25,16 @@ export const needChangePasswordSchema = z.object({
 })
 
 
+export const forgotPasswordSchema = z.object({
+    email: z.email("Email is required and must be a valid email address"),
+
+})
+export const resetPasswordSchema = z.object({
+    newPassword: z.string().min(8, "Password is required and must be at least 8 characters long").regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/, "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character"),
+
+})
 export type ILoginPayload = z.infer<typeof loginValidationZodSchema>;
 export type IRegisterPayload = z.infer<typeof registerValidationZodSchema>;
 export type INeedCHangePasswordPayload = z.infer<typeof needChangePasswordSchema>;
+export type IForgotPasswordPayload = z.infer<typeof forgotPasswordSchema>;
+export type IResetPasswordPayload = z.infer<typeof resetPasswordSchema>;
