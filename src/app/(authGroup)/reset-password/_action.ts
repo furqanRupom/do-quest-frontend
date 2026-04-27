@@ -6,7 +6,7 @@ import { ApiErrorResponse } from "@/types/api.types";
 import {  IResetPasswordPayload, resetPasswordSchema } from "@/zod/auth.validation";
 import { redirect } from "next/navigation";
 
-export const resetPasswordAction = async (payload: IResetPasswordPayload): Promise<null | ApiErrorResponse> => {
+export const resetPasswordAction = async (payload: IResetPasswordPayload,token:string): Promise<null | ApiErrorResponse> => {
     const parsedPayload = resetPasswordSchema.safeParse(payload);
     if (!parsedPayload.success) {
         const firstError = parsedPayload.error.issues[0].message || "Invalid input";
@@ -18,7 +18,7 @@ export const resetPasswordAction = async (payload: IResetPasswordPayload): Promi
 
     try {
 
-        const response = await httpClient.post<any>("/reset-password", parsedPayload.data);
+        const response = await httpClient.post<any>(`/reset-password?token=${token}`, parsedPayload.data);
         if (response.success) {
             redirect('/sign-in')
 

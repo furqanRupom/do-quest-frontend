@@ -4,8 +4,11 @@ import { Card } from "@/components/ui/card"
 import { FieldDescription, FieldLegend, FieldSet } from "@/components/ui/field"
 import ResetPassword from "@/components/modules/Auth/ResetPassword"
 
-
-const resetPasswordPage = () => {
+interface ResetPasswordParams {
+    searchParams: Promise<{ redirect?: string, token: string }>;
+}
+const resetPasswordPage = async ({ searchParams }: ResetPasswordParams) => {
+    const token = (await searchParams)?.token
     return <section className="max-w-7xl mx-auto min-h-svh flex flex-col items-center justify-center">
         <div className="py-5">
             <div className=' font-bold text-3xl inline-flex items-center '>
@@ -17,7 +20,7 @@ const resetPasswordPage = () => {
             <FieldSet>
                 <FieldLegend className="mx-auto font-bold"><h3 className=" text-2xl ">Reset Password?</h3></FieldLegend>
                 <FieldDescription className="text-center">Change your password below.</FieldDescription>
-                <ResetPassword />
+                <ResetPassword token={token} />
             </FieldSet>
         </Card>
     </section>
