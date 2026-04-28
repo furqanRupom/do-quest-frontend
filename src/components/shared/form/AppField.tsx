@@ -70,6 +70,7 @@ const AppField = ({
                 aria-invalid={hasError}
                 aria-describedby={hasError ? `${field.name}-error` : undefined}
                 className={cn(
+                    "py-3 h-11 text-base",
                     prepend && "pl-10",
                     append && "pr-10",
                     hasError && "border-destructive focus-visible:ring-destructive/20",

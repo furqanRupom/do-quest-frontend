@@ -27,7 +27,7 @@ const AppSubmitButton = ({
     <Button 
         type='submit'
         disabled={isDisabled} 
-        className={cn("w-full", className)}
+        className={cn("w-full p-5", className)}
     >
       {isPending ? (
         <>
