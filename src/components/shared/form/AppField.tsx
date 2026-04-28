@@ -78,7 +78,7 @@ const AppField = ({
             />
 
             {
-                append && (<div className="absolute inset-y-0 right-0 items-center pr-3 pointer-cursor z-10">
+                append && (<div className="absolute inset-y-0 right-0 items-center pr-3 cursor-pointer z-10">
                     {append}
                 </div>)
             }
