@@ -42,7 +42,7 @@ const Navbar: React.FunctionComponent = () => {
                                 'shadow-[0_8px_30px_rgba(0,0,0,0.06)]',
                                 'border border-white/10',
                             ].join(' ')
-                            : 'bg-background border border-transparent'
+                            : ' border border-transparent'
                         }
                     `}
                 >
