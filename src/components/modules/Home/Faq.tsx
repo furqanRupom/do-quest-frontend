@@ -1,61 +1,71 @@
-
+// components/faq.tsx
 "use client"
+
 import * as React from 'react';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
-const Faq = () => {
-    const faqs = [
-        {
-            question: "What is a bounty?",
-            answer: "A bounty is a reward offered for completing a specific task or project. It can range from coding challenges to creative projects, with predetermined rewards for successful completion."
-        },
-        {
-            question: "How do I get started?",
-            answer: "Simply sign up for an account, browse available bounties that match your skills, and submit your work. Once approved, you'll receive your reward directly to your wallet."
-        },
-        {
-            question: "What types of projects are available?",
-            answer: "We offer a wide variety of projects including web development, mobile apps, design work, content writing, marketing tasks, and more. There's something for every skill level."
-        },
-        {
-            question: "How are payments processed?",
-            answer: "Payments are processed securely through our platform. Once your submission is approved by the bounty creator, funds are automatically transferred to your wallet within 24 hours."
-        },
-        {
-            question: "Can I post my own bounty?",
-            answer: "Absolutely! You can post bounties for any legitimate project or task. Set your requirements, deadline, and reward amount, then let our community of skilled professionals compete to deliver the best solution."
-        }
-    ];
-    return (
-        <div>
-            <section className="py-16 ">
-                <div className="max-w-4xl mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                            Frequently Asked Questions
-                        </h2>
-                        <p className="text-xl text-gray-600 dark:text-gray-300">
-                            Everything you need to know about bounties and quests
-                        </p>
-                    </div>
+const FAQ: React.FC = () => {
+  const faqs = [
+    {
+      question: "What is a bounty?",
+      answer: "A bounty is a specific task or project posted by an organization or individual with a predefined reward. It allows developers and creators to earn compensation by completing verifiable goals."
+    },
+    {
+      question: "How do I get started?",
+      answer: "Simply connect your wallet, create a profile highlighting your skills, and start browsing available quests. Once you find a match, click 'Apply' or 'Start Quest' to begin."
+    },
+    {
+      question: "What types of projects are available?",
+      answer: "We host everything from smart contract audits and UI/UX design challenges to technical writing and community management quests."
+    },
+    {
+      question: "How are payments processed?",
+      answer: "Payments are held in secure escrow smart contracts and released automatically once the bounty submitter approves the work, ensuring trust for both parties."
+    },
+    {
+      question: "Can I post my own bounty?",
+      answer: "Absolutely. Use the 'Post Bounty' dashboard to define your requirements, set a budget, and attract top-tier global talent to your project."
+    }
+  ];
 
-                    <Accordion  type="single"  collapsible className="w-full">
-                        {faqs.map((faq, index) => (
-                            <AccordionItem  key={index} value={`item-${index}`}>
-                                <AccordionTrigger className="text-left">
-                                    {faq.question}
-                                </AccordionTrigger>
-                                <AccordionContent>
-                                    {faq.answer}
-                                </AccordionContent>
-                            </AccordionItem>
-                        ))}
-                    </Accordion>
-                </div>
-            </section>
-
+  return (
+    <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-muted-foreground text-lg">
+            Everything you need to know about the DoQuest ecosystem.
+          </p>
         </div>
-    );
+        
+        {/* FAQ Accordion */}
+        <Accordion type="single" collapsible className="space-y-4">
+          {faqs.map((faq, index) => (
+            <AccordionItem 
+              key={index} 
+              value={`item-${index}`}
+              className="bg-card/40 backdrop-blur-sm border border-border rounded-xl px-6 overflow-hidden"
+            >
+              <AccordionTrigger className="text-lg font-semibold hover:no-underline py-6">
+                {faq.question}
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground leading-relaxed pb-6">
+                {faq.answer}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    </section>
+  );
 };
 
-export default Faq;
+export default FAQ;

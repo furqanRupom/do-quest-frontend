@@ -1,30 +1,96 @@
-import LogoIcon from "@/components/logo/LogoIcon"
-import SignInForm from "@/components/modules/Auth/Sign-In-Form"
-
-import { Card } from "@/components/ui/card"
-import { FieldDescription,  FieldLegend, FieldSet } from "@/components/ui/field"
+import LogoIcon from "@/components/logo/LogoIcon";
+import SignInForm from "@/components/modules/Auth/Sign-In-Form";
+import { Card } from "@/components/ui/card";
+import { FieldDescription, FieldLegend, FieldSet } from "@/components/ui/field";
 
 interface SignInParams {
   searchParams: Promise<{ redirect?: string }>;
 }
 
-const signInPage = async  ({searchParams}:SignInParams) => {
-    const params = await searchParams
-    const redirectPath = params.redirect
-    return <section className="max-w-7xl mx-auto min-h-svh flex flex-col items-center justify-center">
-        <div className="py-5">
-            <div className=' font-bold text-3xl inline-flex items-center '>
-                <LogoIcon />
-                <h3 className='pt-3'>Do<span className='text-primary'>.</span><span>Quest</span></h3>
+const signInPage = async ({ searchParams }: SignInParams) => {
+  const params = await searchParams;
+  const redirectPath = params.redirect;
+
+  return (
+    <section className="min-h-svh flex">
+      {/* Left Side - Light Vector Dots Background */}
+      <div className="hidden lg:flex lg:w-1/2 bg-zinc-100 dark:bg-zinc-900 relative overflow-hidden flex-col items-center justify-center p-12">
+        
+        {/* Vector Dots Pattern - Clean & Modern */}
+        <div className="absolute inset-0 bg-[radial-gradient(#a1a1aa_1px,transparent_1px)] dark:bg-[radial-gradient(#52525b_1px,transparent_1px)] [background-size:28px_28px]" />
+
+        {/* Subtle gradient overlay for depth */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-transparent to-white/60 dark:from-zinc-900/80 dark:via-transparent dark:to-zinc-900/60" />
+
+        {/* Content */}
+        <div className="relative z-10 max-w-md text-center">
+          <div className="flex justify-center mb-10">
+            <div className="font-bold text-5xl inline-flex items-center">
+              <LogoIcon className="text-primary" />
+              <span className="pt-3 text-zinc-900 dark:text-white">
+                Do<span className="text-primary">.</span>Quest
+              </span>
             </div>
+          </div>
+
+                  
+          <p className="text-zinc-600 dark:text-zinc-400 text-lg leading-relaxed">
+            Continue your learning journey. Complete quests, track progress, and 
+            level up your skills with DoQuest.
+          </p>
+
+          <div className="w-20 h-0.5 bg-primary/20 mx-auto mt-12 rounded" />
+
+          <div className="mt-10 text-sm text-zinc-500 dark:text-zinc-500">
+            Trusted by thousands of learners worldwide
+          </div>
         </div>
-      <Card className="max-w-lg w-full p-7">
+
+        {/* Bottom text */}
+        <div className="absolute bottom-10 left-10 text-xs text-zinc-500 dark:text-zinc-500">
+          © 2026 DoQuest
+        </div>
+      </div>
+
+      {/* Right Side - Form Area */}
+      <div className="flex-1 flex items-center justify-center bg-white dark:bg-zinc-950 p-6">
+        <div className="w-full max-w-lg">
+          {/* Mobile Logo */}
+          <div className="lg:hidden flex justify-center mb-8">
+            <div className="font-bold text-3xl inline-flex items-center">
+              <LogoIcon />
+              <h3 className="pt-3">
+                Do<span className="text-primary">.</span>Quest
+              </h3>
+            </div>
+          </div>
+
+          <Card className="p-8 shadow-lg border border-zinc-200 dark:border-zinc-800">
             <FieldSet>
-                <FieldLegend className="mx-auto font-bold"><h3 className=" text-2xl ">Welcome back!</h3></FieldLegend>
-                <FieldDescription className="text-center">Sign in to your account and continue.</FieldDescription>
-             <SignInForm redirectPath={redirectPath} />
-            </FieldSet> 
-      </Card>
+              <FieldLegend className="mx-auto font-bold text-center">
+                <h3 className="text-3xl">Welcome back!</h3>
+              </FieldLegend>
+              <FieldDescription className="text-center text-muted-foreground mt-2 mb-8">
+                Sign in to continue your journey
+              </FieldDescription>
+
+              <SignInForm redirectPath={redirectPath} />
+            </FieldSet>
+          </Card>
+
+          <p className="text-center text-sm text-muted-foreground mt-8">
+            Don't have an account?{" "}
+            <a
+              href="/sign-up"
+              className="font-medium text-primary hover:underline"
+            >
+              Sign up free
+            </a>
+          </p>
+        </div>
+      </div>
     </section>
-}
-export default signInPage
+  );
+};
+
+export default signInPage;
