@@ -1,6 +1,7 @@
 "use server";
 
 import { setTokenInCookies } from "@/lib/tokenUtils";
+import { Profile } from "@/types/profile.types";
 import { cookies } from "next/headers";
 
 const BASE_API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -42,7 +43,7 @@ export async function getNewTokensWithRefreshToken(refreshToken: string): Promis
     }
 }
 
-export async function getUserInfo() {
+export async function getUserInfo():Promise<Profile | null> {
     try {
         const cookieStore = await cookies();
         const accessToken = cookieStore.get("accessToken")?.value;
