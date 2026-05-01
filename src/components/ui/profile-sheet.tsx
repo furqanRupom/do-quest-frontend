@@ -9,6 +9,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import Link from "next/link";
+import { userLogout } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
 
 interface ProfileSheetProps {
   profile: Profile;
@@ -22,7 +24,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
   fullWidth,
 }) => {
   const [open, setOpen] = React.useState(false);
-
+  const router = useRouter()
   const actions = [
     {
       href: `/${profile.role.toLocaleLowerCase()}/dashboard`,
@@ -42,10 +44,9 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
         <button
           aria-label="Open profile menu"
           className={`
-            ${
-              fullWidth
-                ? "w-full flex items-center gap-3 px-4 py-2.5 rounded-xl border border-border/50 bg-accent/5 hover:bg-accent/10"
-                : ""
+            ${fullWidth
+              ? "w-full flex items-center gap-3 px-4 py-2.5 rounded-xl border border-border/50 bg-accent/5 hover:bg-accent/10"
+              : ""
             }
             transition-all duration-200 cursor-pointer group
           `}
@@ -104,9 +105,10 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
         {/* Sign out */}
         <div className="px-1.5 pb-1.5 border-t border-border/50 pt-1.5">
           <button
-            onClick={() => {
+            onClick={async () => {
               setOpen(false);
-              // TODO: wire up sign-out logic
+              await userLogout()
+              router.push("/sign-in")
             }}
             className="flex w-full items-center gap-2.5 px-2.5 py-2 rounded-lg text-xs text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors duration-150 cursor-pointer"
           >

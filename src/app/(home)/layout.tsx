@@ -12,7 +12,6 @@ interface IHomeLayoutProps {
 
 const HomeLayout: React.FunctionComponent<IHomeLayoutProps> = async ({ children }) => {
      const user = await getUserInfo()
-     console.log(user)
      return <main>
         <Offer />
         <Navbar profile={user} />
