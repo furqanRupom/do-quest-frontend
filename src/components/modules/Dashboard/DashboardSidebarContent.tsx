@@ -1,5 +1,6 @@
 "use client"
 
+import LogoIcon from "@/components/logo/LogoIcon"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import { getIconComponent } from "@/lib/iconMapper"
@@ -23,9 +24,10 @@ const DashboardSidebarContent = ({dashboardHome, navItems, userInfo} : Dashboard
   return (
     <div className="hidden md:flex h-full w-64 flex-col border-r bg-card overflow-y-auto">
       {/* Logo / Brand */}
-      <div className="flex h-16 items-center border-b px-6">
-        <Link href={dashboardHome}>
-          <span className="text-xl font-bold text-primary">PH Healthcare</span>
+      <div className="flex h-16 items-center justify-center border-b">
+        <Link href={dashboardHome} className="flex  items-center justify-center">
+          <LogoIcon height={50} />
+          <span className="text-xl font-bold text-primary text-center mr-4 mt-2">Do.Quest</span>
         </Link>
       </div>
 
@@ -54,7 +56,7 @@ const DashboardSidebarContent = ({dashboardHome, navItems, userInfo} : Dashboard
                         "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all",
                         isActive
                           ? "bg-primary text-primary-foreground"
-                          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                          : "text-muted-foreground hover:bg-primary-foreground",
                       )}
                     >
                       <Icon className="w-4 h-4" />

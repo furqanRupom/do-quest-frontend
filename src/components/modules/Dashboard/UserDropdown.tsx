@@ -36,14 +36,14 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem asChild>
+            <DropdownMenuItem asChild className="hover:bg-gray-50 dark:hover:bg-gray-800/50 focus:bg-gray-50 dark:focus:bg-gray-800/50">
                 <Link href={"/my-profile"} className="w-full cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
                     My Profile
                 </Link>
             </DropdownMenuItem>
 
-            <DropdownMenuItem asChild>
+            <DropdownMenuItem asChild className="hover:bg-gray-50 dark:hover:bg-gray-800/50 focus:bg-gray-50 dark:focus:bg-gray-800/50">
                 <Link href={"/change-password"} className="w-full cursor-pointer">
                     <Key className="mr-2 h-4 w-4" />
                     Change Password
@@ -52,7 +52,10 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem onClick={() => {}} className="cursor-pointer text-red-600">
+            <DropdownMenuItem 
+              onClick={() => {}} 
+              className="cursor-pointer text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 focus:bg-red-50 dark:focus:bg-red-900/20"
+            >
                 <LogOut className="mr-2 h-4 w-4" />
                 Logout
             </DropdownMenuItem>
