@@ -94,7 +94,7 @@ export async function proxy(request: NextRequest) {
             if (accessToken && email) {
                 const userInfo = await getUserInfo();
 
-                if (userInfo.needPasswordChange) {
+                if (userInfo?.needPasswordChange) {
                     return NextResponse.next();
                 } else {
                     return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url));
