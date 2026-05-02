@@ -44,7 +44,7 @@ export async function getNewTokensWithRefreshToken(refreshToken: string): Promis
   }
 }
 
-export async function getUserInfo(): Promise<Profile | null> {
+export async function getUserInfo(): Promise<Profile | any> {
   try {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("accessToken")?.value;
