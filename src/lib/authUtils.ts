@@ -14,7 +14,7 @@ export type RouteConfig = {
 }
 
 export const commonProtectedRoutes: RouteConfig = {
-    exact: ["/my-profile", "/change-password","/wallet","/my-bounties","/submissions"],
+    exact: ["/my-profile", "/change-password","/wallet","/my-bounties","/submissions", "/post-bounty"],
     pattern: []
 }
 
@@ -27,7 +27,7 @@ export const adminProtectedRoutes: RouteConfig = {
 
 
 
-export const patientProtectedRoutes: RouteConfig = {
+export const userProtectedRoutes: RouteConfig = {
     pattern: [/^\/dashboard/],
     exact: []
 };
@@ -49,7 +49,7 @@ export const getRouteOwner = (pathname: string): Role | "common" | null => {
         return Role.Admin;
     }
 
-    if (isRouteMatches(pathname, patientProtectedRoutes)) {
+    if (isRouteMatches(pathname, userProtectedRoutes)) {
         return Role.User;
     }
 
