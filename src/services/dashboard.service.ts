@@ -16,3 +16,16 @@ export async function getDashboardData() {
     }
   }
 }
+export async function getTasksBounteisBarChartData() {
+  try {
+    const response = await httpClient.get<any>("/admin/tasks/bar-chart")
+    return response
+  } catch (error: any) {
+    console.error(error)
+    return {
+      success: false,
+      message: error.message || "An error occured while retrieving dashboard data",
+      data: null
+    }
+  }
+}
