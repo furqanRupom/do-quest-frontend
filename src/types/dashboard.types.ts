@@ -19,3 +19,8 @@ export interface BarChartData {
     count: number
 }
 
+export interface ICountTotals {
+    users: number;
+    submissions:number;
+    tasks:number;
+}
