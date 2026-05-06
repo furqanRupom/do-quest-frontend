@@ -4,7 +4,7 @@ import DataTable from "@/components/shared/table/DataTable"
 import { useRowActionModalState } from "@/hooks/useRowActionModalState"
 import { useServerManagedDataTable } from "@/hooks/useServerManagedDataTable"
 import { useServerManagedDataTableSearch } from "@/hooks/useServerManagedDataTableSearch"
-import {  retriveAllTaskBountiesAdmin } from "@/services/bounty.service"
+import { retriveAllTaskBountiesAdmin } from "@/services/bounty.service"
 import { PaginationMeta } from "@/types/api.types"
 import { ITaskAndBounty } from "@/types/bounty.types"
 import { useQuery } from "@tanstack/react-query"
@@ -67,7 +67,7 @@ const BountiesTaskTable = ({ initialQueryString }: { initialQueryString: string 
     queryFn: () => retriveAllTaskBountiesAdmin(queryString),
   })
 
-  const tasks = data?.success ? data?.data :  []
+  const tasks = data?.success ? data?.data : []
   console.log(tasks)
   const meta: PaginationMeta | undefined = data?.success ? data?.meta : undefined
 
@@ -101,7 +101,7 @@ const BountiesTaskTable = ({ initialQueryString }: { initialQueryString: string 
         onOpenChange={onEditOpenChange}
         task={editingItem}
       />
-    <ChangeBountyStatusModal open={isStatusModalOpen} onOpenChange={onStatusOpenChange} task={statusItem} />
+      <ChangeBountyStatusModal open={isStatusModalOpen} onOpenChange={onStatusOpenChange} task={statusItem} />
 
       <DeleteBountyTaskConfirmationDialog
         open={isDeleteDialogOpen}
