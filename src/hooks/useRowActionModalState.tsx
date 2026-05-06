@@ -1,25 +1,27 @@
-"use client";
-
 import { useCallback, useMemo, useState } from "react";
 
 interface UseRowActionModalStateOptions {
   enableView?: boolean;
   enableEdit?: boolean;
   enableDelete?: boolean;
+  enableStatusChange?: boolean;
 }
 
 export const useRowActionModalState = <TData,>({
   enableView = true,
   enableEdit = true,
   enableDelete = true,
+  enableStatusChange = true,
 }: UseRowActionModalStateOptions = {}) => {
   const [viewingItem, setViewingItem] = useState<TData | null>(null);
   const [editingItem, setEditingItem] = useState<TData | null>(null);
   const [deletingItem, setDeletingItem] = useState<TData | null>(null);
+  const [statusItem, setStatusItem] = useState<TData | null>(null);
 
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
 
   const handleView = useCallback((item: TData) => {
     setViewingItem(item);
@@ -36,25 +38,29 @@ export const useRowActionModalState = <TData,>({
     setIsDeleteDialogOpen(true);
   }, []);
 
+  const handleStatusChange = useCallback((item: TData) => {
+    setStatusItem(item);
+    setIsStatusModalOpen(true);
+  }, []);
+
   const onViewOpenChange = useCallback((open: boolean) => {
     setIsViewDialogOpen(open);
-    if (!open) {
-      setViewingItem(null);
-    }
+    if (!open) setViewingItem(null);
   }, []);
 
   const onEditOpenChange = useCallback((open: boolean) => {
     setIsEditModalOpen(open);
-    if (!open) {
-      setEditingItem(null);
-    }
+    if (!open) setEditingItem(null);
   }, []);
 
   const onDeleteOpenChange = useCallback((open: boolean) => {
     setIsDeleteDialogOpen(open);
-    if (!open) {
-      setDeletingItem(null);
-    }
+    if (!open) setDeletingItem(null);
+  }, []);
+
+  const onStatusOpenChange = useCallback((open: boolean) => {
+    setIsStatusModalOpen(open);
+    if (!open) setStatusItem(null);
   }, []);
 
   const tableActions = useMemo(() => {
@@ -62,19 +68,35 @@ export const useRowActionModalState = <TData,>({
       onView: enableView ? handleView : undefined,
       onEdit: enableEdit ? handleEdit : undefined,
       onDelete: enableDelete ? handleDelete : undefined,
+      onStatusChange: enableStatusChange ? handleStatusChange : undefined,
     };
-  }, [enableDelete, enableEdit, enableView, handleDelete, handleEdit, handleView]);
+  }, [
+    enableView,
+    enableEdit,
+    enableDelete,
+    enableStatusChange,
+    handleView,
+    handleEdit,
+    handleDelete,
+    handleStatusChange,
+  ]);
 
   return {
     viewingItem,
     editingItem,
     deletingItem,
+    statusItem,
+
     isViewDialogOpen,
     isEditModalOpen,
     isDeleteDialogOpen,
+    isStatusModalOpen,
+
     onViewOpenChange,
     onEditOpenChange,
     onDeleteOpenChange,
+    onStatusOpenChange,
+
     tableActions,
   };
 };

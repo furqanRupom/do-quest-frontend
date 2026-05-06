@@ -1,5 +1,6 @@
 "use client"
 
+import { updateBountiesTaskAction } from "@/app/(dashboard)/admin/dashboard/bounties-management/_action"
 import AppField from "@/components/shared/form/AppField"
 import AppSubmitButton from "@/components/shared/form/AppSubmitButton"
 import { Button } from "@/components/ui/button"
@@ -12,7 +13,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { updateBountyAndTask } from "@/services/bounty.service"
 import { ITaskAndBounty } from "@/types/bounty.types"
 import { useForm } from "@tanstack/react-form"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -45,7 +45,7 @@ export default function EditBountyTaskModal({
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: Partial<ITaskAndBounty> }) =>
-      updateBountyAndTask(id, payload),
+      updateBountiesTaskAction(id, payload),
   })
 
   const form = useForm({
@@ -99,7 +99,7 @@ export default function EditBountyTaskModal({
         <DialogHeader className="border-b px-6 py-5">
           <DialogTitle>Edit Task / Bounty</DialogTitle>
           <DialogDescription>
-            Update task information
+            Update task / Bounty information
           </DialogDescription>
         </DialogHeader>
 

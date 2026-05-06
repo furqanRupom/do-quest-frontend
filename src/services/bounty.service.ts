@@ -64,3 +64,14 @@ export async function changeBountyAndTaskStatus(id:string,payload:IChangeTaskAnd
     throw error
   }
 }
+
+export async function retriveAllTaskBountiesAdmin(queryString: string){
+  try {
+      return await httpClient.get<ITaskAndBounty[]>(
+        queryString ? `/admin/tasks?{queryString}` : "/admin/tasks"
+      )
+  }catch(error){
+    console.log("Error fetching tasks and bounties for admin : ",error)
+    throw error
+  }
+}

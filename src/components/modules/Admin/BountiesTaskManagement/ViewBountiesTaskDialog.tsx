@@ -1,5 +1,6 @@
 "use client"
 
+import { getBountyTaskByIdAction } from "@/app/(dashboard)/admin/dashboard/bounties-management/_action"
 import { Badge } from "@/components/ui/badge"
 import {
   Dialog,
@@ -9,8 +10,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { getBountyAndTaskById } from "@/services/bounty.service"
-import { ITaskAndBounty } from "@/types/bounty.types"
 import { useQuery } from "@tanstack/react-query"
 import { format } from "date-fns"
 
@@ -35,11 +34,10 @@ export default function ViewBountyTaskDialog({
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["task-details", taskId],
-    queryFn: () => getBountyAndTaskById(taskId!),
+    queryFn: () => getBountyTaskByIdAction(taskId!),
     enabled: open && !!taskId,
   })
-
-  const task: ITaskAndBounty | undefined = data?.data
+  const task = data?.success ? data.data : null
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

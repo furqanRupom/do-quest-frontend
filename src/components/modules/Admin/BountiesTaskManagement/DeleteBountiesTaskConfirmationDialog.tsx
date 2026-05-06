@@ -1,6 +1,6 @@
 "use client"
 
-import { deleteBountyAndTask } from "@/services/bounty.service"
+import { deleteBountyTaskAction } from "@/app/(dashboard)/admin/dashboard/bounties-management/_action"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -36,7 +36,7 @@ export default function DeleteBountyTaskConfirmationDialog({
   const router = useRouter()
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: deleteBountyAndTask,
+    mutationFn: deleteBountyTaskAction,
   })
 
   const handleDelete = async () => {

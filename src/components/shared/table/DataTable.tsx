@@ -14,11 +14,11 @@ import DataTableFilters, {
 } from "./DataTableFilters";
 import DataTablePagination from "./DataTablePagination";
 import DataTableSearch from "./DataTableSearch";
-
 interface DataTableActions<TData> {
     onView ?: (data : TData) => void;
     onEdit ?: (data : TData) => void;
     onDelete ?: (data : TData) => void;
+    onStatusChange ?:(data:TData) => void;
 }
 
 interface DataTableProps<TData> {
@@ -100,6 +100,13 @@ const DataTable = <TData,>({ data = [] as TData[], columns, actions, toolbarActi
                                 )
                             }
 
+ {actions.onStatusChange && (
+            <DropdownMenuItem
+              onClick={() => actions.onStatusChange?.(rowData)}
+            >
+              Change Status
+            </DropdownMenuItem>
+          )}
                             {
                                 actions.onDelete && (
                                     <DropdownMenuItem onClick={() => actions.onDelete?.(rowData)}>
