@@ -38,10 +38,10 @@ const Navbar = ({ profile }: NavbarProps) => {
     <>
       <div className="h-[76px]" />
 
-      <header className="fixed top-0 left-0 right-0 z-50 flex justify-center p-4">
+      <header className="fixed top-0 left-0 right-0 z-50 flex justify-center py-4">
         <nav
           className={`
-            sticky top-0 z-50 flex items-center justify-between px-6 h-[56px] w-[95%]
+            sticky top-0 z-50 flex items-center justify-between  h-[56px] w-[95%] 
             rounded-full mx-auto max-w-7xl
             transition-all duration-500 ease-in-out
             ${isScrolled

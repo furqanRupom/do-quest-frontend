@@ -9,7 +9,29 @@ import { ILoginResponse } from "@/types/auth.types";
 import { ILoginPayload, loginValidationZodSchema } from "@/zod/auth.validation";
 import { redirect } from "next/navigation";
 
-export const loginAction = async (payload: ILoginPayload, redirectPath?: string): Promise<ILoginResponse | ApiErrorResponse> => {
+const getActionErrorMessage = (error: unknown, fallbackMessage: string) => {
+  if (
+    error &&
+    typeof error === "object" &&
+    "response" in error &&
+    error.response &&
+    typeof error.response === "object" &&
+    "data" in error.response &&
+    error.response.data &&
+    typeof error.response.data === "object" &&
+    "message" in error.response.data &&
+    typeof error.response.data.message === "string"
+  ) {
+    return error.response.data.message
+  }
+
+  if (error instanceof Error) {
+    return error.message
+  }
+
+  return fallbackMessage
+}
+  export const loginAction = async (payload: ILoginPayload, redirectPath?: string): Promise<ILoginResponse | ApiErrorResponse> => {
   const parsedPayload = loginValidationZodSchema.safeParse(payload);
   if (!parsedPayload.success) {
     const firstError = parsedPayload.error.issues[0].message || "Invalid input";
@@ -55,7 +77,7 @@ export const loginAction = async (payload: ILoginPayload, redirectPath?: string)
     // }
     return {
       success: false,
-      message: `Login failed: ${error.message}`,
+      message: `${getActionErrorMessage(error,"Failed to Sign In")}`,
     }
   }
 }

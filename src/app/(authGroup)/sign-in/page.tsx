@@ -26,7 +26,7 @@ const signInPage = async ({ searchParams }: SignInParams) => {
         <div className="relative z-10 max-w-md text-center">
           <div className="flex justify-center mb-10">
             <div className="font-bold text-5xl inline-flex items-center">
-              <LogoIcon className="text-primary" />
+              <LogoIcon />
               <span className="pt-3 text-zinc-900 dark:text-white">
                 Do<span className="text-primary">.</span>Quest
               </span>

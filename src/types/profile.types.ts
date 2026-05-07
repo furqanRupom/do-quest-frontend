@@ -6,6 +6,8 @@ export interface Profile {
   role: string;
   socialLinks: string[];
   needPasswordChange: boolean;
+  company?:string;
+  location?:string;
   createdAt: string;
   updatedAt: string;
 }
