@@ -50,7 +50,6 @@ const UserSettingsForm = ({ profile }: UserSettingsFormProps) => {
       email: profile.email,
       location: profile.location || "",
       company: profile.company || "",
-
       website: websiteLink,
       github: getLink("https://github.com/").replace("https://github.com/", ""),
       linkedin: getLink("https://linkedin.com/in/").replace("https://linkedin.com/in/", ""),
@@ -92,7 +91,7 @@ const UserSettingsForm = ({ profile }: UserSettingsFormProps) => {
   });
 
   return (
-    <section className="space-y-6 px-6 py-4">
+    <section className="space-y-6 px-4 py-4 sm:px-6">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -100,7 +99,8 @@ const UserSettingsForm = ({ profile }: UserSettingsFormProps) => {
         }}
         className="space-y-6"
       >
-        <div className="grid grid-cols-2 gap-4">
+        {/* Profile fields — stacked on mobile, 2-col on sm+ */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <form.Field
             name="name"
             validators={{
@@ -128,8 +128,13 @@ const UserSettingsForm = ({ profile }: UserSettingsFormProps) => {
                   : undefined,
             }}
           >
-            {(field) => <AppField field={field}
-              placeholder="e.g,   TopCat" label="Location" />}
+            {(field) => (
+              <AppField
+                field={field}
+                placeholder="e.g, San Francisco"
+                label="Location"
+              />
+            )}
           </form.Field>
 
           <form.Field
@@ -141,15 +146,21 @@ const UserSettingsForm = ({ profile }: UserSettingsFormProps) => {
                   : undefined,
             }}
           >
-            {(field) => <AppField field={field}
-              placeholder="e.g,  California" label="Company" />}
+            {(field) => (
+              <AppField
+                field={field}
+                placeholder="e.g, Acme Corp"
+                label="Company"
+              />
+            )}
           </form.Field>
         </div>
 
+        {/* Social Links */}
         <div className="space-y-4">
           <h3 className="text-lg font-semibold">Social Links</h3>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <form.Field name="website">
               {(field) => (
                 <AppField
@@ -191,7 +202,7 @@ const UserSettingsForm = ({ profile }: UserSettingsFormProps) => {
             <AppSubmitButton
               isPending={isSubmitting || isPending}
               disabled={!canSubmit}
-            
+              className="w-full sm:w-auto"
             >
               Update Settings
             </AppSubmitButton>
