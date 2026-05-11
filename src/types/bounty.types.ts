@@ -1,8 +1,14 @@
 
+export interface TaskUser {
+  _id: string;
+  name: string;
+  username: string;
+  email: string;
+}
 // Task/Bounty
 export interface ITaskAndBounty {
   _id: string;
-  user: string;
+  user: TaskUser;
   title: string;
   description: string;
   successRequirements: string[];
@@ -38,11 +44,10 @@ export interface IChangeTaskAndBountyStatus {
 }
 
 // Enum Types
-type TaskStatus = 'PENDING' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
+export type TaskStatus = 'PENDING' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED' | 'DISPUTED';
 
-type PaymentStatus = 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
+export type PaymentStatus = 'ACTIVE' | 'COMPLETED' | 'CANCELLED' | 'REFUNDED' | 'RELEASED';
 
-type PaymentFlowStatus = 'PENDING' | 'AUTHORIZED' | 'CAPTURED' | 'CANCELLED' | 'NO_PAYMENT' | 'FAILED';
-
+export type PaymentFlowStatus = 'PENDING' | 'AUTHORIZED' | 'CAPTURED' | 'CANCELLED' | 'NO_PAYMENT' | 'FAILED' | 'PAID' | 'REFUNDED';
 
 
