@@ -1,15 +1,12 @@
 
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useServerManagedDataTable } from "@/hooks/useServerManagedDataTable";
 import { useServerManagedDataTableSearch } from "@/hooks/useServerManagedDataTableSearch";
 import { retriveBountiesAndTasks } from "@/services/bounty.service";
-import { ITaskAndBounty, TaskStatus } from "@/types/bounty.types";
+import { TaskStatus } from "@/types/bounty.types";
 import { PaginationMeta } from "@/types/api.types";
 import DataCard from "@/components/shared/card/DataCard";
 import BountyCard from "./BountyCard";
@@ -23,12 +20,13 @@ import {
 // ── Configs ──────────────────────────────────────────────────────────────────
 
 const DEFAULT_PAGE = 1;
-const DEFAULT_LIMIT = 12; 
+const DEFAULT_LIMIT = 12;
 
 const CATEGORIES = [
   { label: "All", value: "ALL" },
   { label: "AI / Machine Learning", value: "AI" },
   { label: "Web Development", value: "Web Development" },
+  { label: "Backend", value: "backend" },
   { label: "Mobile Development", value: "Mobile Development" },
   { label: "Blockchain / Web3", value: "Blockchain" },
   { label: "Ethical Hacking", value: "Ethical Hacking" },
@@ -104,7 +102,7 @@ const BrowseBounties = ({
   ) => {
     updateParams((params) => {
       params.set("page", "1");
-      
+
       // If "ALL" is selected, remove the param so the backend fetches everything.
       // Otherwise, set the selected string value (e.g., categories=Blockchain)
       if (value && value !== "ALL") {
