@@ -1,18 +1,20 @@
 import { z } from "zod"
 
 /* ---------------- ENUMS ---------------- */
-
 export const taskStatusEnum = z.enum([
   "PENDING",
   "ACTIVE",
   "COMPLETED",
   "CANCELLED",
+  'DISPUTED'
 ])
 
 export const paymentStatusEnum = z.enum([
   "ACTIVE",
   "COMPLETED",
   "CANCELLED",
+  "REFUNDED",
+  "RELEASED"
 ])
 
 export const paymentFlowStatusEnum = z.enum([
@@ -22,6 +24,7 @@ export const paymentFlowStatusEnum = z.enum([
   "CANCELLED",
   "NO_PAYMENT",
   "FAILED",
+  "REFUNDED"
 ])
 
 /* ---------------- CREATE ---------------- */
