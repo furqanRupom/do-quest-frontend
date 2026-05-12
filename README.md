@@ -93,16 +93,8 @@ src/
 
 ---
 
-## Scripts
 
-| Command | Description |
-|---|---|
-| `pnpm dev` | Start development server |
-| `pnpm build` | Production build |
-| `pnpm start` | Run production build |
-| `pnpm lint` | Run ESLint |
 
----
 
 ## Contributing
 
@@ -111,7 +103,3 @@ src/
 3. Open a pull request against `main`
 
 ---
-
-<div align="center">
-Made with ☕ and Next.js &nbsp;·&nbsp; <a href="https://do-quest-backend.vercel.app/api/v1/docs">Backend API Docs</a>
-</div>
