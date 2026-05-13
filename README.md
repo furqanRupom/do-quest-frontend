@@ -24,7 +24,6 @@
 
 Do.Quest is a bounty and quest management platform.It handles authentication, bounty browsing and posting, submission management, wallet transactions, and a role-based admin dashboard.
 
----
 
 ## Tech Stack
 
@@ -38,7 +37,6 @@ Do.Quest is a bounty and quest management platform.It handles authentication, bo
 | State | TanStack Query |
 | Package Manager | pnpm |
 
----
 
 ## Getting Started
 
@@ -60,7 +58,6 @@ pnpm dev
 
 App runs at `http://localhost:3000`.
 
----
 
 ## Environment Variables
 
@@ -69,7 +66,6 @@ App runs at `http://localhost:3000`.
 | `NEXT_PUBLIC_API_URL` | Backend API base URL |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key (`pk_test_...`) |
 
----
 
 ## Project Structure
 
@@ -90,7 +86,6 @@ src/
 └── lib/                # Axios instance, auth/token/cookie utilities
 ```
 
----
 
 ## Scripts
 
@@ -101,7 +96,6 @@ src/
 | `pnpm start` | Run production build |
 | `pnpm lint` | Run ESLint |
 
----
 
 ## Contributing
 
