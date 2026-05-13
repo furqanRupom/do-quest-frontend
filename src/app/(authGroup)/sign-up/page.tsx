@@ -81,10 +81,10 @@ const signUpPage = async ({ searchParams }: SignUpParams) => {
 
             <div className="mb-8 pl-2">
               <h2 className="text-3xl font-bold text-foreground tracking-tight">
-                Sign In
+                Sign Up
               </h2>
               <p className="text-muted-foreground mt-2 text-sm">
-                Access your dashboard and active bounties.
+                Forge your digital identity and start your first quest today.
               </p>
             </div>
 
