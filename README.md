@@ -6,7 +6,7 @@
   </a>
 </p>
 
-**The Next.js web application for the Do.Quest bounty & quest management platform**
+**Do.Quest bounty & quest management platform**
 
 [![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -23,7 +23,7 @@
 
 ## Overview
 
-Do.Quest is a bounty and quest management platform. This is the **Next.js 15+ frontend** — it handles authentication, bounty browsing and posting, submission management, wallet transactions, and a role-based admin dashboard.
+Do.Quest is a bounty and quest management platform.It handles authentication, bounty browsing and posting, submission management, wallet transactions, and a role-based admin dashboard.
 
 ---
 
@@ -31,7 +31,7 @@ Do.Quest is a bounty and quest management platform. This is the **Next.js 15+ fr
 
 | | |
 |---|---|
-| Framework | Next.js 15+ (App Router) |
+| Framework | Next.js 16+ (App Router) |
 | Language | TypeScript |
 | UI | shadcn/ui + Tailwind CSS |
 | HTTP Client | Axios + Server Actions |
