@@ -6,12 +6,14 @@ import { WalletStats } from "./WalletStats";
 import { WalletTransactions } from "./WalletTransactions";
 import { useQuery } from "@tanstack/react-query";
 import { getMyWallet, retrieveWalletTransactions } from "@/services/wallet.service";
+import { Profile } from "@/types/profile.types";
 
 interface WalletProps {
   queryString: string;
+  profile: Profile;
 }
  
-export const Wallet = ({ queryString }: WalletProps) => {
+export const Wallet = ({ queryString, profile }: WalletProps) => {
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["wallets"],
     queryFn: () => getMyWallet(),
@@ -22,7 +24,6 @@ export const Wallet = ({ queryString }: WalletProps) => {
     queryFn: () => retrieveWalletTransactions(queryString),
   });
 
-  // Better defaults
   const wallet: IWallet = data?.success && data?.data ? data.data : {
     availableBalance: 0,
     pendingBalance: 0,
@@ -37,27 +38,29 @@ export const Wallet = ({ queryString }: WalletProps) => {
     ? transactionsData?.meta 
     : null;
 
-  const isBusy = isLoading || isFetching || isTransactionsLoading || isTransactionsFetching;
+  // Using initial isLoading prevents layout shift and flashing skeletons on background refetch
+  const isWalletLoading = isLoading; 
+  const isTransactionsBusy = isTransactionsLoading || isTransactionsFetching;
 
   return (
     <main className="pt-28 pb-20 px-6 max-w-7xl mx-auto w-full min-h-screen bg-background">
-      {/* If you have background glow divs, you can use: */}
-      {/* <div className="fixed inset-0 bg-[radial-gradient(circle_at_20%_50%,oklch(var(--primary)/0.05),transparent_50%)]" /> */}
-
       <div className="mb-12 relative z-10">
         <h1 className="text-4xl font-black text-foreground tracking-tight font-sans mb-2">Wallet</h1>
         <p className="text-muted-foreground">
           Manage your earnings, payouts, and financial history.
         </p>
       </div>
-
+      
       <div className="relative z-10">
-        <WalletStats wallet={wallet} isLoading={isBusy} />
-        <WalletPayouts />
+        <WalletStats wallet={wallet} isLoading={isWalletLoading} />
+        
+        {/* Assuming profile loading is tied to wallet loading for simplicity, or adjust as needed */}
+        <WalletPayouts profile={profile} isLoading={isWalletLoading} /> 
+        
         <WalletTransactions 
           transactions={walletTransactionsData} 
           meta={walletTransactionsMeta} 
-          isLoading={isTransactionsLoading || isTransactionsFetching}
+          isLoading={isTransactionsBusy}
         />
       </div>
     </main>

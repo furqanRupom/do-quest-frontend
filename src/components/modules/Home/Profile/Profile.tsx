@@ -177,7 +177,7 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
                 {/* Stripe Payouts Status */}
                 <div className="flex justify-between items-center">
                   <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Stripe Connect</span>
-                  {profile.payoutsEnabeld ? (
+                  {profile.payoutsEnabled ? (
                     <span className="flex items-center gap-1.5 text-primary bg-primary/10 border border-primary/20 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-tighter">
                       <CheckCircle className="h-3 w-3" />
                       Enabled

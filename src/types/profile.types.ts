@@ -6,9 +6,9 @@ export interface Profile {
   role: string;
   socialLinks: string[];
   needPasswordChange: boolean;
-  company?:string;
-  location?:string;
-  payoutsEnabeld?:boolean;
+  company?: string;
+  location?: string;
+  payoutsEnabled?: boolean;
   createdAt: string;
   updatedAt: string;
 }

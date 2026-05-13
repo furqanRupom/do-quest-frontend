@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query"
 import { retrieveWalletTransactions } from "@/services/wallet.service";
 import { Wallet } from "@/components/modules/Home/Wallet/Wallet";
+import { getUserInfo } from "@/services/auth.service";
 
 export const metadata: Metadata = {
     title: "Do.Quest | Browse",
@@ -16,7 +17,7 @@ const walletPage = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
   const queryParamsObjects = await searchParams
-
+  const profile = await getUserInfo()
   const queryString = Object.keys(queryParamsObjects)
     .map((key) => {
       const value = queryParamsObjects[key]
@@ -44,7 +45,7 @@ const walletPage = async ({
   })
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Wallet queryString={queryString} />
+      <Wallet profile={profile} queryString={queryString} />
     </HydrationBoundary>
   )
 }
