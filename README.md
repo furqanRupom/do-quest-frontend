@@ -6,7 +6,7 @@
   </a>
 </p>
 
-**Do.Quest bounty & quest management platform**
+**The Next.js web application for the Do.Quest bounty & quest management platform**
 
 [![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -93,8 +93,16 @@ src/
 
 ---
 
+## Scripts
 
+| Command | Description |
+|---|---|
+| `pnpm dev` | Start development server |
+| `pnpm build` | Production build |
+| `pnpm start` | Run production build |
+| `pnpm lint` | Run ESLint |
 
+---
 
 ## Contributing
 
@@ -103,3 +111,7 @@ src/
 3. Open a pull request against `main`
 
 ---
+
+<div align="center">
+Made with ☕ and Next.js &nbsp;·&nbsp; <a href="https://do-quest-backend.vercel.app/api/v1/docs">Backend API Docs</a>
+</div>
