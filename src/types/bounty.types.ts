@@ -26,7 +26,6 @@ export interface ITaskAndBounty {
   updatedAt: string; // ISO 8601 date string
   paymentIntentId: string;
 }
-
 export interface INewTaskAndBounty {
   title: string;
   description: string;
@@ -34,9 +33,9 @@ export interface INewTaskAndBounty {
   attachments: string;
   budget: number;
   deadline: string; // ISO 8601 date string
-  maxSubmissions: number;
+  maxSubmissions?: number;
   categories: string[];
-  tags: string[]
+  tags?: string[]
 }
 
 export interface IChangeTaskAndBountyStatus {
