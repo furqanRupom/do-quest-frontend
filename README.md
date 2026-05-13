@@ -87,16 +87,6 @@ src/
 ```
 
 
-## Scripts
-
-| Command | Description |
-|---|---|
-| `pnpm dev` | Start development server |
-| `pnpm build` | Production build |
-| `pnpm start` | Run production build |
-| `pnpm lint` | Run ESLint |
-
-
 ## Contributing
 
 1. Fork the repo and create a branch: `git checkout -b feat/your-feature`
