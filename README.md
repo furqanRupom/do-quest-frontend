@@ -19,7 +19,6 @@
 
 </div>
 
----
 
 ## Overview
 
@@ -110,8 +109,4 @@ src/
 2. Commit using conventional commits: `git commit -m "feat(browse): add bounty card"`
 3. Open a pull request against `main`
 
----
 
-<div align="center">
-Made with ☕ and Next.js &nbsp;·&nbsp; <a href="https://do-quest-backend.vercel.app/api/v1/docs">Backend API Docs</a>
-</div>
