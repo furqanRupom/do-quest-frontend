@@ -11,7 +11,7 @@ const Footer: React.FunctionComponent = () => {
                 {/* Main footer content */}
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8'>
                     {/* Company info */}
-                    <div className='space-y-4'>
+                    <div className='space-y-4 pb-2'>
                         <Logo />
                         <p className='text-muted-foreground text-sm leading-relaxed'>
                             The ultimate platform for bounties and quests. Connect talented individuals

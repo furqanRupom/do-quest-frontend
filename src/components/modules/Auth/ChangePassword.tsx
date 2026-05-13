@@ -137,7 +137,7 @@ const NeedChangePasswordForm = ({ redirectPath, email }: NeedPasswordChangeProps
                     selector={(s) => [s.canSubmit, s.isSubmitting] as const}
                 >
                     {([canSubmit, isSubmitting]) => (
-                        <AppSubmitButton className="cursor-pointer" isPending={isSubmitting || isPending} pendingLabel="Pasword changing...." disabled={!canSubmit}>
+                        <AppSubmitButton className="cursor-pointer w-full" isPending={isSubmitting || isPending} pendingLabel="Pasword changing...." disabled={!canSubmit}>
                             Change Password
                         </AppSubmitButton>
                     )}

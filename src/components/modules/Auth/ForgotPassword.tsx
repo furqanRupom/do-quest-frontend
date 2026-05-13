@@ -83,7 +83,7 @@ const ForgotPasswordForm = () => {
                     selector={(s) => [s.canSubmit, s.isSubmitting] as const}
                 >
                     {([canSubmit, isSubmitting]) => (
-                        <AppSubmitButton className="cursor-pointer" isPending={isSubmitting || isPending} pendingLabel="Reset Link sending...." disabled={!canSubmit}>
+                        <AppSubmitButton className="cursor-pointer w-full" isPending={isSubmitting || isPending} pendingLabel="Reset Link sending...." disabled={!canSubmit} >
                            Send Reset Link
                         </AppSubmitButton>
                     )}

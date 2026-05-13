@@ -8,8 +8,8 @@ interface LogoIconProps {
 }
 
 const LogoIcon: React.FunctionComponent<LogoIconProps> = ({
-  width = 30,
-  height = 30,
+  width = 32,
+  height = 32,
   className = "text-primary", // Automatically uses your Cyan theme color
 }) => {
   return (

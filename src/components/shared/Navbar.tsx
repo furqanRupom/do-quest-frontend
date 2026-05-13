@@ -46,7 +46,7 @@ const Navbar = ({ profile }: NavbarProps) => {
             rounded-full mx-auto max-w-7xl
             transition-all duration-500 ease-in-out
             ${isScrolled
-              ? "bg-background/80 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-border"
+              ? "bg-background/80 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-border p-5"
               : "border border-transparent"
             }
           `}
