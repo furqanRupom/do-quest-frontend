@@ -77,15 +77,6 @@ const signUpPage = async ({ searchParams }: SignUpParams) => {
             </FieldSet>
           </Card>
 
-          <p className="text-center text-sm text-muted-foreground mt-8">
-            Already have an account?{" "}
-            <a
-              href="/sign-in"
-              className="font-medium text-primary hover:underline"
-            >
-              Sign in
-            </a>
-          </p>
         </div>
       </div>
     </section>

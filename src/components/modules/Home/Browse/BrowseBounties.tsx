@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useSearchParams } from "next/navigation";
@@ -16,6 +15,7 @@ import {
   DataTableFilterValues,
   DataTableFilterValue,
 } from "@/components/shared/table/DataTableFilters";
+import { Rocket } from "lucide-react";
 
 // ── Configs ──────────────────────────────────────────────────────────────────
 
@@ -23,35 +23,16 @@ const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 12;
 
 const CATEGORIES = [
-  { label: "All", value: "ALL" },
-  { label: "AI / Machine Learning", value: "AI" },
-  { label: "Web Development", value: "Web Development" },
+  { label: "All Quests", value: "ALL" },
+  { label: "Web3", value: "Blockchain" },
   { label: "Backend", value: "backend" },
-  { label: "Mobile Development", value: "Mobile Development" },
-  { label: "Blockchain / Web3", value: "Blockchain" },
-  { label: "Ethical Hacking", value: "Ethical Hacking" },
-  { label: "Cybersecurity", value: "Cybersecurity" },
-  { label: "UI/UX Design", value: "UI/UX Design" },
-  { label: "Graphic Design", value: "Graphic Design" },
-  { label: "Data Science", value: "Data Science" },
-  { label: "Cloud / DevOps", value: "Cloud / DevOps" },
-  { label: "Smart Contracts", value: "Smart Contracts" },
-  { label: "Content Writing", value: "Content Writing" },
-  { label: "QA / Testing", value: "QA / Testing" },
-  { label: "Marketing / SEO", value: "Marketing / SEO" },
-  { label: "Video / Animation", value: "Video / Animation" },
+  { label: "Frontend", value: "Web Development" },
+  { label: "Design", value: "UI/UX Design" },
+  { label: "AI", value: "AI" },
+  { label: "Mobile", value: "Mobile Development" },
+  { label: "Security", value: "Cybersecurity" },
 ];
 
-const TASK_STATUSES = [
-  { label: "All", value: "ALL" },
-  { label: "Active", value: "ACTIVE" },
-  { label: "Pending", value: "PENDING" },
-  { label: "Completed", value: "COMPLETED" },
-  { label: "Cancelled", value: "CANCELLED" },
-  { label: "Disputed", value: "DISPUTED" },
-];
-
-// Categories first (Primary), Status second (Secondary)
 const filterConfigs: DataTableFilterConfig[] = [
   {
     id: "categories",
@@ -63,14 +44,9 @@ const filterConfigs: DataTableFilterConfig[] = [
 
 // ── Component ────────────────────────────────────────────────────────────────
 
-const BrowseBounties = ({
-  initialQueryString,
-}: {
-  initialQueryString: string;
-}) => {
+const BrowseBounties = ({ initialQueryString }: { initialQueryString: string }) => {
   const searchParams = useSearchParams();
 
-  // ── Server managed hooks ──
   const {
     queryStringFromUrl,
     optimisticPaginationState,
@@ -83,28 +59,19 @@ const BrowseBounties = ({
     defaultLimit: DEFAULT_LIMIT,
   });
 
-  const { searchTermFromUrl, handleDebouncedSearchChange } =
-    useServerManagedDataTableSearch({
-      searchParams,
-      updateParams,
-    });
+  const { searchTermFromUrl, handleDebouncedSearchChange } = useServerManagedDataTableSearch({
+    searchParams,
+    updateParams,
+  });
 
-  // ── Map URL params to DataCardFilters format ──
   const filterValues: DataTableFilterValues = {
     categories: searchParams.get("categories") || undefined,
     status: (searchParams.get("status") as TaskStatus) || undefined,
   };
 
-  // ── Handle filter updates ──
-  const handleFilterChange = (
-    filterId: string,
-    value: DataTableFilterValue | undefined
-  ) => {
+  const handleFilterChange = (filterId: string, value: DataTableFilterValue | undefined) => {
     updateParams((params) => {
       params.set("page", "1");
-
-      // If "ALL" is selected, remove the param so the backend fetches everything.
-      // Otherwise, set the selected string value (e.g., categories=Blockchain)
       if (value && value !== "ALL") {
         params.set(filterId, String(value));
       } else {
@@ -121,7 +88,6 @@ const BrowseBounties = ({
     });
   };
 
-  // ── Fetch data ──
   const queryString = queryStringFromUrl || initialQueryString;
 
   const { data, isLoading, isFetching } = useQuery({
@@ -134,31 +100,32 @@ const BrowseBounties = ({
   const isBusy = isLoading || isFetching || isRouteRefreshPending;
 
   return (
-    <div className="min-h-screen bg-[#f8f9fb]">
-      {/* ── Hero ── */}
-      <div className="bg-background border-b border-border/60">
-        <div className="max-w-5xl mx-auto px-4 pt-14 pb-8 text-center">
-          <h1 className="text-4xl font-bold text-foreground tracking-tight mb-3">
-            Find your next opportunity
-          </h1>
-          <p className="text-muted-foreground text-base max-w-md mx-auto">
-            From quick tasks to complex projects, find bounties that match your
-            skills and start earning on your own terms.
-          </p>
-        </div>
-      </div>
+    <main className="min-h-screen bg-background relative">
+      {/* Background Glow Effects */}
+      <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-[radial-gradient(circle_at_center,oklch(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-[radial-gradient(circle_at_center,oklch(var(--secondary)/0.1),transparent_70%)] pointer-events-none" />
 
-      {/* ── Content ── */}
-      <div className="max-w-5xl mx-auto px-4 py-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20">
+        {/* Hero Section */}
+        <section className="mb-12">
+          <h1 className="text-4xl md:text-5xl font-black text-foreground tracking-tighter mb-4">
+            Marketplace
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl">
+            Forge your path in the digital frontier. Solve high-stakes challenges and earn merit-based rewards in the global economy.
+          </p>
+        </section>
+
+        {/* Data Grid Section */}
         <DataCard
           data={tasks}
           renderCard={(task) => <BountyCard task={task} />}
           emptyContent={<EmptyState />}
           isLoading={isBusy}
-          gridClassName="grid grid-cols-1 sm:grid-cols-2 gap-4"
+          gridClassName="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           search={{
             initialValue: searchTermFromUrl,
-            placeholder: "Search by title, description, category...",
+            placeholder: "Search for quests, technologies, or rewards...",
             onDebouncedChange: handleDebouncedSearchChange,
             debounceMs: 700,
           }}
@@ -175,7 +142,7 @@ const BrowseBounties = ({
           meta={meta}
         />
       </div>
-    </div>
+    </main>
   );
 };
 

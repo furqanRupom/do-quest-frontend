@@ -28,11 +28,7 @@ const DataCardSearch = ({
       skipNextDebounceRef.current = false;
       return;
     }
-
-    const timer = setTimeout(() => {
-      onDebouncedChange(value.trim());
-    }, debounceMs);
-
+    const timer = setTimeout(() => onDebouncedChange(value.trim()), debounceMs);
     return () => clearTimeout(timer);
   }, [value, debounceMs, onDebouncedChange]);
 
@@ -49,10 +45,9 @@ const DataCardSearch = ({
         value={value}
         onChange={(event) => setValue(event.target.value)}
         placeholder={placeholder}
-        className="h-12 pl-12 pr-10 text-sm rounded-xl shadow-sm border-border/60 bg-background transition-shadow focus-visible:shadow-md focus-visible:ring-1 focus-visible:ring-primary/20"
+        className="h-14 pl-12 pr-10 text-sm bg-card/40 backdrop-blur-xl border-border/50 shadow-sm transition-all focus-visible:bg-card/60 focus-visible:border-primary focus-visible:shadow-[0_0_15px_rgba(0,245,255,0.2)] focus-visible:ring-1 focus-visible:ring-primary/50"
         disabled={isLoading}
       />
-
       {value.length > 0 && (
         <Button
           type="button"

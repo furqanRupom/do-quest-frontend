@@ -1,3 +1,4 @@
+// DataCardFilters.tsx
 "use client";
 
 import { Badge } from "@/components/ui/badge";
@@ -14,7 +15,7 @@ import { cn } from "@/lib/utils";
 import { SlidersHorizontal, X } from "lucide-react";
 import { useMemo, useState } from "react";
 
-// Re-using exact types from DataTableFilters so your existing logic works seamlessly
+// Re-using exact types
 export type {
   DataTableFilterOption,
   DataTableFilterConfig,
@@ -44,21 +45,14 @@ interface DataCardFiltersProps {
   isLoading?: boolean;
 }
 
-const RANGE_OPERATOR_LABEL: Record<RangeOperator, string> = {
-  gte: "Min",
-  lte: "Max",
-};
-
+const RANGE_OPERATOR_LABEL: Record<RangeOperator, string> = { gte: "Min", lte: "Max" };
 const RANGE_OPERATORS: RangeOperator[] = ["gte", "lte"];
 
 const isRangeValue = (value: DataTableFilterValue | undefined): value is DataTableRangeValue => {
   return !!value && !Array.isArray(value) && typeof value === "object";
 };
 
-const getFilterActiveCount = (
-  filter: DataTableFilterConfig,
-  value: DataTableFilterValue | undefined,
-): number => {
+const getFilterActiveCount = (filter: DataTableFilterConfig, value: DataTableFilterValue | undefined): number => {
   if (!value) return 0;
   if (filter.type === "single-select") return typeof value === "string" && value.length > 0 ? 1 : 0;
   if (filter.type === "multi-select") return Array.isArray(value) ? value.length : 0;
@@ -66,9 +60,9 @@ const getFilterActiveCount = (
   return 0;
 };
 
-// ── Sub-components for Popovers ──────────────────────────────────────────
+// ── Sub-components ───────────────────────────────────────────────────────
 
-const MultiSelectFilterControl = ({ filter, value, isLoading, onFilterChange }: { filter: any; value: string[]; isLoading?: boolean; onFilterChange: any }) => {
+const MultiSelectFilterControl = ({ filter, value, isLoading, onFilterChange }: any) => {
   const [selectedValues, setSelectedValues] = useState<string[]>(value);
   return (
     <div className="space-y-3">
@@ -92,7 +86,7 @@ const MultiSelectFilterControl = ({ filter, value, isLoading, onFilterChange }: 
   );
 };
 
-const RangeFilterControl = ({ filter, value, isLoading, onFilterChange }: { filter: any; value: DataTableRangeValue; isLoading?: boolean; onFilterChange: any }) => {
+const RangeFilterControl = ({ filter, value, isLoading, onFilterChange }: any) => {
   const [rangeValue, setRangeValue] = useState<DataTableRangeValue>(value);
   const applyNow = () => {
     const hasAnyValue = RANGE_OPERATORS.some((op) => rangeValue[op]?.trim());
@@ -122,22 +116,19 @@ const RangeFilterControl = ({ filter, value, isLoading, onFilterChange }: { filt
   );
 };
 
-// ── Active Badges ────────────────────────────────────────────────────────
-
-type ActiveBadge = { key: string; label: string; onRemove: () => void };
+// ── Main Component ───────────────────────────────────────────────────────
 
 const DataCardFilters = ({ filters, values, onFilterChange, onClearAll, isLoading }: DataCardFiltersProps) => {
   const totalActiveFilters = useMemo(() => {
     return filters.reduce((count, filter) => count + getFilterActiveCount(filter, values[filter.id]), 0);
   }, [filters, values]);
 
-  const activeBadges = useMemo<ActiveBadge[]>(() => {
-    const badges: ActiveBadge[] = [];
+  const activeBadges = useMemo(() => {
+    const badges: { key: string; label: string; onRemove: () => void }[] = [];
     for (const filter of filters) {
       const filterValue = values[filter.id];
       if (filter.type === "single-select" && typeof filterValue === "string" && filterValue.length > 0) {
         const option = filter.options.find((o) => o.value === filterValue);
-        // Just show the category/status name in the badge, not the label prefix
         badges.push({ key: `${filter.id}:${filterValue}`, label: option?.label ?? filterValue, onRemove: () => onFilterChange(filter.id, undefined) });
       }
       if (filter.type === "multi-select" && Array.isArray(filterValue)) {
@@ -164,12 +155,12 @@ const DataCardFilters = ({ filters, values, onFilterChange, onClearAll, isLoadin
     <div className="space-y-4">
       <div className="space-y-3">
         {filters.map((filter) => {
-          // ── Render Single-Select as Wrapping Pills ──
+          // ── Single-Select as Wrapping Neon Pills ──
           if (filter.type === "single-select") {
             return (
-              <div key={filter.id} className="flex flex-wrap items-center gap-1.5 w-full">
+              <div key={filter.id} className="flex flex-wrap items-center gap-3 w-full">
                 {filter.label && (
-                  <span className="text-sm font-medium text-foreground mr-1">{filter.label}</span>
+                  <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest">{filter.label}</span>
                 )}
                 {filter.options.map((option) => {
                   const isAllOption = option.value === "ALL";
@@ -182,18 +173,12 @@ const DataCardFilters = ({ filters, values, onFilterChange, onClearAll, isLoadin
                       variant="outline"
                       size="sm"
                       className={cn(
-                        "h-8 text-xs px-4 rounded-full font-medium transition-all",
-                        isActive && "bg-primary text-primary-foreground hover:bg-primary/90 border-primary shadow-sm",
-                        !isActive && "text-muted-foreground hover:text-foreground bg-background border-border/60"
+                        "h-8 text-xs px-5 font-bold uppercase tracking-widest transition-all border",
+                        isActive && "bg-primary/10 text-primary border-primary shadow-[0_0_10px_rgba(0,245,255,0.2)] hover:bg-primary/20",
+                        !isActive && "text-muted-foreground bg-transparent border-border/60 hover:border-primary hover:text-primary"
                       )}
                       disabled={isLoading}
-                      onClick={() => {
-                        if (isAllOption) {
-                          onFilterChange(filter.id, undefined);
-                        } else {
-                          onFilterChange(filter.id, isActive ? undefined : option.value);
-                        }
-                      }}
+                      onClick={() => onFilterChange(filter.id, isAllOption ? undefined : (isActive ? undefined : option.value))}
                     >
                       {option.label}
                     </Button>
@@ -203,7 +188,7 @@ const DataCardFilters = ({ filters, values, onFilterChange, onClearAll, isLoadin
             );
           }
 
-          // ── Render Multi-Select & Range as Popovers ──
+          // ── Multi-Select & Range as Glass Popovers ──
           const filterValue = values[filter.id];
           const activeCount = getFilterActiveCount(filter, filterValue);
 
@@ -213,7 +198,7 @@ const DataCardFilters = ({ filters, values, onFilterChange, onClearAll, isLoadin
                 <Button
                   variant="outline"
                   className={cn(
-                    "h-9 gap-1.5 text-xs font-medium rounded-lg border-border/60",
+                    "h-9 gap-1.5 text-xs font-medium rounded-lg border-border/60 bg-card/40 backdrop-blur-xl",
                     activeCount > 0 && "border-primary/50 text-primary bg-primary/5"
                   )}
                   disabled={isLoading}
@@ -221,32 +206,16 @@ const DataCardFilters = ({ filters, values, onFilterChange, onClearAll, isLoadin
                   <SlidersHorizontal className="h-3.5 w-3.5" />
                   {filter.label}
                   {activeCount > 0 && (
-                    <Badge className="h-4 min-w-4 px-1 text-[10px] ml-1" variant="secondary">
-                      {activeCount}
-                    </Badge>
+                    <Badge className="h-4 min-w-4 px-1 text-[10px] ml-1" variant="secondary">{activeCount}</Badge>
                   )}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent align="start" className="w-72 p-3">
+              <PopoverContent align="start" className="w-72 p-3 bg-card/95 backdrop-blur-xl border-border/50 shadow-xl">
                 <div className="mb-3 flex items-center justify-between">
                   <h3 className="text-sm font-semibold">{filter.label}</h3>
                 </div>
-                {filter.type === "multi-select" && (
-                  <MultiSelectFilterControl
-                    filter={filter}
-                    value={Array.isArray(filterValue) ? filterValue : []}
-                    isLoading={isLoading}
-                    onFilterChange={onFilterChange}
-                  />
-                )}
-                {filter.type === "range" && (
-                  <RangeFilterControl
-                    filter={filter}
-                    value={isRangeValue(filterValue) ? filterValue : {}}
-                    isLoading={isLoading}
-                    onFilterChange={onFilterChange}
-                  />
-                )}
+                {filter.type === "multi-select" && <MultiSelectFilterControl filter={filter} value={Array.isArray(filterValue) ? filterValue : []} isLoading={isLoading} onFilterChange={onFilterChange} />}
+                {filter.type === "range" && <RangeFilterControl filter={filter} value={isRangeValue(filterValue) ? filterValue : {}} isLoading={isLoading} onFilterChange={onFilterChange} />}
               </PopoverContent>
             </Popover>
           );
@@ -254,35 +223,18 @@ const DataCardFilters = ({ filters, values, onFilterChange, onClearAll, isLoadin
       </div>
 
       {/* Active Filter Chips & Clear All */}
-      {(activeBadges.length > 0 || totalActiveFilters > 0) && (
+      {activeBadges.length > 0 && (
         <div className="flex flex-wrap items-center gap-2">
           {activeBadges.map((badge) => (
-            <span
-              key={badge.key}
-              className="inline-flex items-center gap-1 bg-primary/10 text-primary text-xs px-2.5 py-1 rounded-full font-medium"
-            >
+            <span key={badge.key} className="inline-flex items-center gap-1 bg-primary/10 text-primary text-xs px-2.5 py-1 font-medium border border-primary/30">
               {badge.label}
-              <button
-                type="button"
-                onClick={badge.onRemove}
-                disabled={isLoading}
-                className="ml-0.5 rounded-full p-0.5 hover:bg-primary/20 transition-colors disabled:pointer-events-none"
-                aria-label={`Remove ${badge.label}`}
-              >
+              <button type="button" onClick={badge.onRemove} disabled={isLoading} className="ml-0.5 rounded-full p-0.5 hover:bg-primary/20 transition-colors disabled:pointer-events-none" aria-label={`Remove ${badge.label}`}>
                 <X className="h-3 w-3" />
               </button>
             </span>
           ))}
-          
           {onClearAll && totalActiveFilters > 0 && (
-            <Button
-              type="button"
-              variant="link"
-              size="sm"
-              className="h-6 text-xs text-destructive hover:text-destructive px-1"
-              onClick={onClearAll}
-              disabled={isLoading}
-            >
+            <Button type="button" variant="link" size="sm" className="h-6 text-xs text-destructive hover:text-destructive px-1" onClick={onClearAll} disabled={isLoading}>
               Clear all
             </Button>
           )}

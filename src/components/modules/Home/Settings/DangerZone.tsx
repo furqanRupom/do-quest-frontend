@@ -42,10 +42,11 @@ const DangerZone = () => {
   });
 
   return (
-    <section className="space-y-8">
-      <Card className="flex flex-row border-none ring-2 ring-gray-200 justify-between items-center p-4">
+    <section className="space-y-6">
+      {/* Sign Out Card */}
+      <Card className="flex flex-row justify-between items-center p-6 bg-card border-border backdrop-blur-xl">
         <div>
-          <h3 className="text-lg font-semibold">Sign Out</h3>
+          <h3 className="text-lg font-semibold text-foreground">Sign Out</h3>
           <p className="text-sm text-muted-foreground">
             Sign out of your account on this device
           </p>
@@ -54,18 +55,19 @@ const DangerZone = () => {
           <Button
             onClick={handleLogout}
             disabled={loggingOut}
-            className="cursor-pointer hover:bg-gray-50 bg-gray-50/10"
             variant="outline"
+            className="cursor-pointer flex items-center gap-2"
           >
-            <LogOut />
+            <LogOut className="h-4 w-4" />
             {loggingOut ? "Signing out…" : "Sign Out"}
           </Button>
         </div>
       </Card>
 
-      <Card className="bg-red-300/10 border-none ring-2 ring-red-100 flex flex-row justify-between items-center p-4">
+      {/* Delete Account Card */}
+      <Card className="bg-destructive/5 border border-destructive/30 backdrop-blur-xl flex flex-row justify-between items-center p-6">
         <div>
-          <h3 className="text-lg font-semibold">Delete Account</h3>
+          <h3 className="text-lg font-semibold text-foreground">Delete Account</h3>
           <p className="text-sm text-muted-foreground">
             Permanently delete your account and all associated data.
           </p>
@@ -73,24 +75,26 @@ const DangerZone = () => {
         <div>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button className="cursor-pointer" variant="destructive">
-                <Trash /> Delete Account
+              <Button className="cursor-pointer flex items-center gap-2" variant="destructive">
+                <Trash className="h-4 w-4" /> Delete Account
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent className="bg-card border-border backdrop-blur-xl">
               <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
+                <AlertDialogTitle className="text-foreground">Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription className="text-muted-foreground">
                   This action cannot be undone. Your account and all associated
                   data will be permanently deleted.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel className="cursor-pointer bg-gray-50 hover:bg-gray-100/50">Cancel</AlertDialogCancel>
+                <AlertDialogCancel className="cursor-pointer bg-muted hover:bg-muted/80 text-foreground border-border">
+                  Cancel
+                </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() => mutateAsync()}
                   disabled={isPending}
-                  className="bg-red-500 cursor-pointer text-destructive-foreground hover:bg-red-500/90"
+                  className="bg-destructive cursor-pointer text-destructive-foreground hover:bg-destructive/90 flex items-center gap-2"
                 >
                   {isPending ? "Deleting…" : "Yes, delete my account"}
                 </AlertDialogAction>

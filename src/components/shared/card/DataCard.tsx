@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { PaginationMeta } from "@/types/api.types";
 import { PaginationState } from "@tanstack/react-table";
@@ -70,35 +70,49 @@ const DataCard = <TData,>({
   const totalPages = meta?.totalPages ?? 0;
   const totalItems = meta?.total ?? 0;
 
+  // ── Skeleton that perfectly matches the new Glassmorphic BountyCard ──
   const DefaultSkeleton = () => (
-    <div className="rounded-xl border bg-white p-5 flex flex-col gap-3 animate-pulse">
-      <div className="flex justify-between">
-        <div className="flex flex-col gap-2 flex-1">
-          <div className="h-4 w-24 bg-muted rounded-full" />
-          <div className="h-5 w-3/4 bg-muted rounded" />
-        </div>
-        <div className="flex flex-col items-end gap-1">
-          <div className="h-7 w-16 bg-muted rounded" />
-          <div className="h-3 w-10 bg-muted rounded" />
-        </div>
+    <div className="flex flex-col h-full relative overflow-hidden rounded-xl border border-border/30 bg-card/40 backdrop-blur-xl p-6 animate-pulse">
+      {/* Left accent bar */}
+      <div className="absolute left-0 top-0 bottom-0 w-1 bg-muted/50" />
+
+      {/* Top Row: Status Badge & Bookmark */}
+      <div className="flex justify-between items-start mb-6">
+        <div className="h-5 w-20 bg-muted/50 rounded" /> 
+        <div className="h-4 w-4 bg-muted/50 rounded" />
       </div>
-      <div className="h-4 w-full bg-muted rounded" />
-      <div className="h-4 w-5/6 bg-muted rounded" />
-      <div className="flex gap-2 mt-1">
-        <div className="h-5 w-12 bg-muted rounded-full" />
-        <div className="h-5 w-16 bg-muted rounded-full" />
+
+      {/* Title & Description */}
+      <div className="space-y-3 mb-8">
+        <div className="h-5 w-3/4 bg-muted/50 rounded" />
+        <div className="h-4 w-full bg-muted/50 rounded" />
+        <div className="h-4 w-2/3 bg-muted/50 rounded" />
       </div>
-      <div className="flex justify-between items-center mt-2">
-        <div className="flex gap-3">
-          <div className="h-4 w-24 bg-muted rounded" />
-          <div className="h-4 w-16 bg-muted rounded" />
+
+      {/* Footer Section */}
+      <div className="mt-auto space-y-4">
+        {/* Reward & Time */}
+        <div className="flex justify-between items-end">
+          <div className="space-y-2">
+            <div className="h-3 w-16 bg-muted/50 rounded" /> 
+            <div className="h-6 w-24 bg-muted/50 rounded" /> 
+          </div>
+          <div className="space-y-2 text-right">
+            <div className="h-3 w-12 bg-muted/50 rounded" /> 
+            <div className="h-5 w-16 bg-muted/50 rounded" /> 
+          </div>
         </div>
-        <div className="h-8 w-24 bg-muted rounded-md" />
+
+        {/* Tags Border & Placeholders */}
+        <div className="flex gap-2 pt-4 border-t border-border/30">
+          <div className="h-5 w-12 bg-muted/50 rounded" />
+          <div className="h-5 w-16 bg-muted/50 rounded" />
+          <div className="h-5 w-10 bg-muted/50 rounded" />
+        </div>
       </div>
     </div>
   );
 
-  // Must be uppercase for React to render it as a component instead of an HTML tag
   const SkeletonComponent = renderSkeleton ?? DefaultSkeleton;
 
   return (

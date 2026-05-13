@@ -15,23 +15,15 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useMemo, useState } from "react";
 
 type PaginationToken = number | "start-ellipsis" | "end-ellipsis";
+const DEFAULT_PAGE_SIZES = [12, 24, 36, 48, 100] as const;
 
-const DEFAULT_PAGE_SIZES = [12, 24, 36, 48, 100] as const; // Adjusted for Cards (multiples of grid columns)
+const isDefaultPageSize = (value: number) => DEFAULT_PAGE_SIZES.includes(value as (typeof DEFAULT_PAGE_SIZES)[number]);
 
-const isDefaultPageSize = (value: number) => {
-  return DEFAULT_PAGE_SIZES.includes(value as (typeof DEFAULT_PAGE_SIZES)[number]);
-};
-
-const getPaginationItems = (
-  currentPage: number,
-  totalPages: number,
-): PaginationToken[] => {
+const getPaginationItems = (currentPage: number, totalPages: number): PaginationToken[] => {
   if (totalPages <= 0) return [];
   if (totalPages <= 7) return Array.from({ length: totalPages }, (_, index) => index + 1);
-
   if (currentPage <= 5) return [1, 2, 3, 4, 5, "end-ellipsis", totalPages];
   if (currentPage >= totalPages - 4) return [1, "start-ellipsis", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
-
   return [1, "start-ellipsis", currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2, "end-ellipsis", totalPages];
 };
 
@@ -43,13 +35,7 @@ interface DataCardPaginationProps {
   isLoading?: boolean;
 }
 
-const DataCardPagination = ({
-  pagination,
-  onPaginationChange,
-  totalRows,
-  totalPages,
-  isLoading,
-}: DataCardPaginationProps) => {
+const DataCardPagination = ({ pagination, onPaginationChange, totalRows, totalPages, isLoading }: DataCardPaginationProps) => {
   const pageSize = pagination.pageSize;
   const currentPage = pagination.pageIndex + 1;
   const computedTotalPages = totalPages ?? 0;
@@ -61,14 +47,9 @@ const DataCardPagination = ({
   const showCustomInput = isCustomMode || isCurrentPageSizeCustom;
   const pageSizeSelectValue = showCustomInput ? "custom" : String(pageSize);
 
-  const paginationItems = useMemo(
-    () => getPaginationItems(currentPage, computedTotalPages),
-    [currentPage, computedTotalPages],
-  );
+  const paginationItems = useMemo(() => getPaginationItems(currentPage, computedTotalPages), [currentPage, computedTotalPages]);
 
-  const goToPage = (page: number) => {
-    onPaginationChange({ pageIndex: page - 1, pageSize });
-  };
+  const goToPage = (page: number) => onPaginationChange({ pageIndex: page - 1, pageSize });
 
   const applyCustomPageSize = () => {
     const parsed = Number(customPageSize);
@@ -83,66 +64,33 @@ const DataCardPagination = ({
       setCustomPageSize(String(pageSize));
       return;
     }
-
     const parsed = Number(value);
     if (!Number.isInteger(parsed) || parsed <= 0) return;
-
     setIsCustomMode(false);
     setCustomPageSize(String(parsed));
     onPaginationChange({ pageIndex: 0, pageSize: parsed });
   };
 
-  const jumpBackwardTarget = Math.max(1, currentPage - 5);
-  const jumpForwardTarget = Math.min(computedTotalPages, currentPage + 5);
-
-  const canGoPrevious = currentPage > 1;
-  const canGoNext = currentPage < computedTotalPages;
-
-  if (computedTotalPages <= 0) {
-    return null;
-  }
+  if (computedTotalPages <= 0) return null;
 
   return (
-    <div className="flex flex-col gap-4 border-t border-border/60 pt-6 md:flex-row md:items-center md:justify-between">
+    <div className="flex flex-col gap-4 border-t border-border/30 pt-8 md:flex-row md:items-center md:justify-between">
       {/* Pagination Buttons */}
-      <div className="flex flex-wrap items-center gap-1.5">
+      <div className="flex flex-wrap items-center gap-2">
         <Button
           variant="outline"
           size="sm"
-          className="h-8 gap-1 text-xs rounded-lg"
+          className="h-10 w-10 p-0 bg-card/40 backdrop-blur-xl border-border/50 hover:border-primary hover:text-primary"
           onClick={() => goToPage(currentPage - 1)}
           disabled={!canGoPrevious || isLoading}
         >
-          <ChevronLeft className="h-3.5 w-3.5" />
-          Prev
+          <ChevronLeft className="h-4 w-4" />
         </Button>
 
         {paginationItems.map((item) => {
-          if (item === "start-ellipsis") {
+          if (typeof item === "string") {
             return (
-              <Button
-                key="start-ellipsis"
-                variant="ghost"
-                size="sm"
-                className="min-w-8 h-8 px-2 text-xs rounded-lg"
-                onClick={() => goToPage(jumpBackwardTarget)}
-                disabled={isLoading}
-              >
-                …
-              </Button>
-            );
-          }
-
-          if (item === "end-ellipsis") {
-            return (
-              <Button
-                key="end-ellipsis"
-                variant="ghost"
-                size="sm"
-                className="min-w-8 h-8 px-2 text-xs rounded-lg"
-                onClick={() => goToPage(jumpForwardTarget)}
-                disabled={isLoading}
-              >
+              <Button key={item} variant="ghost" size="sm" className="h-10 w-10 p-0 text-muted-foreground hover:text-foreground" onClick={() => goToPage(item === "start-ellipsis" ? Math.max(1, currentPage - 5) : Math.min(computedTotalPages, currentPage + 5))} disabled={isLoading}>
                 …
               </Button>
             );
@@ -155,8 +103,9 @@ const DataCardPagination = ({
               variant={isActive ? "default" : "outline"}
               size="sm"
               className={cn(
-                "min-w-8 h-8 text-xs rounded-lg",
-                isActive && "pointer-events-none shadow-sm"
+                "h-10 w-10 p-0 text-xs font-bold transition-all",
+                isActive && "bg-primary/10 text-primary border border-primary shadow-[0_0_12px_rgba(0,245,255,0.3)] pointer-events-none",
+                !isActive && "bg-card/40 backdrop-blur-xl border-border/50 hover:border-primary hover:text-primary"
               )}
               onClick={() => goToPage(item)}
               disabled={isLoading}
@@ -169,61 +118,37 @@ const DataCardPagination = ({
         <Button
           variant="outline"
           size="sm"
-          className="h-8 gap-1 text-xs rounded-lg"
+          className="h-10 w-10 p-0 bg-card/40 backdrop-blur-xl border-border/50 hover:border-primary hover:text-primary"
           onClick={() => goToPage(currentPage + 1)}
-          disabled={!canGoNext || isLoading}
+          disabled={currentPage >= computedTotalPages || isLoading}
         >
-          Next
-          <ChevronRight className="h-3.5 w-3.5" />
+          <ChevronRight className="h-4 w-4" />
         </Button>
       </div>
 
       {/* Page Size & Counts */}
-      <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
         <Select value={pageSizeSelectValue} onValueChange={onPageSizeSelect}>
-          <SelectTrigger className="w-20 h-8 text-xs rounded-lg" aria-label="Cards per page">
+          <SelectTrigger className="w-20 h-9 text-xs bg-card/40 backdrop-blur-xl border-border/50" aria-label="Cards per page">
             <SelectValue placeholder="Limit" />
           </SelectTrigger>
-
-          <SelectContent>
+          <SelectContent className="bg-card/95 backdrop-blur-xl border-border/50">
             {DEFAULT_PAGE_SIZES.map((size) => (
-              <SelectItem key={size} value={String(size)} className="text-xs">
-                {size}
-              </SelectItem>
+              <SelectItem key={size} value={String(size)} className="text-xs">{size}</SelectItem>
             ))}
             <SelectItem value="custom" className="text-xs">Custom</SelectItem>
           </SelectContent>
         </Select>
-        <span>per page</span>
+        <span className="uppercase tracking-widest text-[10px]">per page</span>
 
         {showCustomInput && (
           <div className="flex items-center gap-1.5">
-            <Input
-              type="number"
-              min={1}
-              className="h-8 w-20 text-xs rounded-lg"
-              value={customPageSize}
-              onChange={(event) => setCustomPageSize(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  event.preventDefault();
-                  applyCustomPageSize();
-                }
-              }}
-            />
-            <Button
-              size="sm"
-              variant="outline"
-              className="h-8 text-xs rounded-lg"
-              onClick={applyCustomPageSize}
-              disabled={isLoading}
-            >
-              Apply
-            </Button>
+            <Input type="number" min={1} className="h-8 w-20 text-xs bg-card/40 border-border/50" value={customPageSize} onChange={(event) => setCustomPageSize(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); applyCustomPageSize(); } }} />
+            <Button size="sm" variant="outline" className="h-8 text-xs bg-card/40 border-border/50 hover:border-primary" onClick={applyCustomPageSize} disabled={isLoading}>Go</Button>
           </div>
         )}
 
-        <span className="ml-1 text-muted-foreground/70">
+        <span className="ml-1 text-muted-foreground/70 uppercase tracking-widest text-[10px]">
           {totalRows ?? 0} results · Page {currentPage} of {computedTotalPages}
         </span>
       </div>

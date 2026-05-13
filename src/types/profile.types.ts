@@ -8,6 +8,7 @@ export interface Profile {
   needPasswordChange: boolean;
   company?:string;
   location?:string;
+  payoutsEnabeld?:boolean;
   createdAt: string;
   updatedAt: string;
 }

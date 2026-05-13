@@ -77,16 +77,6 @@ const signInPage = async ({ searchParams }: SignInParams) => {
               <SignInForm redirectPath={redirectPath} />
             </FieldSet>
           </Card>
-
-          <p className="text-center text-sm text-muted-foreground mt-8">
-            Don't have an account?{" "}
-            <a
-              href="/sign-up"
-              className="font-medium text-primary hover:underline"
-            >
-              Sign up free
-            </a>
-          </p>
         </div>
       </div>
     </section>
