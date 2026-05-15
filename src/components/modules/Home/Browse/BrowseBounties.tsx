@@ -15,7 +15,6 @@ import {
   DataTableFilterValues,
   DataTableFilterValue,
 } from "@/components/shared/table/DataTableFilters";
-import { Rocket } from "lucide-react";
 
 // ── Configs ──────────────────────────────────────────────────────────────────
 

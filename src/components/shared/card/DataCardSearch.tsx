@@ -40,7 +40,7 @@ const DataCardSearch = ({
 
   return (
     <div className="relative w-full">
-      <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2" />
+      <Search className=" z-20 text-muted-foreground pointer-events-none absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2" />
       <Input
         value={value}
         onChange={(event) => setValue(event.target.value)}

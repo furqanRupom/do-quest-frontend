@@ -43,7 +43,7 @@ const DataTableSearch = ({
   };
 
   return (
-    <div className="relative w-full md:max-w-sm">
+    <div className="relative  w-full md:max-w-lg">
       <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
       <Input
         value={value}

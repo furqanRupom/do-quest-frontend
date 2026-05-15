@@ -77,3 +77,13 @@ export async function retriveAllTaskBountiesAdmin(queryString: string) {
     throw error
   }
 }
+export async function retriveAllMyBounties(queryString: string) {
+  try {
+    return await httpClient.get<ITaskAndBounty[]>(
+      queryString ? `/tasks/my?{queryString}` : "/tasks/my"
+    )
+  } catch (error) {
+    console.log("Error fetching tasks and bounties for admin : ", error)
+    throw error
+  }
+}

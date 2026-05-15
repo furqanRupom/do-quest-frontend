@@ -77,7 +77,7 @@ const DataTable = <TData,>({ data = [] as TData[], columns, actions, toolbarActi
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant={"ghost"} className="h-8 w-8 p-0">
+            <Button variant={"ghost"} className="h-8 w-8 p-0 cursor-pointer">
               <span className="sr-only">Open Menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
@@ -169,7 +169,7 @@ const DataTable = <TData,>({ data = [] as TData[], columns, actions, toolbarActi
       )}
 
       {(search || filters || toolbarAction) && (
-        <div className="mb-4 flex flex-wrap items-start gap-3">
+        <div className="mb-4 flex  flex-wrap items-start gap-3">
           {search && (
             <DataTableSearch
               key={search.initialValue ?? ""}
