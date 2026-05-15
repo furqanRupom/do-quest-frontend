@@ -132,13 +132,11 @@ export const bountiesTaskColumns: ColumnDef<ITaskAndBounty>[] = [
       )
     },
   },
-
 {
   id: "manageSubmissions",
   header: "Submissions",
   cell: ({ row }) => {
     const id = row.original._id || row.original._id
-
     return (
       <Link href={`/my-bounties/${id}/submissions`}>
         <Button variant="outline" size="sm">
@@ -147,4 +145,6 @@ export const bountiesTaskColumns: ColumnDef<ITaskAndBounty>[] = [
       </Link>
     )
   },
-},]
+},
+
+]

@@ -109,7 +109,7 @@ export function WalletPayouts({ profile, isLoading = false }: WalletPayoutsProps
 
               <Button 
                 size="lg" 
-                className="font-bold shadow-lg shadow-primary/20 w-full sm:w-auto flex items-center gap-2"
+                className="font-bold shadow-lg shadow-primary/20 w-full sm:w-auto flex items-center gap-2 cursor-pointer"
                 onClick={handleSetup}
                 disabled={isPending}
               >
