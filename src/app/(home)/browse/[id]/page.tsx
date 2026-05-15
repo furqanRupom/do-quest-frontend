@@ -32,7 +32,6 @@ const BountyDetailsPage = async ({ params }: Props) => {
     errorMessage = error?.message || "Something went wrong while fetching the bounty";
     console.error("Bounty fetch error:", error);
   }
-console.log(bounty)
   if (!bounty) {
     return (
       <section className="mx-auto max-w-5xl px-4 py-8">
