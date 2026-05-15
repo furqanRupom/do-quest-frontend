@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
@@ -7,9 +8,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";
 import AppField from "@/components/shared/form/AppField";
 import AppSubmitButton from "@/components/shared/form/AppSubmitButton";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { IRegisterPayload, registerValidationZodSchema } from "@/zod/auth.validation";
 import { registerAction } from "@/app/(authGroup)/sign-up/_action";
+import { toast } from "sonner";
 
 interface SignUpFormProps {
   redirectPath?: string;
@@ -18,10 +19,27 @@ interface SignUpFormProps {
 const SignUpForm = ({ redirectPath }: SignUpFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [serverError, setServerError] = useState<string | null>(null);
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (payload: IRegisterPayload) => registerAction(payload, redirectPath),
+
+    onSuccess: (result: any) => {
+      if (result?.success) {
+        toast.success(result.message);
+      } else {
+        toast.error(result?.message || "Failed to create account");
+      }
+    },
+
+    onError: (error: any) => {
+      // Handle NEXT_REDIRECT gracefully (if register action uses redirect)
+      if (error?.digest?.startsWith("NEXT_REDIRECT")) {
+        toast.success("Account created successfully!");
+        return;
+      }
+
+      toast.error(error?.message || "Something went wrong. Please try again.");
+    },
   });
 
   const form = useForm({
@@ -32,16 +50,15 @@ const SignUpForm = ({ redirectPath }: SignUpFormProps) => {
       password: "",
       confirmPassword: "",
     },
+
     onSubmit: async ({ value }) => {
-      setServerError(null);
       try {
-        const result = await mutateAsync(value) as any;
-        if (!result.success) {
-          setServerError(result.message || null);
-        }
+        await mutateAsync(value);
       } catch (error: any) {
-        console.log(`Sign up failed: ${error.message}`);
-        setServerError(`Sign up failed: ${error.message}`);
+        // Prevent logging redirect error as failure
+        if (!error?.digest?.startsWith("NEXT_REDIRECT")) {
+          console.error("Sign up failed:", error);
+        }
       }
     },
   });
@@ -57,7 +74,7 @@ const SignUpForm = ({ redirectPath }: SignUpFormProps) => {
         }}
         className="space-y-6"
       >
-        {/* Name + Username in one row (two columns) */}
+        {/* Name + Username */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <form.Field
             name="name"
@@ -154,13 +171,6 @@ const SignUpForm = ({ redirectPath }: SignUpFormProps) => {
             />
           )}
         </form.Field>
-
-        {/* Server Error */}
-        {serverError && (
-          <Alert variant="destructive">
-            <AlertDescription>{serverError}</AlertDescription>
-          </Alert>
-        )}
 
         {/* Submit Button */}
         <form.Subscribe selector={(s) => [s.canSubmit, s.isSubmitting] as const}>

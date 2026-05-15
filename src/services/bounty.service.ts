@@ -60,7 +60,7 @@ export async function getBountyAndTaskById(id: string) {
 
 export async function changeBountyAndTaskStatus(id: string, payload: IChangeTaskAndBountyStatus) {
   try {
-    return await httpClient.put<ITaskAndBounty>(`/admin/tasks/${id}`, payload)
+    return await httpClient.put<ITaskAndBounty>(`/tasks/status/${id}`, payload)
   } catch (error) {
     console.log("Error updating bounty tasks:", error)
     throw error

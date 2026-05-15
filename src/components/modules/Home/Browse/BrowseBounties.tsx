@@ -104,13 +104,13 @@ const BrowseBounties = ({ initialQueryString }: { initialQueryString: string }) 
       <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-[radial-gradient(circle_at_center,oklch(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
       <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-[radial-gradient(circle_at_center,oklch(var(--secondary)/0.1),transparent_70%)] pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
         {/* Hero Section */}
         <section className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-black text-foreground tracking-tighter mb-4">
+          <h1 className="text-3xl font-black text-foreground tracking-tighter mb-4">
             Marketplace
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl">
+          <p className="text-muted-foreground max-w-2xl">
             Forge your path in the digital frontier. Solve high-stakes challenges and earn merit-based rewards in the global economy.
           </p>
         </section>

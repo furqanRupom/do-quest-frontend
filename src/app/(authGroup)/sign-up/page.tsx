@@ -1,8 +1,5 @@
 import LogoIcon from "@/components/logo/LogoIcon";
 import SignUpForm from "@/components/modules/Auth/Sign-Up-Form";
-import { Card } from "@/components/ui/card";
-import { FieldDescription, FieldLegend, FieldSet } from "@/components/ui/field";
-
 interface SignUpParams {
   searchParams: Promise<{ redirect?: string }>;
 }

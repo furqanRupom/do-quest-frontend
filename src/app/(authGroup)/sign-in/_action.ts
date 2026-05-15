@@ -2,6 +2,7 @@
 
 import { getDefaultDashboardRoute, isValidRedirectForRole, UserRole } from "@/lib/authUtils";
 import { httpClient } from "@/lib/axios/httpClient";
+import { getActionErrorMessage } from "@/lib/errorMessage";
 import { setTokenInCookies } from "@/lib/tokenUtils";
 import { ApiErrorResponse } from "@/types/api.types";
 import { ILoginResponse } from "@/types/auth.types";
@@ -9,28 +10,6 @@ import { ILoginResponse } from "@/types/auth.types";
 import { ILoginPayload, loginValidationZodSchema } from "@/zod/auth.validation";
 import { redirect } from "next/navigation";
 
-const getActionErrorMessage = (error: unknown, fallbackMessage: string) => {
-  if (
-    error &&
-    typeof error === "object" &&
-    "response" in error &&
-    error.response &&
-    typeof error.response === "object" &&
-    "data" in error.response &&
-    error.response.data &&
-    typeof error.response.data === "object" &&
-    "message" in error.response.data &&
-    typeof error.response.data.message === "string"
-  ) {
-    return error.response.data.message
-  }
-
-  if (error instanceof Error) {
-    return error.message
-  }
-
-  return fallbackMessage
-}
   export const loginAction = async (payload: ILoginPayload, redirectPath?: string): Promise<ILoginResponse | ApiErrorResponse> => {
   const parsedPayload = loginValidationZodSchema.safeParse(payload);
   if (!parsedPayload.success) {

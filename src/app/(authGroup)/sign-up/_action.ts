@@ -1,6 +1,7 @@
 "use server";
 
 import { httpClient } from "@/lib/axios/httpClient";
+import { getActionErrorMessage } from "@/lib/errorMessage";
 import { ApiErrorResponse } from "@/types/api.types";
 import { IRegisterResponse } from "@/types/auth.types";
 
@@ -48,7 +49,7 @@ export const registerAction = async (payload: IRegisterPayload, redirectPath?: s
     // }
     return {
       success: false,
-      message: `Sign Up failed: ${error.message}`,
+      message: getActionErrorMessage(error,"Failed to sign up"),
     }
   }
 }

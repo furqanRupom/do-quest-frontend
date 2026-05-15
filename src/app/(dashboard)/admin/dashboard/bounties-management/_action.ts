@@ -1,32 +1,11 @@
 "use server"
 
+import { getActionErrorMessage } from "@/lib/errorMessage"
 import { changeBountyAndTaskStatus, deleteBountyAndTask, getBountyAndTaskById, updateBountyAndTask } from "@/services/bounty.service"
 import { type ApiErrorResponse, type ApiResponse } from "@/types/api.types"
 import { IChangeTaskAndBountyStatus, ITaskAndBounty } from "@/types/bounty.types"
 import { IUpdateBountyTaskPayload, updateBountyTaskSchema } from "@/zod/bounty.validation"
 
-const getActionErrorMessage = (error: unknown, fallbackMessage: string) => {
-  if (
-    error &&
-    typeof error === "object" &&
-    "response" in error &&
-    error.response &&
-    typeof error.response === "object" &&
-    "data" in error.response &&
-    error.response.data &&
-    typeof error.response.data === "object" &&
-    "message" in error.response.data &&
-    typeof error.response.data.message === "string"
-  ) {
-    return error.response.data.message
-  }
-
-  if (error instanceof Error) {
-    return error.message
-  }
-
-  return fallbackMessage
-}
 
 
 export const updateBountiesTaskAction = async (

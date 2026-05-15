@@ -43,9 +43,9 @@ export const Wallet = ({ queryString, profile }: WalletProps) => {
   const isTransactionsBusy = isTransactionsLoading || isTransactionsFetching;
 
   return (
-    <main className="pt-28 pb-20 px-6 max-w-7xl mx-auto w-full min-h-screen bg-background">
+    <main className="pt-20 pb-20 px-6 max-w-7xl mx-auto w-full min-h-screen bg-background">
       <div className="mb-12 relative z-10">
-        <h1 className="text-4xl font-black text-foreground tracking-tight font-sans mb-2">Wallet</h1>
+        <h1 className="text-3xl font-black text-foreground tracking-tight font-sans mb-2">Wallet</h1>
         <p className="text-muted-foreground">
           Manage your earnings, payouts, and financial history.
         </p>
