@@ -80,11 +80,6 @@ export const createBountyTaskSchema = z.object({
 
 export const updateBountyTaskSchema = createBountyTaskSchema.partial()
 
-/* ---------------- FORM VERSION ---------------- */
-/**
- * Your form uses strings (like doctor form),
- * so we need a separate schema for UI inputs.
- */
 
 export const bountyTaskFormSchema = z.object({
   title: z.string().min(3),

@@ -3,7 +3,7 @@
 "use server"
 
 import { httpClient } from "@/lib/axios/httpClient"
-import { type IChangeTaskAndBountyStatus, type INewTaskAndBounty, type ITaskAndBounty } from "@/types/bounty.types"
+import { type IChangeTaskAndBountyStatus, type ITaskAndBounty } from "@/types/bounty.types"
 import { ICreateBountyTaskPayload } from "@/zod/bounty.validation"
 
 export async function retriveBountiesAndTasks(queryString: string) {

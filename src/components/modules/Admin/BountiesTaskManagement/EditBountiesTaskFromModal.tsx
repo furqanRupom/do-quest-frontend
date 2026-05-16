@@ -83,7 +83,7 @@ export default function EditBountyTaskModal({
       toast.success("Task updated successfully")
       onOpenChange(false)
 
-      await queryClient.invalidateQueries({ queryKey: ["tasks"] })
+      await queryClient.invalidateQueries({ queryKey: ["tasks","bounty"] })
     },
   })
 
@@ -136,7 +136,7 @@ export default function EditBountyTaskModal({
               {/* Deadline */}
               <form.Field name="deadline">
                 {(field) => (
-                  <AppField field={field} label="Deadline" type="datetime-local" />
+                  <AppField field={field} label="Deadline" type="number" />
                 )}
               </form.Field>
 

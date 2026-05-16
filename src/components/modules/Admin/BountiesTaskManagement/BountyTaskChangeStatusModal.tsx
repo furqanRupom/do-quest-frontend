@@ -59,6 +59,7 @@ export default function ChangeBountyStatusModal({
     onOpenChange(false);
 
     await queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    await queryClient.invalidateQueries({queryKey:['bounty']})
   };
 
   return (

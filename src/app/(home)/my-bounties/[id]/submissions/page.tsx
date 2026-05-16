@@ -1,22 +1,14 @@
-import { Metadata } from "next";
-
-import {  getMyBountySubmissions } from "@/services/submission.service"
+import BountySubmissionsTable from "@/components/modules/Home/MyBounties/BountySubmissions/BountySubmissioinsTable"
+import { getBountySubmissions } from "@/services/submission.service"
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query"
-import MyBountySubmissionstable from "@/components/modules/Home/Submissions/MyBountySubmissionsTable";
-
-
-export const metadata: Metadata = {
-    title: "Submissions - Do.Quest",
-    description: "View and manage your submissions for various quests on Do.Quest. Track your progress, receive feedback, and engage with the community to enhance your learning experience.",
-};
-
-
 
 interface bountySubmissionProps {
+  params: Promise<{ id: string }>,
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-const myBountySubmissionsPage = async ({ searchParams }: bountySubmissionProps) => {
+const bountySubmissionsPage = async ({ params, searchParams }: bountySubmissionProps) => {
+  const { id } = await params
 
   const queryParamsObjects = await searchParams
 
@@ -40,18 +32,18 @@ const myBountySubmissionsPage = async ({ searchParams }: bountySubmissionProps) 
   const queryClient = new QueryClient()
 
   await queryClient.prefetchQuery({
-    queryKey: ['my-submission'],
-    queryFn: () => getMyBountySubmissions(queryString),
+    queryKey: ['submission'],
+    queryFn: () => getBountySubmissions(id, queryString),
     staleTime: 1000 * 60 * 60,     // 1 hour
     gcTime: 1000 * 60 * 60 * 6,    // 6 hours
   })
  /*
- 1. TODO : here we take care of own bounties, view, edit, and resubmit request etc. 
+ 1. TODO : here we going to handle approve submissions, reject submissions, we give them granted for resubmit submissions,
 
  */
   return <HydrationBoundary state={dehydrate(queryClient)}>
-    <MyBountySubmissionstable queryString={queryString} />
+    <BountySubmissionsTable bountyId={id} queryString={queryString} />
   </HydrationBoundary>
 }
 
-export default myBountySubmissionsPage;
+export default bountySubmissionsPage;
