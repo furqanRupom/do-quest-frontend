@@ -69,7 +69,7 @@ const MyBountiesTable = ({ initialQueryString }: { initialQueryString: string })
 
   const tasks = data?.success ? data?.data : []
   const meta: PaginationMeta | undefined = data?.success ? data?.meta : undefined
-
+console.log(tasks)
   return (
     <>
       <DataTable

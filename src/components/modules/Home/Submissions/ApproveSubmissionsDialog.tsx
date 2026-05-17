@@ -20,7 +20,7 @@ interface Props {
   open: boolean
   onOpenChange: (open: boolean) => void
   submission: ISubmission | null
-  bountyId: string // 👈 Added bountyId prop
+  bountyId: string
 }
 
 export default function ApproveSubmissionDialog({
@@ -35,7 +35,7 @@ export default function ApproveSubmissionDialog({
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async ({ submissionId, bountyId }: { submissionId: string; bountyId: string }) => {
       const res = await approvedBountySubmissionAction(bountyId, submissionId)
-      
+     console.log("IN APPROVED MODAL",res)     
       if (!res.success) {
         return { success: false }
       }
@@ -76,13 +76,17 @@ export default function ApproveSubmissionDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Approve Submission</AlertDialogTitle>
-          <AlertDialogDescription>
-            Are you sure you want to approve this submission and process the payment?
-            <div className="mt-3 p-2 rounded bg-muted text-sm">
-              <p><span className="font-medium">Task:</span> {typeof submission.task === "string" ? submission.task : submission.task?.title}</p>
-              <p><span className="font-medium">User:</span> {typeof submission.user === "string" ? submission.user : submission.user?.username}</p>
+          
+          <AlertDialogDescription asChild>
+            <div>
+              Are you sure you want to approve this submission and process the payment?
+              <div className="mt-3 p-2 rounded bg-muted text-sm">
+                <p><span className="font-medium">Task:</span> {typeof submission.task === "string" ? submission.task : submission.task?.title}</p>
+                <p><span className="font-medium">User:</span> {typeof submission.user === "string" ? submission.user : submission.user?.username}</p>
+              </div>
             </div>
           </AlertDialogDescription>
+          
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isPending}>

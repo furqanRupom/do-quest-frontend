@@ -82,7 +82,6 @@ const BountySubmissionsTable = ({
 
   const submissions = data?.success ? data?.data : []
   const meta: PaginationMeta | undefined = data?.success ? data?.meta : undefined
-
   return (
     <>
       <DataTable

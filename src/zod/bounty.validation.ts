@@ -9,14 +9,6 @@ export const taskStatusEnum = z.enum([
   'DISPUTED'
 ])
 
-export const paymentStatusEnum = z.enum([
-  "ACTIVE",
-  "COMPLETED",
-  "CANCELLED",
-  "REFUNDED",
-  "RELEASED"
-])
-
 export const paymentFlowStatusEnum = z.enum([
   "PENDING",
   "AUTHORIZED",

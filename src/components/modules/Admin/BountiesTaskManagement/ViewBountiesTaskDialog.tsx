@@ -75,7 +75,6 @@ export default function ViewBountyTaskDialog({
                   <h3 className="mb-2 font-semibold">Status</h3>
                   <div className="flex gap-2 flex-wrap">
                     <Badge>{task.status}</Badge>
-                    <Badge variant="secondary">{task.paymentStatus}</Badge>
                     <Badge variant="outline">{task.paymentFlowStatus}</Badge>
                   </div>
                 </div>

@@ -17,7 +17,6 @@ export interface ITaskAndBounty {
   deadline: string; // ISO 8601 date string
   maxSubmissions: number;
   status: TaskStatus;
-  paymentStatus: PaymentStatus;
   categories: string[];
   tags: string[];
   paymentFlowStatus: PaymentFlowStatus;
@@ -45,7 +44,6 @@ export interface IChangeTaskAndBountyStatus {
 // Enum Types
 export type TaskStatus = 'PENDING' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED' | 'DISPUTED';
 
-export type PaymentStatus = 'ACTIVE' | 'COMPLETED' | 'CANCELLED' | 'REFUNDED' | 'RELEASED';
 
 export type PaymentFlowStatus = 'PENDING' | 'AUTHORIZED' | 'CAPTURED' | 'CANCELLED' | 'NO_PAYMENT' | 'FAILED' | 'PAID' | 'REFUNDED';
 

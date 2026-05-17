@@ -53,12 +53,12 @@ export const myBountiesColumns: ColumnDef<ITaskAndBounty>[] = [
   },
 
   {
-    id: "paymentStatus",
-    accessorKey: "paymentStatus",
+    id: "paymentFlowStatus",
+    accessorKey: "paymentFlowStatus",
     header: "Payment",
     cell: ({ row }) => (
       <Badge variant="secondary">
-        {row.original.paymentStatus}
+        {row.original.paymentFlowStatus}
       </Badge>
     ),
   },
