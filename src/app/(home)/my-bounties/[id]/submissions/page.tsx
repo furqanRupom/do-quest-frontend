@@ -1,4 +1,4 @@
-import BountySubmissionsTable from "@/components/modules/Home/MyBounties/BountySubmissions/BountySubmissioinsTable"
+import BountySubmissionsTable from "@/components/modules/Home/Submissions/BountySubmissionsTable"
 import { getBountySubmissions } from "@/services/submission.service"
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query"
 
@@ -41,8 +41,11 @@ const bountySubmissionsPage = async ({ params, searchParams }: bountySubmissionP
  1. TODO : here we going to handle approve submissions, reject submissions, we give them granted for resubmit submissions,
 
  */
-  return <HydrationBoundary state={dehydrate(queryClient)}>
+  return  <HydrationBoundary state={dehydrate(queryClient)}>
+
+    <section className="max-w-7xl mx-auto">
     <BountySubmissionsTable bountyId={id} queryString={queryString} />
+    </section>
   </HydrationBoundary>
 }
 

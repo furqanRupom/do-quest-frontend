@@ -5,7 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { PaginationMeta } from "@/types/api.types";
 import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, getSortedRowModel, PaginationState, SortingState, useReactTable } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp, ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown, MoreHorizontal, Eye, Pencil, Trash2, ArrowRightLeft, CheckCircle2, XCircle, MessageSquare } from "lucide-react";
 import { useEffect, useState } from "react";
 import DataTableFilters, {
   DataTableFilterConfig,
@@ -14,17 +14,21 @@ import DataTableFilters, {
 } from "./DataTableFilters";
 import DataTablePagination from "./DataTablePagination";
 import DataTableSearch from "./DataTableSearch";
-interface DataTableActions<TData> {
+
+export interface DataTableActions<TData> {
   onView?: (data: TData) => void;
   onEdit?: (data: TData) => void;
   onDelete?: (data: TData) => void;
   onStatusChange?: (data: TData) => void;
+  onApprove?: (data: TData) => void;
+  onReject?: (data: TData) => void;
+  onRevision?: (data: TData) => void;
 }
 
 interface DataTableProps<TData> {
   data: TData[];
   columns: ColumnDef<TData>[];
-  actions?: DataTableActions<TData>;
+  actions?: DataTableActions<TData> | ((data: TData) => DataTableActions<TData>);
   toolbarAction?: React.ReactNode;
   emptyMessage?: string;
   isLoading?: boolean;
@@ -51,7 +55,6 @@ interface DataTableProps<TData> {
   meta?: PaginationMeta;
 }
 
-
 const DataTable = <TData,>({ data = [] as TData[], columns, actions, toolbarAction, emptyMessage, isLoading, sorting, pagination, search, filters, meta }: DataTableProps<TData>) => {
 
   const [hasHydrated, setHasHydrated] = useState(false);
@@ -63,16 +66,23 @@ const DataTable = <TData,>({ data = [] as TData[], columns, actions, toolbarActi
   const hydratedIsLoading = hasHydrated ? Boolean(isLoading) : false;
   const showLoadingOverlay = hydratedIsLoading;
 
-
   const tableColumns: ColumnDef<TData>[] = actions ? [...columns,
 
   // Action column
   {
-    id: "actions", // Unique id for the column
+    id: "actions",
     header: "Actions",
     enableSorting: false,
     cell: ({ row }) => {
       const rowData = row.original;
+      
+      // Allow actions to be a function for row-specific logic, or an object
+      const rowActions = typeof actions === 'function' ? actions(rowData) : actions;
+      
+      // Hide the dropdown completely if no actions apply to this row
+      const hasActions = Object.values(rowActions).some(val => typeof val === 'function');
+
+      if (!hasActions) return null;
 
       return (
         <DropdownMenu>
@@ -84,37 +94,47 @@ const DataTable = <TData,>({ data = [] as TData[], columns, actions, toolbarActi
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
-            {
-              actions.onView && (
-                <DropdownMenuItem onClick={() => actions.onView?.(rowData)}>
-                  View
-                </DropdownMenuItem>
-              )
-            }
-
-            {
-              actions.onEdit && (
-                <DropdownMenuItem onClick={() => actions.onEdit?.(rowData)}>
-                  Edit
-                </DropdownMenuItem>
-              )
-            }
-
-            {actions.onStatusChange && (
-              <DropdownMenuItem
-                onClick={() => actions.onStatusChange?.(rowData)}
-              >
-                Change Status
+            {rowActions.onView && (
+              <DropdownMenuItem onClick={() => rowActions.onView?.(rowData)} className="cursor-pointer">
+                <Eye className="mr-2 h-4 w-4" /> View
               </DropdownMenuItem>
             )}
-            {
-              actions.onDelete && (
-                <DropdownMenuItem onClick={() => actions.onDelete?.(rowData)}>
-                  Delete
-                </DropdownMenuItem>
-              )
-            }
 
+            {rowActions.onEdit && (
+              <DropdownMenuItem onClick={() => rowActions.onEdit?.(rowData)} className="cursor-pointer">
+                <Pencil className="mr-2 h-4 w-4" /> Edit
+              </DropdownMenuItem>
+            )}
+
+            {rowActions.onStatusChange && (
+              <DropdownMenuItem onClick={() => rowActions.onStatusChange?.(rowData)} className="cursor-pointer">
+                <ArrowRightLeft className="mr-2 h-4 w-4" /> Change Status
+              </DropdownMenuItem>
+            )}
+
+            {rowActions.onApprove && (
+              <DropdownMenuItem onClick={() => rowActions.onApprove?.(rowData)} className="cursor-pointer text-green-600 focus:text-green-600 focus:bg-green-50 dark:focus:bg-green-950">
+                <CheckCircle2 className="mr-2 h-4 w-4" /> Approve
+              </DropdownMenuItem>
+            )}
+
+            {rowActions.onReject && (
+              <DropdownMenuItem onClick={() => rowActions.onReject?.(rowData)} className="cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50 dark:focus:bg-red-950">
+                <XCircle className="mr-2 h-4 w-4" /> Reject
+              </DropdownMenuItem>
+            )}
+
+            {rowActions.onRevision && (
+              <DropdownMenuItem onClick={() => rowActions.onRevision?.(rowData)} className="cursor-pointer text-amber-600 focus:text-amber-600 focus:bg-amber-50 dark:focus:bg-amber-950">
+                <MessageSquare className="mr-2 h-4 w-4" /> Request Revision
+              </DropdownMenuItem>
+            )}
+
+            {rowActions.onDelete && (
+              <DropdownMenuItem onClick={() => rowActions.onDelete?.(rowData)} className="cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50 dark:focus:bg-red-950">
+                <Trash2 className="mr-2 h-4 w-4" /> Delete
+              </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -122,7 +142,6 @@ const DataTable = <TData,>({ data = [] as TData[], columns, actions, toolbarActi
   }
   ] : columns;
 
-  // eslint-disable-next-line react-hooks/incompatible-library -- TanStack Table is intentionally used here and React Compiler already skips memoization for this hook.
   const table = useReactTable({
     data,
     columns: tableColumns,
@@ -139,9 +158,7 @@ const DataTable = <TData,>({ data = [] as TData[], columns, actions, toolbarActi
     onSortingChange: sorting ?
       (updater) => {
         const currentSortingState = sorting.state;
-
         const nextSortingState = typeof updater === "function" ? updater(currentSortingState) : updater;
-
         sorting.onSortingChange(nextSortingState);
       }
       : undefined,
@@ -157,6 +174,7 @@ const DataTable = <TData,>({ data = [] as TData[], columns, actions, toolbarActi
       }
       : undefined,
   });
+
   return (
     <div className="relative">
       {showLoadingOverlay && (
@@ -169,7 +187,7 @@ const DataTable = <TData,>({ data = [] as TData[], columns, actions, toolbarActi
       )}
 
       {(search || filters || toolbarAction) && (
-        <div className="mb-4 flex  flex-wrap items-start gap-3">
+        <div className="mb-4 flex flex-wrap items-start gap-3">
           {search && (
             <DataTableSearch
               key={search.initialValue ?? ""}
@@ -197,7 +215,6 @@ const DataTable = <TData,>({ data = [] as TData[], columns, actions, toolbarActi
         </div>
       )}
 
-      {/* // Table */}
       <div className="rounded-lg border">
         <Table>
           <TableHeader>

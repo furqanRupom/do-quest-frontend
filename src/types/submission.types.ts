@@ -1,3 +1,5 @@
+import { TaskStatus } from "./bounty.types";
+
 export enum  SubmissionStatus {
      pending = 'PENDING',
     approved = 'APPROVED',
@@ -7,8 +9,17 @@ export enum  SubmissionStatus {
 }
 export interface ISubmission {
   _id:string
-  task: string;
-  user: string;
+  task: {
+    title:string;
+    budget:number;
+    status:TaskStatus,
+    deadline:string
+  };
+  user: {
+    name:string;
+    username:string;
+    email:string
+  };
 
   message: string;
   attachments: string[];

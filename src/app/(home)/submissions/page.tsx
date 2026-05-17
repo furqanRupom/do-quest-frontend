@@ -1,13 +1,13 @@
 import { Metadata } from "next";
 
-import {  getMyBountySubmissions } from "@/services/submission.service"
+import { getMyBountySubmissions } from "@/services/submission.service"
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query"
 import MyBountySubmissionstable from "@/components/modules/Home/Submissions/MyBountySubmissionsTable";
 
 
 export const metadata: Metadata = {
-    title: "Submissions - Do.Quest",
-    description: "View and manage your submissions for various quests on Do.Quest. Track your progress, receive feedback, and engage with the community to enhance your learning experience.",
+  title: "Submissions - Do.Quest",
+  description: "View and manage your submissions for various quests on Do.Quest. Track your progress, receive feedback, and engage with the community to enhance your learning experience.",
 };
 
 
@@ -45,12 +45,16 @@ const myBountySubmissionsPage = async ({ searchParams }: bountySubmissionProps) 
     staleTime: 1000 * 60 * 60,     // 1 hour
     gcTime: 1000 * 60 * 60 * 6,    // 6 hours
   })
- /*
- 1. TODO : here we take care of own bounties, view, edit, and resubmit request etc. 
-
- */
+  /*
+  1. TODO : here we take care of own bounties, view, edit, and resubmit request etc. 
+ 
+  */
   return <HydrationBoundary state={dehydrate(queryClient)}>
-    <MyBountySubmissionstable queryString={queryString} />
+    <section className="max-w-7xl mx-auto">
+
+      <MyBountySubmissionstable queryString={queryString} />
+
+    </section>
   </HydrationBoundary>
 }
 

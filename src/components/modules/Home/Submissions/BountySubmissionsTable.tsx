@@ -4,40 +4,53 @@ import DataTable from "@/components/shared/table/DataTable"
 import { useRowActionModalState } from "@/hooks/useRowActionModalState"
 import { useServerManagedDataTable } from "@/hooks/useServerManagedDataTable"
 import { useServerManagedDataTableSearch } from "@/hooks/useServerManagedDataTableSearch"
-import { getMyBountySubmissions } from "@/services/submission.service"
+import { getBountySubmissions } from "@/services/submission.service"
 import { PaginationMeta } from "@/types/api.types"
 import { ISubmission, SubmissionStatus } from "@/types/submission.types"
 import { useQuery } from "@tanstack/react-query"
 import { useSearchParams } from "next/navigation"
-import ViewMySubmissionDetailsDialog from "./ViewSubmissionsMyDetailsDialog"
-import ResubmitSubmissionModal from "./ResubmitSubmissionsModal"
-import { myBountySubmissionColumns } from "./BountySubmissionsColumns"
+import RejectSubmissionDialog from "./RejectSubmissionDialog"
+import RevisionSubmissionDialog from "./RevisionSubmissionDialog"
+import ViewSubmissionDetailsDialog from "./ViewSubmissionsDetailsDialog"
+import ApproveSubmissionDialog from "./ApproveSubmissionsDialog"
+import { bountySubmissionColumns } from "./BountySubmissionsColumns"
 
 const DEFAULT_PAGE = 1
 const DEFAULT_LIMIT = 10
 
-interface MyBountySubmissionsTableProps {
+interface BountySubmissionsTableProps {
+  bountyId: string
   queryString: string
 }
 
-const MyBountySubmissionsTable = ({
+const BountySubmissionsTable = ({
+  bountyId,
   queryString,
-}: MyBountySubmissionsTableProps) => {
+}: BountySubmissionsTableProps) => {
   const searchParams = useSearchParams()
 
   const {
     viewingItem,
-    editingItem,
+    approvingItem,
+    rejectingItem,
+    revisionItem,
     isViewDialogOpen,
-    isEditModalOpen,
+    isApproveDialogOpen,
+    isRejectDialogOpen,
+    isRevisionDialogOpen,
     onViewOpenChange,
-    onEditOpenChange,
+    onApproveOpenChange,
+    onRejectOpenChange,
+    onRevisionOpenChange,
     tableActions,
   } = useRowActionModalState<ISubmission>({
     enableView: true,
-    enableEdit: true, // Treated as "Resubmit"
+    enableEdit: false,
     enableDelete: false,
     enableStatusChange: false,
+    enableApprove: true,
+    enableReject: true,
+    enableRevision: true,
   })
 
   const {
@@ -54,19 +67,17 @@ const MyBountySubmissionsTable = ({
     defaultLimit: DEFAULT_LIMIT,
   })
 
-  const {
-    searchTermFromUrl,
-    handleDebouncedSearchChange,
-  } = useServerManagedDataTableSearch({
-    searchParams,
-    updateParams,
-  })
+  const { handleDebouncedSearchChange, searchTermFromUrl } =
+    useServerManagedDataTableSearch({
+      searchParams,
+      updateParams,
+    })
 
   const finalQueryString = queryStringFromUrl || queryString
 
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: ["my-submissions", finalQueryString],
-    queryFn: () => getMyBountySubmissions(finalQueryString),
+    queryKey: ["submissions", bountyId, finalQueryString],
+    queryFn: () => getBountySubmissions(bountyId, finalQueryString),
   })
 
   const submissions = data?.success ? data?.data : []
@@ -76,9 +87,9 @@ const MyBountySubmissionsTable = ({
     <>
       <DataTable
         data={submissions}
-        columns={myBountySubmissionColumns}
+        columns={bountySubmissionColumns}
         isLoading={isLoading || isFetching || isRouteRefreshPending}
-        emptyMessage="You haven't made any submissions yet."
+        emptyMessage="No submissions found for this bounty."
         sorting={{
           state: optimisticSortingState,
           onSortingChange: handleSortingChange,
@@ -89,35 +100,46 @@ const MyBountySubmissionsTable = ({
         }}
         search={{
           initialValue: searchTermFromUrl,
-          placeholder: "Search by task name, status...",
+          placeholder: "Search by user, status...",
           debounceMs: 700,
           onDebouncedChange: handleDebouncedSearchChange,
         }}
         meta={meta}
         actions={(submission) => ({
-          // Always allow viewing details
+          // Always allow viewing
           onView: tableActions.onView,
-          // Only allow resubmit (edit action) if revision was requested or still pending
-          onEdit: submission.status === SubmissionStatus.revision_requested || 
-                  submission.status === SubmissionStatus.pending
-            ? tableActions.onEdit
-            : undefined,
+          // Only allow approve/reject/revision if submission is pending
+          onApprove: submission.status === SubmissionStatus.pending ? tableActions.onApprove : undefined,
+          onReject: submission.status === SubmissionStatus.pending ? tableActions.onReject : undefined,
+          onRevision: submission.status === SubmissionStatus.pending ? tableActions.onRevision : undefined,
         })}
       />
 
-      <ViewMySubmissionDetailsDialog
+      <ViewSubmissionDetailsDialog
         open={isViewDialogOpen}
         onOpenChange={onViewOpenChange}
         submission={viewingItem}
       />
 
-      <ResubmitSubmissionModal
-        open={isEditModalOpen}
-        onOpenChange={onEditOpenChange}
-        submission={editingItem}
+      <ApproveSubmissionDialog
+        open={isApproveDialogOpen}
+        onOpenChange={onApproveOpenChange}
+        submission={approvingItem}
+      />
+
+      <RejectSubmissionDialog
+        open={isRejectDialogOpen}
+        onOpenChange={onRejectOpenChange}
+        submission={rejectingItem}
+      />
+
+      <RevisionSubmissionDialog
+        open={isRevisionDialogOpen}
+        onOpenChange={onRevisionOpenChange}
+        submission={revisionItem}
       />
     </>
   )
 }
 
-export default MyBountySubmissionsTable
+export default BountySubmissionsTable
