@@ -28,3 +28,8 @@ export interface ISubmitBounty {
   attachments: string[];
 
 }
+
+export interface IApprovedSubmission {
+  submission : ISubmission,
+  transferId: {id: string, amount:number}
+}

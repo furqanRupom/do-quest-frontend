@@ -11,4 +11,14 @@ export const submissionSchema = z.object({
     .default([]),
 });
 
+
+export const rejectBountySubmissionSchema = z.object({
+  rejectionReason:z.string()
+})
+
+export const revisionBountySubmissionSchema = z.object({
+  revisionNote:z.string()
+})
 export type ISubmissionPayload = z.infer<typeof submissionSchema>;
+export type IRejectionSubmissionPayload = z.infer<typeof rejectBountySubmissionSchema>
+export type IRevisionSubmissionPayload = z.infer<typeof revisionBountySubmissionSchema>
