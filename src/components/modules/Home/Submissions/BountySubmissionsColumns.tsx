@@ -67,8 +67,8 @@ export const bountySubmissionColumns: ColumnDef<ISubmission>[] = [
         {typeof row.original.user === "string"
           ? row.original.user
           : row.original.user?.username ||
-            row.original.user?.email ||
-            "Anonymous"}
+          row.original.user?.email ||
+          "Anonymous"}
       </span>
     ),
   },
@@ -135,9 +135,8 @@ export const myBountySubmissionColumns: ColumnDef<ISubmission>[] = [
     header: "Task",
     cell: ({ row }) => (
       <span className="font-medium line-clamp-1 text-sm">
-        {typeof row.original.task === "string"
-          ? row.original.task
-          : row.original.task?.title || "N/A"}
+        {typeof row.original.task === "string" ? truncateText(row.original.task, 40)
+          : truncateText(row.original.task?.title, 40) || "N/A"}
       </span>
     ),
   },

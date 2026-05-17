@@ -11,6 +11,8 @@
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-slot": "^1.2.3",
+    "@stripe/react-stripe-js": "^6.3.0",
+    "@stripe/stripe-js": "^9.5.0",
     "@tanstack/react-devtools": "^0.10.2",
     "@tanstack/react-form": "^1.29.1",
     "@tanstack/react-form-devtools": "^0.2.22",

@@ -1,5 +1,6 @@
 "use client"
 
+import { revisionBountySubmissionAction } from "@/app/(home)/my-bounties/[id]/submissions/_action"
 import AppField from "@/components/shared/form/AppField"
 import AppSubmitButton from "@/components/shared/form/AppSubmitButton"
 import { Button } from "@/components/ui/button"
@@ -38,10 +39,11 @@ export default function RevisionSubmissionDialog({
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (payload: { submissionId: string; revisionNote: string }) => {
-      // TODO: Replace with actual revision action
-      // import { requestRevisionAction } from "@/app/(dashboard)/admin/dashboard/bounties-management/_action"
-      // const res = await requestRevisionAction(payload.submissionId, { revisionNote: payload.revisionNote })
-      // return res
+       const res = await revisionBountySubmissionAction(payload.submissionId, { revisionNote: payload.revisionNote })
+
+       if(!res.success) {
+         return {success:false}
+       }
       return { success: true }
     },
   })
@@ -126,6 +128,8 @@ export default function RevisionSubmissionDialog({
                   <AppField
                     field={field}
                     label="Revision Feedback"
+                    type="textarea"
+                    rows={10}
                     placeholder="Describe what needs to be revised or improved..."
                   />
                 )}
@@ -141,7 +145,7 @@ export default function RevisionSubmissionDialog({
               {/* Actions */}
               <div className="flex justify-end gap-3 border-t pt-4">
                 <DialogClose asChild>
-                  <Button variant="outline">Cancel</Button>
+                  <Button className="cursor-pointer" variant="outline">Cancel</Button>
                 </DialogClose>
 
                 <form.Subscribe

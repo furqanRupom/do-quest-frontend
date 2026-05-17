@@ -16,7 +16,8 @@ export const approvedBountySubmissionAction = async (bountyId: string, submissio
   try {
     return await approveBountySubmission(bountyId, submissionId)
 
-  } catch (error) {
+  } catch (error:any) {
+    console.log(error.response)
     console.error("Approved Submissions : ", error)
     return {
       success: false,
@@ -51,7 +52,6 @@ export const rejectBountySubmissionAction = async (submissionId: string, payload
   try {
     return await rejectBountySubmission(submissionId, parsedPayload.data)
   } catch (error) {
-    console.error("Submission Rejection : ", error)
     return {
       succcess: false,
       message: getActionErrorMessage(error, "Failed to reject submissions")

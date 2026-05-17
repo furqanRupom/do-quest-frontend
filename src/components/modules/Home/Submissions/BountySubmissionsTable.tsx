@@ -125,6 +125,7 @@ const BountySubmissionsTable = ({
         open={isApproveDialogOpen}
         onOpenChange={onApproveOpenChange}
         submission={approvingItem}
+        bountyId={bountyId}
       />
 
       <RejectSubmissionDialog

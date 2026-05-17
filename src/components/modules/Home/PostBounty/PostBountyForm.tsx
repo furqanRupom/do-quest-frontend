@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useMutation } from "@tanstack/react-query"
 import { useForm } from "@tanstack/react-form"
+import { useRouter } from "next/navigation"
 import {
   ArrowLeft,
   ArrowRight,
@@ -27,15 +28,19 @@ import {
   bountyTaskFormSchema,
   ICreateBountyTaskPayload,
 } from "@/zod/bounty.validation"
-import { toast } from "sonner" // <-- IMPORT HERE
+import { toast } from "sonner"
 import { useArrayField } from "@/hooks/useArrayFields"
+import BountyPaymentForm from "./BountyPaymentForm" // <-- Import Stripe Component
 
 const STEPS = [
   { number: 1, label: "Details" },
-  { number: 2, label: "Review" },
+  { number: 2, label: "Review & Pay" },
 ]
+
 const PostBountyForm = () => {
+  const router = useRouter()
   const [step, setStep] = useState(1)
+  const [clientSecret, setClientSecret] = useState<string | null>(null) // <-- Hold Stripe secret
 
   // Managed outside tanstack-form (array-based inputs)
   const [requirements, setRequirements] = useState<string[]>([])
@@ -75,14 +80,13 @@ const PostBountyForm = () => {
         }
 
         const result = (await mutateAsync(payload)) as any
-        
-        if (result?.success) {
-          toast.success("Bounty submitted successfully! 🚀", {
-            description: "Your quest is now live on the meritocracy frontier.",
-          })
-          // Optional: reset form or redirect here
+        console.log("RESULT ----------",result)
+        // ✅ Task created in DB. Save secret and show Stripe form
+
+        if (result?.data?.clientSecret) {
+          setClientSecret(result?.data.clientSecret)
         } else {
-          toast.error("Submission failed", {
+          toast.error("Failed to initialize payment", {
             description: result?.message || "Something went wrong. Please try again.",
           })
         }
@@ -256,14 +260,13 @@ const PostBountyForm = () => {
             </div>
           )}
 
-          {/* ──────── Step 2: Review ──────── */}
+          {/* ──────── Step 2: Review & Pay ──────── */}
           {step === 2 && (
             <div className="space-y-8 pt-4">
               <div>
                 <h2 className="text-4xl font-bold tracking-tight">Final Review</h2>
                 <p className="text-muted-foreground mt-2 text-lg">
-                  Verify your quest details. Once submitted, your bounty will be
-                  live for questers to claim.
+                  Verify your quest details and authorize the escrow payment to make it live.
                 </p>
               </div>
 
@@ -363,18 +366,31 @@ const PostBountyForm = () => {
                   </Card>
 
                   <div className="space-y-3">
-                    <form.Subscribe selector={(s) => [s.isSubmitting] as const}>
-                      {([isSubmitting]) => (
-                        <AppSubmitButton
-                          className="w-full h-14 text-base cursor-pointer"
-                          isPending={isSubmitting || isPending}
-                          pendingLabel="Submitting..."
-                          disabled={!isFormValid()}
-                        >
-                          <Rocket className="h-5 w-5 mr-2" /> Submit Bounty
-                        </AppSubmitButton>
-                      )}
-                    </form.Subscribe>
+                    {/* ✅ Conditional Render: Show Stripe Form if Secret exists, else show Submit button */}
+                    {clientSecret ? (
+                      <BountyPaymentForm 
+                        clientSecret={clientSecret} 
+                        onSuccessAction={() => {
+                          toast.success("Bounty submitted successfully! 🚀", {
+                            description: "Funds authorized. Your quest is now live.",
+                          })
+                          router.push('/my-bounties')
+                        }} 
+                      />
+                    ) : (
+                      <form.Subscribe selector={(s) => [s.isSubmitting] as const}>
+                        {([isSubmitting]) => (
+                          <AppSubmitButton
+                            className="w-full h-14 text-base cursor-pointer"
+                            isPending={isSubmitting || isPending}
+                            pendingLabel="Saving Draft..."
+                            disabled={!isFormValid()}
+                          >
+                            <Rocket className="h-5 w-5 mr-2" /> Continue to Payment
+                          </AppSubmitButton>
+                        )}
+                      </form.Subscribe>
+                    )}
 
                     <p className="text-center text-xs text-muted-foreground mt-4 px-2">
                       By submitting, you agree to lock the reward amount in the DoQuest escrow contract.
@@ -396,7 +412,7 @@ const PostBountyForm = () => {
 
           {step === 2 && (
             <div className="flex justify-start items-center pt-8 border-t">
-              <Button type="button" className="cursor-pointer" variant="ghost" size="lg" onClick={() => setStep(1)}>
+              <Button type="button" className="cursor-pointer" variant="ghost" size="lg" onClick={() => { setStep(1); setClientSecret(null); }}>
                 <ArrowLeft className="h-5 w-5 mr-2" /> Back to Editing
               </Button>
             </div>

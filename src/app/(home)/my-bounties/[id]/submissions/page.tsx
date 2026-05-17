@@ -43,7 +43,17 @@ const bountySubmissionsPage = async ({ params, searchParams }: bountySubmissionP
  */
   return  <HydrationBoundary state={dehydrate(queryClient)}>
 
-    <section className="max-w-7xl mx-auto">
+    <section className="max-w-7xl mx-auto min-h-screen py-20 ">
+
+      
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight">
+          View Bounties Submissions
+        </h1>
+        <p className="text-muted-foreground mt-2 text-sm">
+          Manage and track all the submitted bounties have submitted from your tasks, including their status, submissions, and deadlines.
+        </p>
+      </div>
     <BountySubmissionsTable bountyId={id} queryString={queryString} />
     </section>
   </HydrationBoundary>

@@ -10,6 +10,7 @@ export enum  SubmissionStatus {
 export interface ISubmission {
   _id:string
   task: {
+    _id:string;
     title:string;
     budget:number;
     status:TaskStatus,

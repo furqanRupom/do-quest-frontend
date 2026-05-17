@@ -15,9 +15,9 @@ export const useRowActionModalState = <TData,>({
   enableEdit = true,
   enableDelete = true,
   enableStatusChange = true,
-  enableApprove = true,
-  enableReject = true,
-  enableRevision = true,
+  enableApprove = false,
+  enableReject = false,
+  enableRevision = false,
 }: UseRowActionModalStateOptions = {}) => {
   // Original states
   const [viewingItem, setViewingItem] = useState<TData | null>(null);

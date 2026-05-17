@@ -1,5 +1,6 @@
 "use client"
 
+import { rejectBountySubmissionAction } from "@/app/(home)/my-bounties/[id]/submissions/_action"
 import AppField from "@/components/shared/form/AppField"
 import AppSubmitButton from "@/components/shared/form/AppSubmitButton"
 import { Button } from "@/components/ui/button"
@@ -38,10 +39,11 @@ export default function RejectSubmissionDialog({
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (payload: { submissionId: string; rejectionReason: string }) => {
-      // TODO: Replace with actual reject action
-      // import { rejectSubmissionAction } from "@/app/(dashboard)/admin/dashboard/bounties-management/_action"
-      // const res = await rejectSubmissionAction(payload.submissionId, { rejectionReason: payload.rejectionReason })
-      // return res
+       const res = await rejectBountySubmissionAction(payload.submissionId, { rejectionReason: payload.rejectionReason })
+
+       if(!res.success) {
+         return {success:false}
+       }
       return { success: true }
     },
   })
@@ -118,15 +120,17 @@ export default function RejectSubmissionDialog({
                   <AppField
                     field={field}
                     label="Rejection Reason"
+                    type="textarea"
+                    rows={10}
                     placeholder="Explain why this submission is being rejected..."
                   />
                 )}
               </form.Field>
 
               {/* Actions */}
-              <div className="flex justify-end gap-3 border-t pt-4">
+              <div className="flex justify-end gap-3 border-t pt-4 cursor-pointer">
                 <DialogClose asChild>
-                  <Button variant="outline">Cancel</Button>
+                  <Button className="cursor-pointer" variant="outline">Cancel</Button>
                 </DialogClose>
 
                 <form.Subscribe

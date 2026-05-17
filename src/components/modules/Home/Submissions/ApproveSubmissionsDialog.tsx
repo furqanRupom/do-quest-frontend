@@ -1,5 +1,6 @@
 "use client"
 
+import { approvedBountySubmissionAction } from "@/app/(home)/my-bounties/[id]/submissions/_action"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,22 +20,25 @@ interface Props {
   open: boolean
   onOpenChange: (open: boolean) => void
   submission: ISubmission | null
+  bountyId: string // 👈 Added bountyId prop
 }
 
 export default function ApproveSubmissionDialog({
   open,
   onOpenChange,
   submission,
+  bountyId, 
 }: Props) {
   const queryClient = useQueryClient()
   const router = useRouter()
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (submissionId: string) => {
-      // TODO: Replace with actual approve action
-      // import { approveSubmissionAction } from "@/app/(dashboard)/admin/dashboard/bounties-management/_action"
-      // const res = await approveSubmissionAction(submissionId)
-      // return res
+    mutationFn: async ({ submissionId, bountyId }: { submissionId: string; bountyId: string }) => {
+      const res = await approvedBountySubmissionAction(bountyId, submissionId)
+      
+      if (!res.success) {
+        return { success: false }
+      }
       return { success: true }
     },
   })
@@ -46,7 +50,7 @@ export default function ApproveSubmissionDialog({
     }
 
     try {
-      const res = await mutateAsync(submission._id)
+      const res = await mutateAsync({ submissionId: submission._id, bountyId })
 
       if (!res?.success) {
         toast.error("Failed to approve submission")
@@ -86,7 +90,7 @@ export default function ApproveSubmissionDialog({
           </AlertDialogCancel>
           <AlertDialogAction
             disabled={isPending}
-            onClick={(e: any) => {
+            onClick={(e) => {
               e.preventDefault()
               void handleApprove()
             }}

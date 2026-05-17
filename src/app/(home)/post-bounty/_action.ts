@@ -21,8 +21,11 @@ export const createNewBountyAction= async (
     }
   }
   try {
-   return  await addNewBountyAndTask(parsedPayload.data)
+  const tasks = await addNewBountyAndTask(parsedPayload.data)
+  console.log(tasks)
+  return tasks
   } catch (error: unknown) {
+
     return {
       success: false,
       message: getActionErrorMessage(error, "Failed to create new bounty"),
