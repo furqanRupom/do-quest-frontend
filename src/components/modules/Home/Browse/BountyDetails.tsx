@@ -226,14 +226,6 @@ export default function BountyDetails({
                       <span className="font-bold">{isOpen ? "Open" : bounty.status}</span>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="mb-1 font-['Space_Grotesk'] text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-                      Payment
-                    </p>
-                    <Badge variant={bounty.paymentStatus === "ACTIVE" ? "default" : "secondary"}>
-                      {bounty.paymentStatus}
-                    </Badge>
-                  </div>
                 </div>
 
                 {/* Skills / Tags */}
