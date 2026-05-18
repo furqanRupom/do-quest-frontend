@@ -7,7 +7,6 @@ import { Plus, Menu, X, ChevronRight, LogOut } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Profile } from "@/types/profile.types";
 import { ProfileSheet } from "../ui/profile-sheet";
-import { ThemeToggle } from "../ui/theme-toggle";
 
 type NavbarProps = {
   profile: Profile | null;
@@ -106,7 +105,6 @@ const Navbar = ({ profile }: NavbarProps) => {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-3">
-            <ThemeToggle />
             <Button
               asChild
               size="lg"
@@ -137,7 +135,6 @@ const Navbar = ({ profile }: NavbarProps) => {
 
           {/* Mobile Menu Toggle */}
           <div className="flex items-center gap-2 md:hidden">
-            <ThemeToggle />
             <Button
               variant="ghost"
               size="icon"

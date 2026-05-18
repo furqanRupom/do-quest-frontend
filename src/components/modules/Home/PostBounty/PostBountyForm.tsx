@@ -222,7 +222,7 @@ const PostBountyForm = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <form.Field name="budget" validators={{ onChange: bountyTaskFormSchema.shape.budget }}>
                     {(field) => (
-                      <AppField field={field} label="Total Budget (USDC)" type="number" placeholder="0.00" prepend={<span className="text-muted-foreground text-sm font-bold">$</span>} />
+                      <AppField field={field} label="Total Budget ($ - USD)" type="number" placeholder="0.00" prepend={<span className="text-muted-foreground text-sm font-bold">$</span>} />
                     )}
                   </form.Field>
 

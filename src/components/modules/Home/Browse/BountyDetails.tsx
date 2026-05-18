@@ -118,7 +118,7 @@ export default function BountyDetails({
                   Reward Pool
                 </p>
                 <p className="font-['Space_Grotesk'] text-2xl font-semibold">
-                  {bounty.budget.toLocaleString()} USDC
+                  {bounty.budget.toLocaleString()} $
                 </p>
               </div>
             </div>
@@ -214,14 +214,13 @@ export default function BountyDetails({
                 {/* Status & Payment Status */}
                 <div className="flex items-center justify-between border-b pb-6">
                   <div>
-                    <p className="mb-1 font-['Space_Grotesk'] text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+                    <p className="mb-1 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
                       Status
                     </p>
                     <div className="flex items-center gap-2">
                       <span
-                        className={`h-2 w-2 rounded-full ${
-                          isOpen ? "animate-pulse bg-primary" : "bg-muted-foreground"
-                        }`}
+                        className={`h-2 w-2 rounded-full ${isOpen ? "animate-pulse bg-primary" : "bg-muted-foreground"
+                          }`}
                       />
                       <span className="font-bold">{isOpen ? "Open" : bounty.status}</span>
                     </div>
@@ -231,7 +230,7 @@ export default function BountyDetails({
                 {/* Skills / Tags */}
                 {bounty.tags?.length > 0 && (
                   <div>
-                    <p className="mb-3 font-['Space_Grotesk'] text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+                    <p className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
                       Skills Required
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -289,55 +288,36 @@ export default function BountyDetails({
                     </div>
                   )}
                 </div>
+                {
+                  isOpen ?
 
-              <Link href={`/submissions/${bounty._id}`}>
+                    <Link href={`/submissions/${bounty._id}`}>
 
-                {/* Submit Button */}
-                <Button
-                  disabled={!isOpen}
-                  className="h-14 w-full cursor-pointer bg-primary font-['Space_Grotesk'] text-lg font-black uppercase tracking-tighter text-primary-foreground shadow-[0_0_15px_hsl(var(--primary)/0.3)] transition-all hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)] active:scale-[0.98] disabled:opacity-70"
-                >
-                  {isOpen ? "Submit Bounty" : "Bounty Closed"}
-                </Button>
-                 </Link>
+                      {/* Submit Button */}
+                      <Button
+                        disabled={!isOpen}
+                        className="h-14 w-full cursor-pointer bg-primary text-lg font-black uppercase tracking-tighter text-primary-foreground shadow-[0_0_15px_hsl(var(--primary)/0.3)] transition-all hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)] active:scale-[0.98] disabled:opacity-70"
+                      >
+                        Submit Bounty
+                      </Button>
+                    </Link>
+
+                    :
+                    <Button
+                      disabled={!isOpen}
+                      className="h-14 w-full cursor-pointer bg-primary text-lg font-black uppercase tracking-tighter text-primary-foreground shadow-[0_0_15px_hsl(var(--primary)/0.3)] transition-all hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)] active:scale-[0.98] disabled:opacity-70"
+                    >
+                      Bounty Closed
+                    </Button>
+
+                }
+
               </CardContent>
             </Card>
           </aside>
         </div>
       </main>
 
-      {/* ── Footer ── */}
-      <footer className="mt-auto w-full border-t bg-card px-8 py-12">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="font-['Space_Grotesk'] text-xl font-black">DoQuest</span>
-              <DollarSign className="h-5 w-5 text-primary" />
-            </div>
-            <p className="font-['Space_Grotesk'] max-w-sm text-sm uppercase tracking-widest text-muted-foreground">
-              © 2024 DoQuest. The Frontier of Digital Meritocracy.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-2">
-              <Link href="/browse" className="font-['Space_Grotesk'] text-sm uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary">
-                Browse Quests
-              </Link>
-              <Link href="/leaderboard" className="font-['Space_Grotesk'] text-sm uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary">
-                Leaderboard
-              </Link>
-            </div>
-            <div className="flex flex-col gap-2">
-              <Link href="/docs" className="font-['Space_Grotesk'] text-sm uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary">
-                Documentation
-              </Link>
-              <Link href="/terms" className="font-['Space_Grotesk'] text-sm uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary">
-                Terms of Service
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
