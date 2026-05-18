@@ -12,7 +12,16 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { ISubmission, SubmissionStatus } from "@/types/submission.types"
 import { format } from "date-fns"
-import { Download, AlertCircle, CheckCircle2, MessageSquare } from "lucide-react"
+import { 
+  AlertCircle, 
+  CheckCircle2, 
+  MessageSquare, 
+  ExternalLink, 
+  User, 
+  ClipboardList, 
+  Clock,
+  FileText
+} from "lucide-react"
 
 interface Props {
   open: boolean
@@ -52,9 +61,10 @@ const getStatusIcon = (status: SubmissionStatus | string) => {
     case SubmissionStatus.revision_requested:
       return <MessageSquare className="w-5 h-5" />
     default:
-      return null
+      return <Clock className="w-5 h-5" />
   }
 }
+
 
 export default function ViewMySubmissionDetailsDialog({
   open,
@@ -72,8 +82,9 @@ export default function ViewMySubmissionDetailsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] max-w-3xl overflow-hidden p-0">
-        <DialogHeader className="border-b px-6 py-5 flex flex-row items-start justify-between">
+      {/* Updated max width and added w-full for consistency */}
+      <DialogContent className="max-h-[90vh] max-w-5xl w-full overflow-hidden p-0">
+        <DialogHeader className="border-b px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <DialogTitle>Your Submission</DialogTitle>
             <DialogDescription>
@@ -81,84 +92,39 @@ export default function ViewMySubmissionDetailsDialog({
             </DialogDescription>
           </div>
           {canResubmit && onResubmit && (
-            <Button
-              onClick={onResubmit}
-              className="ml-auto"
-            >
+            <Button onClick={onResubmit} className="sm:ml-auto shrink-0">
               Resubmit
             </Button>
           )}
         </DialogHeader>
 
         <ScrollArea className="max-h-[calc(90vh-5rem)]">
-          <div className="space-y-4 px-6 py-5">
-
-            {/* Status Section */}
-            <div className="rounded-lg border p-4 bg-muted/30">
-              <div className="flex items-center gap-3 mb-3">
-                {getStatusIcon(submission.status) && (
-                  <div className={getStatusColor(submission.status)}>
-                    {getStatusIcon(submission.status)}
-                  </div>
-                )}
-                <h3 className="font-semibold">Status</h3>
+          <div className="space-y-5 px-6 py-5">
+            
+            {/* Status & ID Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-lg border p-4 bg-muted/30">
+              <div className="flex items-center gap-3">
+                <div className={getStatusColor(submission.status)}>
+                  {getStatusIcon(submission.status)}
+                </div>
+                <span className="font-semibold text-lg">
+                  {submission.status?.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}
+                </span>
               </div>
-              <Badge variant="outline" className="text-base py-1 px-3">
-                {submission.status}
+              <Badge className={`text-xs py-1 px-3 font-medium `}>
+                ID: {submission._id?.substring(0, 10)}...
               </Badge>
             </div>
 
-            {/* Task Information */}
-            <div className="rounded-lg border p-4">
-              <h3 className="mb-4 font-semibold">Task Information</h3>
-              <div className="space-y-3">
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">Task Name</p>
-                  <p className="text-sm font-medium">
-                    {typeof submission.task === "string"
-                      ? submission.task
-                      : submission.task?.title || "N/A"}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Your Message */}
-            <div className="rounded-lg border p-4">
-              <h3 className="mb-3 font-semibold">Your Message</h3>
-              <p className="text-sm text-muted-foreground whitespace-pre-wrap bg-muted/50 p-3 rounded">
-                {submission.message || "No message provided"}
-              </p>
-            </div>
-
-            {/* Your Attachments */}
-            {submission.attachments && submission.attachments.length > 0 && (
-              <div className="rounded-lg border p-4">
-                <h3 className="mb-3 font-semibold">Your Attachments ({submission.attachments.length})</h3>
-                <div className="space-y-2">
-                  {submission.attachments.map((attachment, index) => (
-                    <div key={index} className="flex items-center justify-between p-2 rounded bg-muted/50 hover:bg-muted/80 transition-colors">
-                      <span className="text-sm truncate">{attachment}</span>
-                      <a href={attachment} target="_blank" rel="noopener noreferrer">
-                        <Button variant="ghost" size="sm">
-                          <Download className="w-4 h-4" />
-                        </Button>
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Feedback Section */}
+            {/* Feedback Section - Moved up for better visibility when resubmitting */}
             <div className="space-y-3">
               {/* Revision Note */}
               {submission.revisionNote && (
                 <div className="rounded-lg border border-amber-200 dark:border-amber-800 p-4 bg-amber-50/50 dark:bg-amber-900/10">
                   <div className="flex items-start gap-3">
-                    <MessageSquare className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-1 flex-shrink-0" />
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-amber-900 dark:text-amber-200 mb-2">Revision Requested</h3>
+                    <MessageSquare className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h3 className="font-semibold text-amber-900 dark:text-amber-200 mb-1">Revision Requested</h3>
                       <p className="text-sm text-amber-800 dark:text-amber-300 whitespace-pre-wrap">
                         {submission.revisionNote}
                       </p>
@@ -171,9 +137,9 @@ export default function ViewMySubmissionDetailsDialog({
               {submission.rejectionReason && (
                 <div className="rounded-lg border border-red-200 dark:border-red-800 p-4 bg-red-50/50 dark:bg-red-900/10">
                   <div className="flex items-start gap-3">
-                    <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 mt-1 flex-shrink-0" />
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-red-900 dark:text-red-200 mb-2">Rejection Reason</h3>
+                    <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h3 className="font-semibold text-red-900 dark:text-red-200 mb-1">Rejection Reason</h3>
                       <p className="text-sm text-red-800 dark:text-red-300 whitespace-pre-wrap">
                         {submission.rejectionReason}
                       </p>
@@ -183,15 +149,71 @@ export default function ViewMySubmissionDetailsDialog({
               )}
             </div>
 
+            {/* Task Information */}
+            <div className="rounded-lg border p-4">
+              <h3 className="mb-4 font-semibold flex items-center gap-2">
+                <ClipboardList className="w-4 h-4 text-muted-foreground" />
+                Task Information
+              </h3>
+              <div className="space-y-1 text-sm">
+                <p className="text-muted-foreground">Task Name</p>
+                <p className="font-medium">
+                  {typeof submission.task === "string"
+                    ? submission.task
+                    : submission.task?.title || "N/A"}
+                </p>
+              </div>
+            </div>
+
+            {/* Your Message */}
+            <div className="rounded-lg border p-4">
+              <h3 className="mb-3 font-semibold flex items-center gap-2">
+                <FileText className="w-4 h-4 text-muted-foreground" />
+                Your Message
+              </h3>
+              <div className="text-sm text-foreground whitespace-pre-wrap bg-muted/50 p-4 rounded-md border">
+                {submission.message || "No message provided"}
+              </div>
+            </div>
+
+            {/* Your Attachments - Links/URLs */}
+            {submission.attachments && submission.attachments.length > 0 && (
+              <div className="rounded-lg border p-4">
+                <h3 className="mb-3 font-semibold flex items-center gap-2">
+                  <ExternalLink className="w-4 h-4 text-muted-foreground" />
+                  Your Attachments ({submission.attachments.length})
+                </h3>
+                <div className="space-y-2">
+                  {submission.attachments.map((attachment, index) => (
+                    <a
+                      key={index}
+                      href={attachment}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 p-3 rounded-md border bg-muted/30 hover:bg-muted/60 hover:border-blue-300 dark:hover:border-blue-700 transition-colors group"
+                    >
+                      <ExternalLink className="w-4 h-4 shrink-0 text-muted-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
+                      <span className="text-sm truncate text-blue-600 dark:text-blue-400 group-hover:underline decoration-blue-400">
+                        {attachment}
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Timeline */}
             <div className="rounded-lg border p-4">
-              <h3 className="mb-4 font-semibold">Timeline</h3>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between items-center pb-3 border-b">
+              <h3 className="mb-4 font-semibold flex items-center gap-2">
+                <Clock className="w-4 h-4 text-muted-foreground" />
+                Timeline
+              </h3>
+              <div className="space-y-0 text-sm">
+                <div className="flex justify-between items-center py-3 border-b">
                   <span className="text-muted-foreground">Submitted</span>
                   <span className="font-medium">{formatDateTime(submission.createdAt)}</span>
                 </div>
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center py-3">
                   <span className="text-muted-foreground">Last Updated</span>
                   <span className="font-medium">{formatDateTime(submission.updatedAt)}</span>
                 </div>

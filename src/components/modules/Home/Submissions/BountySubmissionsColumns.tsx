@@ -86,23 +86,9 @@ export const bountySubmissionColumns: ColumnDef<ISubmission>[] = [
     ),
   },
   {
-    id: "message",
-    accessorKey: "message",
-    header: "Message",
-    cell: ({ row }) => {
-      const msg = row.original.message
-      if (!msg) return <span className="text-sm text-muted-foreground">No message</span>
-      return (
-        <span className="text-sm text-muted-foreground" title={msg}>
-          {truncateText(msg, 40)}
-        </span>
-      )
-    },
-  },
-  {
     id: "attachments",
     accessorKey: "attachments",
-    header: "Files",
+    header: "Attachements",
     enableSorting: false,
     cell: ({ row }) => {
       const count = row.original.attachments?.length ?? 0
@@ -110,7 +96,7 @@ export const bountySubmissionColumns: ColumnDef<ISubmission>[] = [
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium">{count}</span>
           {count > 0 && (
-            <span className="text-xs text-muted-foreground">file{count !== 1 ? "s" : ""}</span>
+            <span className="text-xs text-muted-foreground"> attachements {count !== 1 ? "s" : ""}</span>
           )}
         </div>
       )
@@ -154,51 +140,9 @@ export const myBountySubmissionColumns: ColumnDef<ISubmission>[] = [
     ),
   },
   {
-    id: "message",
-    accessorKey: "message",
-    header: "Your Message",
-    cell: ({ row }) => {
-      const msg = row.original.message
-      if (!msg) return <span className="text-sm text-muted-foreground">No message</span>
-      return (
-        <span className="text-sm text-muted-foreground" title={msg}>
-          {truncateText(msg, 40)}
-        </span>
-      )
-    },
-  },
-  {
-    id: "revisionNote",
-    accessorKey: "revisionNote",
-    header: "Revision Note",
-    cell: ({ row }) => {
-      const note = row.original.revisionNote
-      if (!note) return <span className="text-muted-foreground text-sm">—</span>
-      return (
-        <span className="text-sm text-amber-600 dark:text-amber-400" title={note}>
-          {truncateText(note, 40)}
-        </span>
-      )
-    },
-  },
-  {
-    id: "rejectionReason",
-    accessorKey: "rejectionReason",
-    header: "Rejection Reason",
-    cell: ({ row }) => {
-      const reason = row.original.rejectionReason
-      if (!reason) return <span className="text-muted-foreground text-sm">—</span>
-      return (
-        <span className="text-sm text-red-600 dark:text-red-400" title={reason}>
-          {truncateText(reason, 40)}
-        </span>
-      )
-    },
-  },
-  {
     id: "attachments",
     accessorKey: "attachments",
-    header: "Files",
+    header: "Attachments",
     enableSorting: false,
     cell: ({ row }) => {
       const count = row.original.attachments?.length ?? 0
@@ -206,7 +150,7 @@ export const myBountySubmissionColumns: ColumnDef<ISubmission>[] = [
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium">{count}</span>
           {count > 0 && (
-            <span className="text-xs text-muted-foreground">file{count !== 1 ? "s" : ""}</span>
+            <span className="text-xs text-muted-foreground">attachements{count !== 1 ? "s" : ""}</span>
           )}
         </div>
       )
