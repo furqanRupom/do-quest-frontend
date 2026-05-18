@@ -1,8 +1,8 @@
+
 "use client"
 
 import { Wallet, Clock, TrendingUp } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import { IWallet } from "@/types/wallet.types";
 import { WalletStatsSkeleton } from "@/components/skeleton/WalletStatsSkeleton";
 
@@ -10,7 +10,6 @@ interface WalletStatsProps {
   wallet: IWallet;
   isLoading?: boolean;
 }
-
 
 export function WalletStats({ wallet, isLoading = false }: WalletStatsProps) {
   const stats = [
@@ -52,15 +51,15 @@ export function WalletStats({ wallet, isLoading = false }: WalletStatsProps) {
           className="relative overflow-hidden bg-card border-border backdrop-blur-xl"
         >
           <div className={`absolute top-0 left-0 w-[3px] h-full ${stat.bar}`} />
-          <CardContent className="p-8">
-            <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-4">
+          <CardContent className="p-6">   {/* Reduced from p-8 */}
+            <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-3">
               {stat.label}
             </p>
-            <h3 className="text-3xl font-black text-foreground mb-3 font-sans tracking-tight">
+            <h3 className="text-2xl font-black text-foreground mb-2 font-sans tracking-tight">  {/* Reduced from 3xl */}
               {stat.value}
             </h3>
             <div className={`flex items-center gap-2 ${stat.textColor}`}>
-              <stat.icon size={14} />
+              <stat.icon size={16} />   {/* Slightly smaller icon */}
               <span className="text-sm font-medium">{stat.subtext}</span>
             </div>
           </CardContent>

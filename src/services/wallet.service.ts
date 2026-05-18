@@ -1,13 +1,13 @@
 "use server"
 
 import { httpClient } from "@/lib/axios/httpClient"
-import { IWallet, IWalletTransaction } from "@/types/wallet.types"
+import { IWallet, IWalletTransaction, IWithdrawWallet } from "@/types/wallet.types"
 
 
 export async function retrieveWalletTransactions(queryString:string){
   try {
     return await httpClient.get<IWalletTransaction[]>(
-      queryString ? `/wallet/transactions${queryString}` : '/wallet/transactions'
+      queryString ? `/wallet/transactions?${queryString}` : '/wallet/transactions'
     )
     
   }

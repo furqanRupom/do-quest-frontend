@@ -47,3 +47,8 @@ export interface IWalletTransaction {
   status:string;
   description:TransactionStatus;
 }
+
+export interface IWithdrawWallet {
+  transferId:string;
+  wallet: IWallet;
+}

@@ -8,6 +8,7 @@ import {
 } from "@/types/wallet.types"
 import { DataTableFilterConfig } from "@/components/shared/table/DataTableFilters"
 
+
 // ── Columns ────────────────────────────────────────────────────────────────
 
 export const walletTransactionColumns: ColumnDef<IWalletTransaction>[] = [
@@ -38,7 +39,7 @@ export const walletTransactionColumns: ColumnDef<IWalletTransaction>[] = [
       const amount = row.getValue("amount") as number
       const isCredit = type === TransactionType.credit
       
-      // Divide by 100 if your backend stores amounts in cents
+      // Note: Divide by 100 if your backend stores amounts in cents
       const display = `${isCredit ? "+" : "-"}$${Math.abs(amount / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}`
 
       return (
