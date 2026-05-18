@@ -36,7 +36,7 @@ export function WalletStats({ wallet, isLoading = false }: WalletStatsProps) {
       subtext: "Lifetime achievement",
       icon: TrendingUp,
       bar: "bg-accent",
-      textColor: "text-accent",
+      textColor: "text-gray-400",
     },
   ];
 

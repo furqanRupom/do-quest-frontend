@@ -113,25 +113,25 @@ const DataTable = <TData,>({ data = [] as TData[], columns, actions, toolbarActi
             )}
 
             {rowActions.onApprove && (
-              <DropdownMenuItem onClick={() => rowActions.onApprove?.(rowData)} className="cursor-pointer text-green-600 focus:text-green-600 focus:bg-green-50 dark:focus:bg-green-950">
+              <DropdownMenuItem onClick={() => rowActions.onApprove?.(rowData)} className="cursor-pointer">
                 <CheckCircle2 className="mr-2 h-4 w-4" /> Approve
               </DropdownMenuItem>
             )}
 
             {rowActions.onReject && (
-              <DropdownMenuItem onClick={() => rowActions.onReject?.(rowData)} className="cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50 dark:focus:bg-red-950">
+              <DropdownMenuItem onClick={() => rowActions.onReject?.(rowData)} className="cursor-pointer">
                 <XCircle className="mr-2 h-4 w-4" /> Reject
               </DropdownMenuItem>
             )}
 
             {rowActions.onRevision && (
-              <DropdownMenuItem onClick={() => rowActions.onRevision?.(rowData)} className="cursor-pointer text-amber-600 focus:text-amber-600 focus:bg-amber-50 dark:focus:bg-amber-950">
+              <DropdownMenuItem onClick={() => rowActions.onRevision?.(rowData)} className="cursor-pointer">
                 <MessageSquare className="mr-2 h-4 w-4" /> Request Revision
               </DropdownMenuItem>
             )}
 
             {rowActions.onDelete && (
-              <DropdownMenuItem onClick={() => rowActions.onDelete?.(rowData)} className="cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50 dark:focus:bg-red-950">
+              <DropdownMenuItem onClick={() => rowActions.onDelete?.(rowData)} className="cursor-pointer">
                 <Trash2 className="mr-2 h-4 w-4" /> Delete
               </DropdownMenuItem>
             )}

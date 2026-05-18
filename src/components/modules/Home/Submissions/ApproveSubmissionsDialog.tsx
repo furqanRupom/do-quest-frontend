@@ -78,9 +78,9 @@ export default function ApproveSubmissionDialog({
           <AlertDialogTitle>Approve Submission</AlertDialogTitle>
           
           <AlertDialogDescription asChild>
-            <div>
+            <div >
               Are you sure you want to approve this submission and process the payment?
-              <div className="mt-3 p-2 rounded bg-muted text-sm">
+              <div className="mt-6 p-3  rounded bg-muted text-sm">
                 <p><span className="font-medium">Task:</span> {typeof submission.task === "string" ? submission.task : submission.task?.title}</p>
                 <p><span className="font-medium">User:</span> {typeof submission.user === "string" ? submission.user : submission.user?.username}</p>
               </div>
@@ -89,7 +89,7 @@ export default function ApproveSubmissionDialog({
           
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isPending}>
+          <AlertDialogCancel className="cursor-pointer" disabled={isPending}>
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
@@ -98,6 +98,7 @@ export default function ApproveSubmissionDialog({
               e.preventDefault()
               void handleApprove()
             }}
+            className="cursor-pointer"
           >
             {isPending ? "Approving..." : "Approve"}
           </AlertDialogAction>
