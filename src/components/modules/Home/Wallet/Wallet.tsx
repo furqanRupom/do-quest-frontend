@@ -95,7 +95,6 @@ export const Wallet = ({ queryString: initialQueryString = "", profile }: Wallet
           <div className="lg:col-span-8">
             <WalletStats wallet={wallet} isLoading={isWalletLoading} />
 
-        {/* Transactions Table - Search Enabled, Filtering Removed */}
         <DataTable 
           data={transactions}
           columns={walletTransactionColumns}
@@ -112,7 +111,6 @@ export const Wallet = ({ queryString: initialQueryString = "", profile }: Wallet
             debounceMs: 700,
             onDebouncedChange: handleDebouncedSearchChange,
           }}
-          // Filters prop removed (no filtering)
         />
           </div>
           

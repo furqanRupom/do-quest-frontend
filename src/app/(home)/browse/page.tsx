@@ -5,7 +5,7 @@ import { retriveBountiesAndTasks} from "@/services/bounty.service"
 import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query"
 
 export const metadata: Metadata = {
-    title: "Do.Quest | Browse",
+    title: "Browse Bounties - Do.Quest",
     description: "Do quests browse page",
 };
 

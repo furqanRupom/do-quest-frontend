@@ -5,7 +5,7 @@ import { Wallet } from "@/components/modules/Home/Wallet/Wallet";
 import { getUserInfo } from "@/services/auth.service";
 
 export const metadata: Metadata = {
-    title: "Do.Quest | Wallet",
+    title: "Wallet - Do.Quest",
     description: "Manage your earnings, payouts, and financial history.",
 };
 
