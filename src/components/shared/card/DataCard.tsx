@@ -69,7 +69,6 @@ const DataCard = <TData,>({
   const hydratedIsLoading = hasHydrated ? Boolean(isLoading) : false;
   const totalPages = meta?.totalPages ?? 0;
   const totalItems = meta?.total ?? 0;
-
   // ── Skeleton that perfectly matches the new Glassmorphic BountyCard ──
   const DefaultSkeleton = () => (
     <div className="flex flex-col h-full relative overflow-hidden rounded-xl border border-border/30 bg-card/40 backdrop-blur-xl p-6 animate-pulse">

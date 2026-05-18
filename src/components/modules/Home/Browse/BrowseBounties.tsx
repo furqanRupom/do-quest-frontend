@@ -19,7 +19,7 @@ import {
 // ── Configs ──────────────────────────────────────────────────────────────────
 
 const DEFAULT_PAGE = 1;
-const DEFAULT_LIMIT = 12;
+const DEFAULT_LIMIT = 10;
 
 const CATEGORIES = [
   { label: "All Quests", value: "ALL" },

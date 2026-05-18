@@ -39,7 +39,7 @@ const DataCardPagination = ({ pagination, onPaginationChange, totalRows, totalPa
   const pageSize = pagination.pageSize;
   const currentPage = pagination.pageIndex + 1;
   const computedTotalPages = totalPages ?? 0;
-
+  const canGoPrevious = currentPage > 1;
   const [isCustomMode, setIsCustomMode] = useState<boolean>(!isDefaultPageSize(pageSize));
   const [customPageSize, setCustomPageSize] = useState<string>(String(pageSize));
 
@@ -103,7 +103,7 @@ const DataCardPagination = ({ pagination, onPaginationChange, totalRows, totalPa
               variant={isActive ? "default" : "outline"}
               size="sm"
               className={cn(
-                "h-10 w-10 p-0 text-xs font-bold transition-all",
+                "h-10 w-10 p-0 text-xs cursor-pointer font-bold transition-all",
                 isActive && "bg-primary/10 text-primary border border-primary shadow-[0_0_12px_rgba(0,245,255,0.3)] pointer-events-none",
                 !isActive && "bg-card/40 backdrop-blur-xl border-border/50 hover:border-primary hover:text-primary"
               )}
@@ -118,7 +118,7 @@ const DataCardPagination = ({ pagination, onPaginationChange, totalRows, totalPa
         <Button
           variant="outline"
           size="sm"
-          className="h-10 w-10 p-0 bg-card/40 backdrop-blur-xl border-border/50 hover:border-primary hover:text-primary"
+          className="h-10 w-10 p-0 cursor-pointer bg-card/40 backdrop-blur-xl border-border/50 hover:border-primary hover:text-primary"
           onClick={() => goToPage(currentPage + 1)}
           disabled={currentPage >= computedTotalPages || isLoading}
         >
