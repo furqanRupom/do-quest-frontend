@@ -21,23 +21,8 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
                     icon: "LayoutDashboard"
 
                 },
-                {
-                    title: "My Profile",
-                    href: `/my-profile`,
-                    icon: "User",
-                },
             ]
         },
-        {
-            title: "Settings",
-            items: [
-                {
-                    title: "Change Password",
-                    href: "change-password",
-                    icon: "Settings"
-                }
-            ]
-        }
     ]
 }
 
@@ -73,16 +58,6 @@ export const adminNavItems: NavSection[] = [
 ];
 
 export const userNavItems: NavSection[] = [
-    {
-        title: "Bounties and Tasks",
-        items: [
-            {
-                title: "My Bounties",
-                href: "/dashboard/my-bounties",
-                icon: "ClipboardList",
-            },
-        ],
-    },
 
 ];
 

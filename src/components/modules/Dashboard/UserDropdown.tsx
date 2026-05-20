@@ -1,14 +1,23 @@
+"use client"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { userLogout } from "@/services/auth.service"
 import { UserInfo } from "@/types/user.types"
 import { Key, LogOut, User } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 interface UserDropdownProps{
     userInfo : UserInfo
 }
 
 const UserDropdown = ({ userInfo }: UserDropdownProps) => {
+    const router = useRouter()
+
+    const handleLogout = async () => {
+        await userLogout()
+        router.push("/sign-in")
+    }
   return (
     <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -37,14 +46,14 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
             <DropdownMenuSeparator />
 
             <DropdownMenuItem asChild className="hover:bg-gray-50 dark:hover:bg-gray-800/50 focus:bg-gray-50 dark:focus:bg-gray-800/50">
-                <Link href={"/my-profile"} className="w-full cursor-pointer">
+                <Link href={"/profile"} className="w-full cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
                     My Profile
                 </Link>
             </DropdownMenuItem>
 
             <DropdownMenuItem asChild className="hover:bg-gray-50 dark:hover:bg-gray-800/50 focus:bg-gray-50 dark:focus:bg-gray-800/50">
-                <Link href={"/change-password"} className="w-full cursor-pointer">
+                <Link href={"/settings"} className="w-full cursor-pointer">
                     <Key className="mr-2 h-4 w-4" />
                     Change Password
                 </Link>
@@ -53,7 +62,7 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
             <DropdownMenuSeparator />
 
             <DropdownMenuItem 
-              onClick={() => {}} 
+              onClick={handleLogout} 
               className="cursor-pointer text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 focus:bg-red-50 dark:focus:bg-red-900/20"
             >
                 <LogOut className="mr-2 h-4 w-4" />
