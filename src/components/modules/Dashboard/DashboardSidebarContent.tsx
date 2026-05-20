@@ -25,9 +25,9 @@ const DashboardSidebarContent = ({dashboardHome, navItems, userInfo} : Dashboard
     <div className="hidden md:flex h-full w-64 flex-col border-r bg-card overflow-y-auto">
       {/* Logo / Brand */}
       <div className="flex h-16 items-center justify-center border-b">
-        <Link href={dashboardHome} className="flex  items-center justify-center">
-          <LogoIcon height={50} />
-          <span className="text-xl font-bold text-primary text-center mr-4 mt-2">Do.Quest</span>
+        <Link href="/" className="flex  items-center justify-center space-x-2">
+          <LogoIcon height={28} />
+          <span className="text-xl font-bold text-primary text-center mr-4 mt-1">Do.Quest</span>
         </Link>
       </div>
 
