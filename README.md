@@ -14,7 +14,7 @@
 
 > **Status:** 🚧 Under active development
 
-[Live App](https://do-quest.vercel.app) · [Backend API Docs](https://do-quest-backend.vercel.app/api/v1/docs) · [Backend Repo](#)
+[Live App](https://do-quests.vercel.app) · [Backend API Docs](https://do-quest-backend.vercel.app/api/v1/docs) · [Backend Repo](#)
 
 </div>
 
