@@ -1,6 +1,6 @@
 <div align="center">
 <p align="center">
-  <a href="https://do-quest.vercel.app" target="_blank">
+  <a href="https://do-quests.vercel.app" target="_blank">
     <img src="./public/do.svg" width="120" alt="DoQuest Logo" />
   </a>
 </p>
