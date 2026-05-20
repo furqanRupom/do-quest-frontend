@@ -113,7 +113,8 @@ const UserDashboardContent = () => {
           data={submissionStatusData?.data as any || null}
         />
         <FinanceOverviewAreaChart 
-          data={financeOverviewData?.data || null}
+          earningsData={financeOverviewData?.data?.earnings|| null}
+          spendingData={financeOverviewData?.data?.spending || null}
         />
       </div>
 
