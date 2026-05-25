@@ -1,10 +1,14 @@
 import LogoIcon from "@/components/logo/LogoIcon";
 import SignInForm from "@/components/modules/Auth/Sign-In-Form";
+import { Metadata } from "next";
 
 interface SignInParams {
   searchParams: Promise<{ redirect?: string }>;
 }
-
+export const metadata:Metadata =  {
+  title:"Sign In - Do.Quest",
+  description:"Do.Quest sign in page"
+}
 const signInPage = async ({ searchParams }: SignInParams) => {
   const params = await searchParams;
   const redirectPath = params.redirect;
