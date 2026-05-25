@@ -52,7 +52,7 @@ const Service: React.FunctionComponent = () => {
                   <span>Access global talent pool</span>
                 </li>
               </ul>
-              <Link href="/post-bounty">  <Button className="w-full mt-6" size="lg">
+              <Link href="/post-bounty">  <Button className="w-full mt-6 cursor-pointer" size="lg">
                 Post a Bounty
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -93,7 +93,7 @@ const Service: React.FunctionComponent = () => {
                 </li>
               </ul>
               <Link href="/browse">
-                <Button className="w-full mt-6" size="lg" variant="outline">
+                <Button className="w-full mt-6 cursor-pointer" size="lg" variant="outline">
                   Browse Bounties
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
