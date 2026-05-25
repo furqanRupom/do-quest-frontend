@@ -36,7 +36,7 @@ const BountyDetailsPage = async ({ params }: Props) => {
     return (
       <section className="mx-auto max-w-5xl px-4 py-8">
         <Button asChild variant="outline" className="mb-6">
-          <Link href="/bounties">← Back to Bounties</Link>
+          <Link href="/browse">← Back to Bounties</Link>
         </Button>
         <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-6 text-destructive">
           {errorMessage || "Bounty not found"}
@@ -46,7 +46,7 @@ const BountyDetailsPage = async ({ params }: Props) => {
   }
 
   // Directly pass the bounty data. No mapping needed!
-  return <BountyDetails bounty={bounty} backHref="/bounties" />;
+  return <BountyDetails bounty={bounty} backHref="/browse" />;
 };
 
 export default BountyDetailsPage;
