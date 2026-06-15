@@ -16,6 +16,11 @@ interface SignInFormProps {
   redirectPath?: string;
 }
 
+const DEMO_CREDENTIALS = {
+  user: { usernameOrEmail: "tilan_nuez", password: "Tilan@12345" },
+  admin: { usernameOrEmail: "do@quest", password: "Do.quest@12345" },
+};
+
 const SignInForm = ({ redirectPath }: SignInFormProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -29,8 +34,7 @@ const SignInForm = ({ redirectPath }: SignInFormProps) => {
       }
     },
     onError: (error: any) => {
-
-   if (error?.digest?.startsWith("NEXT_REDIRECT")) {
+      if (error?.digest?.startsWith("NEXT_REDIRECT")) {
         toast.success("Signed in successfully!");
         return;
       }
@@ -43,20 +47,50 @@ const SignInForm = ({ redirectPath }: SignInFormProps) => {
       usernameOrEmail: "",
       password: "",
     },
-
     onSubmit: async ({ value }) => {
       try {
         await mutateAsync(value);
       } catch (error: any) {
-        // Error is already handled by onError in useMutation
         console.error("Sign in failed:", error);
       }
     },
   });
 
+  const fillDemoCredentials = (role: "user" | "admin") => {
+    const creds = DEMO_CREDENTIALS[role];
+    form.setFieldValue("usernameOrEmail", creds.usernameOrEmail);
+    form.setFieldValue("password", creds.password);
+  };
+
   return (
     <section>
-      <form
+
+      {/* Demo credentials */}
+      <div className="mb-6">
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+          Demo Credentials
+        </p>
+        <div className="grid grid-cols-2 gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => fillDemoCredentials("user")}
+            className="h-auto py-2 px-3 flex flex-col items-start gap-0.5 cursor-pointer"
+          >
+            <span className="text-xs font-semibold text-foreground">Sign in as User</span>
+            <span className="text-[11px] font-normal text-muted-foreground">tilan_nuez</span>
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => fillDemoCredentials("admin")}
+            className="h-auto py-2 px-3 flex flex-col items-start gap-0.5 cursor-pointer"
+          >
+            <span className="text-xs font-semibold text-foreground">Sign in as Admin</span>
+            <span className="text-[11px] font-normal text-muted-foreground">do@quest</span>
+          </Button>
+        </div>
+      </div>      <form
         method="POST"
         action="#"
         noValidate
