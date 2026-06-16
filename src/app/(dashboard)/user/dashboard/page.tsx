@@ -1,4 +1,6 @@
 import UserDashboardContent from "@/components/modules/Dashboard/UserDashboardContent"
+import WelcomeCard from "@/components/shared/WelcomeCard"
+import { getUserInfo } from "@/services/auth.service"
 import {
   userDashboardMetaData,
   getSubmissionGraph,
@@ -9,14 +11,19 @@ import {
   getCategoryStats,
   getFinanceOverview,
 } from "@/services/dashboard.service"
+import { ApiResponse } from "@/types/api.types"
+import { IUserMetaResponse } from "@/types/dashboard.types"
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
+  useQuery,
 } from "@tanstack/react-query"
 
 const UserDashboardPage = async () => {
   const queryClient = new QueryClient()
+  const user = await getUserInfo();
+
 
   /* ================= META ================= */
   await queryClient.prefetchQuery({
@@ -69,8 +76,14 @@ const UserDashboardPage = async () => {
     staleTime: 30 * 1000,
   })
 
+
+
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
+
+      <WelcomeCard
+        name={user.name}
+      />
       <UserDashboardContent />
     </HydrationBoundary>
   )
