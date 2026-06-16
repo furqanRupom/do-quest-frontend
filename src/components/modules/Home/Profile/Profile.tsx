@@ -27,6 +27,7 @@ import {
   Settings,
   Lock,
 } from "lucide-react"
+import Link from "next/link"
 
 interface ProfileCardProps {
   profile: Profile
@@ -99,12 +100,6 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
                     {initials}
                   </AvatarFallback>
                 </Avatar>
-                <Button 
-                  size="icon" 
-                  className="absolute -bottom-2 -right-2 bg-background border border-primary/50 p-2 rounded-lg text-primary hover:bg-primary hover:text-primary-foreground transition-colors h-8 w-8"
-                >
-                  <Pencil className="h-4 w-4" />
-                </Button>
               </div>
 
               {/* Info Section */}
@@ -264,6 +259,7 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
               )}
 
               {/* Connect New Button */}
+              <Link className="cursor-pointer" href="/settings">
               <Button 
                 variant="outline"
                 className="w-full mt-4 flex items-center justify-center gap-2 py-6 rounded-lg border-2 border-dashed border-border/50 text-muted-foreground hover:border-primary/50 hover:text-primary transition-all font-bold uppercase tracking-widest text-xs"
@@ -271,6 +267,7 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
                 <Plus className="h-4 w-4" />
                 Link New Platform
               </Button>
+            </Link>
             </div>
           </div>
 
