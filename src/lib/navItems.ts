@@ -30,26 +30,32 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
 
 export const adminNavItems: NavSection[] = [
     {
-        title: "User Management",
+        // title: "User Management",
         items: [
             {
                 title: "Users",
                 href: "/admin/dashboard/users-management",
                 icon: "Users",
-            }
-        ],
-    },
-    {
-        title: "Bounties and tasks Management",
-        items: [
+            },
+            
             {
                 title: "Bounties",
                 href: "/admin/dashboard/bounties-management",
                 icon: "Calendar",
             },
-
         ],
     },
+    // {
+    //     // title: "Bounties and tasks Management",
+    //     items: [
+    //         {
+    //             title: "Bounties",
+    //             href: "/admin/dashboard/bounties-management",
+    //             icon: "Calendar",
+    //         },
+
+    //     ],
+    // },
 ];
 
 export const userNavItems: NavSection[] = [
