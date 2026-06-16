@@ -1,14 +1,10 @@
 "use client"
-import StatsCard from "@/components/shared/StatsCard"
 import {
-  userDashboardMetaData,
   getSubmissionGraph,
   getEarningsGraph,
   getSpendingGraph,
   getTaskGraph,
 } from "@/services/dashboard.service"
-import { ApiResponse } from "@/types/api.types"
-import { IUserMetaResponse } from "@/types/dashboard.types"
 import { useQuery } from "@tanstack/react-query"
 import EarningsLineChart from "@/components/shared/EarningsLineChart"
 import SubmissionsBarChart from "@/components/shared/SubmissionBarChart"
@@ -16,11 +12,6 @@ import EarningsVsSpendingChart from "@/components/shared/EarningsVsSpeandingChar
 import SubmissionsOverTasksChart from "@/components/shared/SubmissionsOverTasksChart"
 
 const UserDashboardContent = () => {
-  const { data: metaRes } = useQuery({
-    queryKey: ["user-dashboard-meta"],
-    queryFn: userDashboardMetaData,
-    refetchOnWindowFocus: "always",
-  })
 
   const { data: submissionGraph } = useQuery({
     queryKey: ["submission-graph"],
@@ -43,7 +34,6 @@ const UserDashboardContent = () => {
   })
 
 
-  const meta = metaRes as ApiResponse<IUserMetaResponse>
 
   return (
     <section className="space-y-10 py-12">
