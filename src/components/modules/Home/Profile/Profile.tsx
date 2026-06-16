@@ -259,10 +259,10 @@ const ProfileCard = ({ profile }: ProfileCardProps) => {
               )}
 
               {/* Connect New Button */}
-              <Link className="cursor-pointer" href="/settings">
+              <Link  href="/settings">
               <Button 
                 variant="outline"
-                className="w-full mt-4 flex items-center justify-center gap-2 py-6 rounded-lg border-2 border-dashed border-border/50 text-muted-foreground hover:border-primary/50 hover:text-primary transition-all font-bold uppercase tracking-widest text-xs"
+                className="w-full cursor-pointer mt-4 flex items-center justify-center gap-2 py-6 rounded-lg border-2 border-dashed border-border/50 text-muted-foreground hover:border-primary/50 hover:text-primary transition-all font-bold uppercase tracking-widest text-xs"
               >
                 <Plus className="h-4 w-4" />
                 Link New Platform
