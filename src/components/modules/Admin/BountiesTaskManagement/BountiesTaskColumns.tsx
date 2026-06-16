@@ -92,28 +92,6 @@ export const bountiesTaskColumns: ColumnDef<ITaskAndBounty>[] = [
     ),
   },
 
-  {
-    id: "categories",
-    accessorKey: "categories",
-    header: "Categories",
-    enableSorting: false,
-    cell: ({ row }) => {
-      const categories = row.original.categories ?? []
-
-      return (
-        <div className="flex flex-wrap gap-1">
-          {categories.slice(0, 2).map((cat, i) => (
-            <Badge key={i} variant="outline">
-              {cat}
-            </Badge>
-          ))}
-          {categories.length > 2 && (
-            <Badge variant="outline">+{categories.length - 2}</Badge>
-          )}
-        </div>
-      )
-    },
-  },
 
   {
     id: "createdAt",
@@ -132,19 +110,5 @@ export const bountiesTaskColumns: ColumnDef<ITaskAndBounty>[] = [
       )
     },
   },
-{
-  id: "manageSubmissions",
-  header: "Submissions",
-  cell: ({ row }) => {
-    const id = row.original._id || row.original._id
-    return (
-      <Link href={`/my-bounties/${id}/submissions`}>
-        <Button variant="outline" size="sm">
-          View
-        </Button>
-      </Link>
-    )
-  },
-},
 
 ]
