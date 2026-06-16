@@ -1,9 +1,7 @@
 import DateCell from "@/components/shared/cell/DateCell"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { ITaskAndBounty } from "@/types/bounty.types"
 import { ColumnDef } from "@tanstack/react-table"
-import Link from "next/link"
 
 const getStatusVariant = (status: string) => {
   switch (status) {
