@@ -61,18 +61,15 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.15 0.02 270);
 
-  /* Cyan based primary */
-  --primary: oklch(0.55 0.15 250);
+  --primary: oklch(0.62 0.13 192);
   --primary-foreground: oklch(0.98 0 0);
 
-  /* Purple based secondary */
   --secondary: oklch(0.5 0.15 295);
   --secondary-foreground: oklch(0.98 0 0);
 
   --muted: oklch(0.94 0.01 250);
   --muted-foreground: oklch(0.55 0.02 260);
 
-  /* Subtle accent for hovers (Light mode = very faint blue tint) */
   --accent: oklch(0.94 0.04 250);
   --accent-foreground: oklch(0.2 0.04 250);
 
@@ -81,7 +78,7 @@
 
   --border: oklch(0.9 0.01 250);
   --input: oklch(0.9 0.01 250);
-  --ring: oklch(0.55 0.15 250);
+  --ring: oklch(0.62 0.13 192);
 
   --sidebar: oklch(0.94 0.01 250);
   --sidebar-foreground: oklch(0.15 0.02 270);
@@ -100,10 +97,12 @@
    DARK MODE (Wallet Glassmorphic Theme)
 ========================= */
 .dark {
-  --background: oklch(0.1 0.015 270); /* Deep dark indigo/slate (#0A0A0C) */
+  --background: oklch(0.1 0.015 270);
+  /* Deep dark indigo/slate (#0A0A0C) */
   --foreground: oklch(0.95 0.01 250);
 
-  --card: oklch(0.15 0.02 270); /* Slightly lighter for glass panels */
+  --card: oklch(0.15 0.02 270);
+  /* Slightly lighter for glass panels */
   --card-foreground: oklch(0.95 0.01 250);
 
   --popover: oklch(0.15 0.02 270);
@@ -124,10 +123,12 @@
   --accent: oklch(0.2 0.04 250);
   --accent-foreground: oklch(0.8 0.1 250);
 
-  --destructive: oklch(0.65 0.25 25); /* Red 400 */
+  --destructive: oklch(0.65 0.25 25);
+  /* Red 400 */
   --destructive-foreground: oklch(0.95 0 0);
 
-  --border: oklch(0.28 0.03 270); /* Replicates border-white/10 natively */
+  --border: oklch(0.28 0.03 270);
+  /* Replicates border-white/10 natively */
   --input: oklch(0.28 0.03 270);
   --ring: oklch(0.78 0.14 192);
 

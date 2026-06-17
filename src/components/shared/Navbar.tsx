@@ -7,6 +7,7 @@ import { Plus, Menu, X, ChevronRight, LogOut } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Profile } from "@/types/profile.types";
 import { ProfileSheet } from "../ui/profile-sheet";
+import { ThemeToggle } from "../ui/theme-toggle";
 
 type NavbarProps = {
   profile: Profile | null;
@@ -23,7 +24,6 @@ const Navbar = ({ profile }: NavbarProps) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
   React.useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
     return () => {
@@ -31,7 +31,6 @@ const Navbar = ({ profile }: NavbarProps) => {
     };
   }, [isMobileMenuOpen]);
 
-  // Close mobile menu on route change
   React.useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
@@ -45,7 +44,6 @@ const Navbar = ({ profile }: NavbarProps) => {
     { href: "/wallet", label: "Wallet" },
   ];
 
-  // Links specifically for authenticated users in the mobile menu
   const authMobileLinks = [
     { href: `/${profile?.role}/dashboard`, label: "Dashboard" },
     { href: "/profile", label: "Profile" },
@@ -53,26 +51,23 @@ const Navbar = ({ profile }: NavbarProps) => {
   ];
 
   const firstLetter = profile?.name?.charAt(0)?.toUpperCase() ?? "?";
-
   const handleSignOut = async () => {
-    // TODO: Replace with your actual sign-out logic (e.g., await signOut())
     setIsMobileMenuOpen(false);
   };
 
   return (
     <>
-      <div className="h-[76px]" />
+      <div className="h-19" />
 
       <header className="fixed top-0 left-0 right-0 z-50 flex justify-center py-4">
         <nav
           className={`
-            sticky top-0 z-50 flex items-center justify-between h-[56px] w-[95%] 
+            sticky top-0 z-50 flex items-center justify-between h-14 w-[95%] 
             rounded-full mx-auto max-w-7xl
             transition-all duration-500 ease-in-out
-            ${
-              isScrolled
-                ? "bg-background/80 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-border p-5"
-                : "border border-transparent"
+            ${isScrolled
+              ? "bg-background/80 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-border p-5"
+              : "border border-transparent"
             }
           `}
         >
@@ -90,10 +85,9 @@ const Navbar = ({ profile }: NavbarProps) => {
                     px-5 py-2 text-base font-semibold
                     transition-all duration-300 rounded-full
                     scale-95 active:scale-90
-                    ${
-                      isActive
-                        ? "text-foreground bg-accent/10"
-                        : "text-muted-foreground hover:bg-accent/10"
+                    ${isActive
+                      ? "text-foreground bg-accent/10"
+                      : "text-muted-foreground hover:bg-accent/10"
                     }
                   `}
                 >
@@ -105,6 +99,7 @@ const Navbar = ({ profile }: NavbarProps) => {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle />
             <Button
               asChild
               size="lg"
@@ -142,20 +137,18 @@ const Navbar = ({ profile }: NavbarProps) => {
               onClick={() => setIsMobileMenuOpen((p) => !p)}
             >
               <span
-                className={`transition-all duration-300 ${
-                  isMobileMenuOpen
+                className={`transition-all duration-300 ${isMobileMenuOpen
                     ? "rotate-90 opacity-0 absolute"
                     : "rotate-0 opacity-100"
-                }`}
+                  }`}
               >
                 <Menu className="w-5 h-5 text-primary" />
               </span>
               <span
-                className={`transition-all duration-300 ${
-                  isMobileMenuOpen
+                className={`transition-all duration-300 ${isMobileMenuOpen
                     ? "rotate-0 opacity-100"
                     : "-rotate-90 opacity-0 absolute"
-                }`}
+                  }`}
               >
                 <X className="w-5 h-5 text-primary" />
               </span>
@@ -165,23 +158,20 @@ const Navbar = ({ profile }: NavbarProps) => {
 
         {/* Mobile Menu Overlay */}
         <div
-          className={`fixed inset-0 bg-black/40 backdrop-blur-sm md:hidden transition-opacity duration-300 ${
-            isMobileMenuOpen
-              ? "opacity-100 visible"
-              : "opacity-0 invisible"
-          }`}
+          className={`fixed inset-0 bg-black/40 backdrop-blur-sm md:hidden transition-opacity duration-300 ${isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+            }`}
           onClick={() => setIsMobileMenuOpen(false)}
         />
 
         {/* Mobile Menu Panel */}
         <div
-          className={`fixed top-[76px] left-0 right-0 md:hidden transition-all duration-300 ease-out ${
-            isMobileMenuOpen
+          className={`fixed top-[76px] left-0 right-0 md:hidden transition-all duration-300 ease-out ${isMobileMenuOpen
               ? "opacity-100 visible translate-y-0"
               : "opacity-0 invisible -translate-y-4"
-          }`}
+            }`}
         >
           <div className="mx-4 p-4 rounded-2xl bg-background/95 backdrop-blur-xl border border-border shadow-[0_8px_30px_rgba(0,0,0,0.12)] max-h-[calc(100vh-100px)] overflow-y-auto">
+
             {/* Regular Navigation Links */}
             <div className="flex flex-col gap-1">
               {navLinks.map((link) => {
@@ -195,18 +185,16 @@ const Navbar = ({ profile }: NavbarProps) => {
                       flex items-center justify-between px-4 py-3 rounded-xl
                       text-base font-semibold transition-all duration-200
                       active:scale-[0.98]
-                      ${
-                        isActive
-                          ? "text-foreground bg-primary/10"
-                          : "text-muted-foreground hover:text-foreground hover:bg-accent/10"
+                      ${isActive
+                        ? "text-foreground bg-primary/10"
+                        : "text-muted-foreground hover:text-foreground hover:bg-accent/10"
                       }
                     `}
                   >
                     <span>{link.label}</span>
                     <ChevronRight
-                      className={`w-4 h-4 transition-colors ${
-                        isActive ? "text-primary" : "text-muted-foreground/40"
-                      }`}
+                      className={`w-4 h-4 transition-colors ${isActive ? "text-primary" : "text-muted-foreground/40"
+                        }`}
                     />
                   </Link>
                 );
@@ -227,26 +215,33 @@ const Navbar = ({ profile }: NavbarProps) => {
                           flex items-center justify-between px-4 py-3 rounded-xl
                           text-base font-semibold transition-all duration-200
                           active:scale-[0.98]
-                          ${
-                            isActive
-                              ? "text-foreground bg-primary/10"
-                              : "text-muted-foreground hover:text-foreground hover:bg-accent/10"
+                          ${isActive
+                            ? "text-foreground bg-primary/10"
+                            : "text-muted-foreground hover:text-foreground hover:bg-accent/10"
                           }
                         `}
                       >
                         <span>{link.label}</span>
                         <ChevronRight
-                          className={`w-4 h-4 transition-colors ${
-                            isActive
+                          className={`w-4 h-4 transition-colors ${isActive
                               ? "text-primary"
                               : "text-muted-foreground/40"
-                          }`}
+                            }`}
                         />
                       </Link>
                     );
                   })}
                 </>
               )}
+            </div>
+
+            {/* Theme Toggle Row */}
+            <div className="my-3 h-px bg-border" />
+            <div className="flex items-center justify-between px-4 py-2">
+              <span className="text-sm font-semibold text-muted-foreground">
+                Theme
+              </span>
+              <ThemeToggle />
             </div>
 
             {/* Actions Divider */}
