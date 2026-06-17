@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { getBountyDetailsAction } from "./_action";
 import { ITaskAndBounty } from "@/types/bounty.types";
 import BountyDetails from "@/components/modules/Home/Browse/BountyDetails";
+import { getUserInfo } from "@/services/auth.service";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Bounty Details - Do.Quest",
@@ -16,7 +18,7 @@ interface Props {
 
 const BountyDetailsPage = async ({ params }: Props) => {
   const { id } = await params;
-
+  const user = await getUserInfo();
   let bounty: ITaskAndBounty | null = null;
   let errorMessage = "";
 
@@ -31,6 +33,9 @@ const BountyDetailsPage = async ({ params }: Props) => {
   } catch (error: any) {
     errorMessage = error?.message || "Something went wrong while fetching the bounty";
     console.error("Bounty fetch error:", error);
+  }
+  if (!user) {
+    redirect("/sign-in")
   }
   if (!bounty) {
     return (
