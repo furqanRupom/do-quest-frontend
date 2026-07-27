@@ -59,7 +59,22 @@ export const adminNavItems: NavSection[] = [
 ];
 
 export const userNavItems: NavSection[] = [
-
+    {
+        // title: "User Profile & Settings",
+        items: [
+            {
+                title: "Profile",
+                href: "/profile",
+                icon: "Users",
+            },
+            
+            {
+                title: "Settings",
+                href: "/settings",
+                icon: "Calendar",
+            },
+        ],
+    },
 ];
 
 export const getNavItemsByRole = (role: UserRole): NavSection[] => {
