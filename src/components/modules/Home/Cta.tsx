@@ -4,64 +4,58 @@ import { Star, Rocket, ArrowRight } from "lucide-react";
 
 const Cta = () => {
     return (
-        <section className="py-20 relative bg-background overflow-hidden">
-            {/* Background Gradient Glows */}
-            <div className="absolute inset-0 pointer-events-none opacity-20">
-                <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[radial-gradient(circle_at_center,var(--primary),transparent_70%)]" />
-                <div className="absolute top-1/2 right-1/4 translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[radial-gradient(circle_at_center,var(--secondary),transparent_70%)]" />
-            </div>
+        <section className="py-24 relative bg-background overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 relative z-10">
+                {/* Clean Card using Theme Variables */}
+                <div className="bg-card border border-border rounded-3xl p-10 md:p-16 text-center shadow-xl relative overflow-hidden">
 
-            <div className="max-w-4xl mx-auto px-4 relative z-10">
-                {/* Glassmorphic Card */}
-                <div className="bg-card border border-border backdrop-blur-xl rounded-3xl p-12 md:p-16 text-center shadow-2xl relative overflow-hidden">
-                    
-                    {/* Inner subtle highlight */}
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
+                    {/* Solid Primary Accent Top Bar */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-primary rounded-b" />
 
-                    <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight mb-5">
-                        Ready to{" "}
-                        <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                            Claim Your Bounty
+                    <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight mb-6">
+                        Ready to Elevate Your{" "}
+                        <span className="text-primary">
+                            Development Workflow
                         </span>
                         ?
                     </h2>
-                    
-                    <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-                        Join thousands of creators earning from their skills. Start your journey today and turn your expertise into rewards.
+
+                    <p className="text-base md:text-lg text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
+                        Join top developers building high-performance applications. Start your journey today and accelerate your projects with modern tools.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        {/* Primary Action Button with Glow */}
-                        <Button 
-                            size="lg" 
-                            className="bg-gradient-to-r from-primary to-secondary text-primary-foreground font-bold hover:shadow-[0_0_30px_rgba(0,245,255,0.3)] transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2 text-base py-6 px-8"
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        {/* Primary Action Button */}
+                        <Button
+                            size="lg"
+                            className="bg-primary text-primary-foreground font-bold hover:bg-primary/90 transition-all duration-200 flex items-center gap-2 text-base py-6 px-8 rounded-xl"
                         >
                             <Rocket className="h-5 w-5" />
                             Get Started
                         </Button>
 
                         {/* Secondary Outline Button */}
-                        <Button 
-                            size="lg" 
-                            variant="outline" 
-                            className="border-border text-foreground hover:bg-accent/10 font-bold flex items-center gap-2 text-base py-6 px-8"
+                        <Button
+                            size="lg"
+                            variant="outline"
+                            className="border-border bg-transparent text-foreground hover:bg-accent hover:text-accent-foreground font-bold flex items-center gap-2 text-base py-6 px-8 rounded-xl transition-all duration-200"
                         >
-                            Learn More 
+                            Explore Features
                             <ArrowRight className="h-4 w-4" />
                         </Button>
                     </div>
 
                     {/* Stats Section */}
-                    <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-8 text-sm text-muted-foreground">
-                        <div className="flex items-center gap-1.5">
+                    <div className="mt-14 pt-8 border-t border-border flex flex-col sm:flex-row justify-center items-center gap-8 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2">
                             <Star className="h-4 w-4 text-primary fill-primary" />
                             <span className="font-bold text-foreground">4.9/5</span> Rating
                         </div>
-                        <div>
-                            <span className="font-bold text-foreground">10,000+</span> Happy Hunters
+                        <div className="flex items-center gap-2">
+                            <span className="font-bold text-foreground">10,000+</span> Active Developers
                         </div>
-                        <div>
-                            <span className="font-bold text-foreground">$500K+</span> Paid Out
+                        <div className="flex items-center gap-2">
+                            <span className="font-bold text-foreground">99.9%</span> Uptime SLA
                         </div>
                     </div>
                 </div>
